@@ -13,7 +13,7 @@ in that phase's `TODO.md`; leave it `-/-` until `TODO.md` exists.
 
 | # | Phase | Status | Done/Total | Notes |
 |---|---|---|---|---|
-| 00 | Solution Bootstrap | in-progress | 10/19 | SDK verified: `dotnet --version` = 10.0.302, pinned in `global.json` |
+| 00 | Solution Bootstrap | in-progress | 17/19 | `tools/scripts/ci-desktop.sh` green (33 arch tests); item 18 asked, awaiting the launch-verification answer |
 | 01 | Design System Foundation | not-started | -/- | |
 | 02 | Shell & Navigation | not-started | -/- | |
 | 03 | Shared Kernel & Contracts Seed | not-started | -/- | |
