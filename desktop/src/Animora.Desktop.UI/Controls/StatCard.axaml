@@ -1,0 +1,53 @@
+<UserControl x:Class="Animora.Desktop.UI.Controls.StatCard"
+             x:Name="Root"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:i="https://github.com/projektanker/icons.avalonia">
+  <!--
+    KPI stat card (design-reference.md §6): icon tile + delta badge share the header row, then
+    MetricValue, Label, and an optional footer note below a Divider. "Leading"/"trailing" mirror
+    automatically from Root.axaml's inherited FlowDirection — nothing here names a physical side.
+    Icon/text colors for the tile and badge come from Theme/Styles/Surfaces.axaml's
+    Border.TintedAccent.* and Theme/Styles/Chips.axaml's Border.Chip.* selectors; this file only
+    swaps which modifier class is present (StatCard.axaml.cs), never a literal color (DT-06).
+  -->
+  <Border Classes="Card" Padding="{StaticResource CardPadding}">
+    <StackPanel Spacing="{StaticResource Spacing12}">
+      <Grid ColumnDefinitions="Auto,*,Auto">
+        <Border x:Name="IconTileBorder"
+                Grid.Column="0"
+                Classes="TintedAccent Success"
+                Width="{StaticResource IconTileSize}"
+                Height="{StaticResource IconTileSize}">
+          <i:Icon Value="{Binding IconGlyph, ElementName=Root}"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center" />
+        </Border>
+        <Border x:Name="DeltaBadgeBorder"
+                Grid.Column="2"
+                Classes="Chip Success"
+                VerticalAlignment="Top"
+                IsVisible="False">
+          <StackPanel Orientation="Horizontal" Spacing="{StaticResource Spacing4}">
+            <i:Icon x:Name="DeltaGlyphIcon" Value="mdi-arrow-up" />
+            <TextBlock Text="{Binding DeltaText, ElementName=Root}" />
+          </StackPanel>
+        </Border>
+      </Grid>
+      <StackPanel Spacing="{StaticResource Spacing8}">
+        <TextBlock Classes="MetricValue"
+                   Foreground="{DynamicResource BrushTextPrimary}"
+                   Text="{Binding MetricValue, ElementName=Root}" />
+        <TextBlock Classes="Caption"
+                   Foreground="{DynamicResource BrushTextSecondary}"
+                   Text="{Binding Label, ElementName=Root}" />
+      </StackPanel>
+      <StackPanel x:Name="FooterPanel" Spacing="{StaticResource Spacing8}" IsVisible="False">
+        <Border Height="1" Background="{DynamicResource BrushDivider}" />
+        <TextBlock Classes="Caption"
+                   Foreground="{DynamicResource BrushTextMuted}"
+                   Text="{Binding FooterNote, ElementName=Root}" />
+      </StackPanel>
+    </StackPanel>
+  </Border>
+</UserControl>

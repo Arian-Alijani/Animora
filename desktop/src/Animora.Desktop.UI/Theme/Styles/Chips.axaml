@@ -1,11 +1,13 @@
 <Styles xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:i="https://github.com/projektanker/icons.avalonia">
   <!--
     Status-chip variants and the count badge (design-reference.md §6): both are a Border wrapping a
-    TextBlock label. The base class sets shared geometry on the Border and shared typography on any
-    descendant TextBlock; each accent modifier class only sets the Border's fill and the TextBlock's
-    foreground, so a consumer writes `<Border Classes="Chip Success"><TextBlock Text="..."/></Border>`
-    with no per-instance color/typography. Flat — no border, no shadow (§5).
+    TextBlock label (and, for the delta badge in Controls/StatCard, an Icon glyph). The base class
+    sets shared geometry on the Border and shared typography/size on any descendant TextBlock/Icon;
+    each accent modifier class only sets the Border's fill and the descendant's foreground, so a
+    consumer writes `<Border Classes="Chip Success"><TextBlock Text="..."/></Border>` with no
+    per-instance color/typography. Flat — no border, no shadow (§5).
   -->
 
   <!-- Base chip geometry: pill shape, ControlHeightSmall, horizontal padding only (vertical
@@ -23,11 +25,20 @@
     <Setter Property="HorizontalAlignment" Value="Center" />
     <Setter Property="VerticalAlignment" Value="Center" />
   </Style>
+  <!-- Icon glyph inside a chip (StatCard's delta badge, §6 "▲/▼ glyph") — icon-sized, not
+       text-sized, so this is a sibling rule rather than sharing the TextBlock one above. -->
+  <Style Selector="Border.Chip i|Icon">
+    <Setter Property="FontSize" Value="{StaticResource IconSizeSmall}" />
+    <Setter Property="VerticalAlignment" Value="Center" />
+  </Style>
 
   <Style Selector="Border.Chip.Success">
     <Setter Property="Background" Value="{DynamicResource BrushAccentSuccessTint}" />
   </Style>
   <Style Selector="Border.Chip.Success TextBlock">
+    <Setter Property="Foreground" Value="{DynamicResource BrushAccentSuccessStrong}" />
+  </Style>
+  <Style Selector="Border.Chip.Success i|Icon">
     <Setter Property="Foreground" Value="{DynamicResource BrushAccentSuccessStrong}" />
   </Style>
 
@@ -37,11 +48,17 @@
   <Style Selector="Border.Chip.Warning TextBlock">
     <Setter Property="Foreground" Value="{DynamicResource BrushAccentWarningStrong}" />
   </Style>
+  <Style Selector="Border.Chip.Warning i|Icon">
+    <Setter Property="Foreground" Value="{DynamicResource BrushAccentWarningStrong}" />
+  </Style>
 
   <Style Selector="Border.Chip.Danger">
     <Setter Property="Background" Value="{DynamicResource BrushAccentDangerTint}" />
   </Style>
   <Style Selector="Border.Chip.Danger TextBlock">
+    <Setter Property="Foreground" Value="{DynamicResource BrushAccentDangerStrong}" />
+  </Style>
+  <Style Selector="Border.Chip.Danger i|Icon">
     <Setter Property="Foreground" Value="{DynamicResource BrushAccentDangerStrong}" />
   </Style>
 
@@ -51,11 +68,17 @@
   <Style Selector="Border.Chip.Info TextBlock">
     <Setter Property="Foreground" Value="{DynamicResource BrushAccentInfoStrong}" />
   </Style>
+  <Style Selector="Border.Chip.Info i|Icon">
+    <Setter Property="Foreground" Value="{DynamicResource BrushAccentInfoStrong}" />
+  </Style>
 
   <Style Selector="Border.Chip.Violet">
     <Setter Property="Background" Value="{DynamicResource BrushAccentVioletTint}" />
   </Style>
   <Style Selector="Border.Chip.Violet TextBlock">
+    <Setter Property="Foreground" Value="{DynamicResource BrushAccentVioletStrong}" />
+  </Style>
+  <Style Selector="Border.Chip.Violet i|Icon">
     <Setter Property="Foreground" Value="{DynamicResource BrushAccentVioletStrong}" />
   </Style>
 
@@ -75,6 +98,25 @@
     <Setter Property="Foreground" Value="{DynamicResource BrushTextOnBrand}" />
     <Setter Property="HorizontalAlignment" Value="Center" />
     <Setter Property="VerticalAlignment" Value="Center" />
+  </Style>
+
+  <!-- Optional accent override for non-nav uses of Controls/CountBadge (e.g. a low-stock count):
+       solid Base fill (not the soft Tint above) since a badge this small needs full saturation to
+       stay legible; text stays BrushTextOnBrand from the base rule above on every variant. -->
+  <Style Selector="Border.CountBadge.Success">
+    <Setter Property="Background" Value="{DynamicResource BrushAccentSuccessBase}" />
+  </Style>
+  <Style Selector="Border.CountBadge.Warning">
+    <Setter Property="Background" Value="{DynamicResource BrushAccentWarningBase}" />
+  </Style>
+  <Style Selector="Border.CountBadge.Danger">
+    <Setter Property="Background" Value="{DynamicResource BrushAccentDangerBase}" />
+  </Style>
+  <Style Selector="Border.CountBadge.Info">
+    <Setter Property="Background" Value="{DynamicResource BrushAccentInfoBase}" />
+  </Style>
+  <Style Selector="Border.CountBadge.Violet">
+    <Setter Property="Background" Value="{DynamicResource BrushAccentVioletBase}" />
   </Style>
 
 </Styles>

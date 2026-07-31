@@ -1,0 +1,38 @@
+<UserControl x:Class="Animora.Desktop.UI.Controls.EmptyState"
+             x:Name="Root"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:i="https://github.com/projektanker/icons.avalonia">
+  <!--
+    Empty-state placeholder for a list/table/report with no rows yet: muted icon, title,
+    description, optional action slot (e.g. a "create the first X" button). ActionContent is a
+    separate property rather than the inherited UserControl.Content for the same reason
+    SectionCard uses BodyContent — this file's own root markup already occupies Content.
+  -->
+  <StackPanel HorizontalAlignment="Center"
+              VerticalAlignment="Center"
+              Spacing="{StaticResource Spacing12}"
+              MaxWidth="320">
+    <i:Icon Value="{Binding IconGlyph, ElementName=Root}"
+            FontSize="{StaticResource IconSizeLarge}"
+            Foreground="{DynamicResource BrushTextMuted}"
+            HorizontalAlignment="Center" />
+    <TextBlock Classes="BodyStrong"
+               Foreground="{DynamicResource BrushTextPrimary}"
+               HorizontalAlignment="Center"
+               TextAlignment="Center"
+               Text="{Binding Title, ElementName=Root}" />
+    <TextBlock x:Name="DescriptionText"
+               Classes="Caption"
+               Foreground="{DynamicResource BrushTextMuted}"
+               HorizontalAlignment="Center"
+               TextAlignment="Center"
+               TextWrapping="Wrap"
+               Text="{Binding Description, ElementName=Root}"
+               IsVisible="False" />
+    <ContentPresenter x:Name="ActionPresenter"
+                       Content="{Binding ActionContent, ElementName=Root}"
+                       HorizontalAlignment="Center"
+                       IsVisible="False" />
+  </StackPanel>
+</UserControl>

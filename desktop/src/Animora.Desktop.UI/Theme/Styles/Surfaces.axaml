@@ -1,5 +1,6 @@
 <Styles xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:i="https://github.com/projektanker/icons.avalonia">
   <!--
     Border classes for the reference's surface roles (design-reference.md §4.2, §5, §6): card, hero,
     tinted-accent, rail and callout. Each sets only fill/border/radius/shadow — layout (Padding,
@@ -48,20 +49,39 @@
     <Setter Property="BorderThickness" Value="0" />
     <Setter Property="CornerRadius" Value="{StaticResource RadiusBlock}" />
   </Style>
+  <!-- Icon glyph inside a tinted-accent tile (KPI icon tile, §6 "accent-strong glyph"). -->
+  <Style Selector="Border.TintedAccent i|Icon">
+    <Setter Property="FontSize" Value="{StaticResource IconSize}" />
+  </Style>
   <Style Selector="Border.TintedAccent.Success">
     <Setter Property="Background" Value="{DynamicResource BrushAccentSuccessTint}" />
+  </Style>
+  <Style Selector="Border.TintedAccent.Success i|Icon">
+    <Setter Property="Foreground" Value="{DynamicResource BrushAccentSuccessStrong}" />
   </Style>
   <Style Selector="Border.TintedAccent.Info">
     <Setter Property="Background" Value="{DynamicResource BrushAccentInfoTint}" />
   </Style>
+  <Style Selector="Border.TintedAccent.Info i|Icon">
+    <Setter Property="Foreground" Value="{DynamicResource BrushAccentInfoStrong}" />
+  </Style>
   <Style Selector="Border.TintedAccent.Warning">
     <Setter Property="Background" Value="{DynamicResource BrushAccentWarningTint}" />
+  </Style>
+  <Style Selector="Border.TintedAccent.Warning i|Icon">
+    <Setter Property="Foreground" Value="{DynamicResource BrushAccentWarningStrong}" />
   </Style>
   <Style Selector="Border.TintedAccent.Violet">
     <Setter Property="Background" Value="{DynamicResource BrushAccentVioletTint}" />
   </Style>
+  <Style Selector="Border.TintedAccent.Violet i|Icon">
+    <Setter Property="Foreground" Value="{DynamicResource BrushAccentVioletStrong}" />
+  </Style>
   <Style Selector="Border.TintedAccent.Danger">
     <Setter Property="Background" Value="{DynamicResource BrushAccentDangerTint}" />
+  </Style>
+  <Style Selector="Border.TintedAccent.Danger i|Icon">
+    <Setter Property="Foreground" Value="{DynamicResource BrushAccentDangerStrong}" />
   </Style>
 
 </Styles>

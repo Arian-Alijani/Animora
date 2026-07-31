@@ -1,0 +1,48 @@
+<UserControl x:Class="Animora.Desktop.UI.Controls.SectionCard"
+             x:Name="Root"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:i="https://github.com/projektanker/icons.avalonia">
+  <!--
+    Section card (design-reference.md §6): header row — optional Overline eyebrow above a
+    SectionTitle on the leading side, an optional trailing action link — over a free-form body slot.
+    The body slot is bound through BodyContent rather than the inherited UserControl.Content,
+    because this file's own root markup (the Border/header chrome below) already occupies Content;
+    Avalonia has no way to reuse it for both a control's own chrome and a consumer-supplied child.
+    Usage: `<controls:SectionCard Title="..."><controls:SectionCard.BodyContent><.../>
+    </controls:SectionCard.BodyContent></controls:SectionCard>`.
+  -->
+  <Border Classes="Card" Padding="{StaticResource CardPaddingLarge}">
+    <StackPanel Spacing="{StaticResource Spacing16}">
+      <Grid ColumnDefinitions="*,Auto">
+        <StackPanel Grid.Column="0" Spacing="{StaticResource Spacing4}">
+          <TextBlock x:Name="EyebrowText"
+                     Classes="Overline"
+                     Foreground="{DynamicResource BrushTextMuted}"
+                     Text="{Binding Eyebrow, ElementName=Root}"
+                     IsVisible="False" />
+          <TextBlock Classes="SectionTitle"
+                     Foreground="{DynamicResource BrushTextPrimary}"
+                     Text="{Binding Title, ElementName=Root}" />
+        </StackPanel>
+        <Button x:Name="ActionButton"
+                Grid.Column="1"
+                Classes="Subtle Small"
+                VerticalAlignment="Top"
+                Command="{Binding ActionCommand, ElementName=Root}"
+                CommandParameter="{Binding ActionCommandParameter, ElementName=Root}"
+                IsVisible="False">
+          <StackPanel Orientation="Horizontal" Spacing="{StaticResource Spacing4}">
+            <TextBlock Classes="Caption"
+                       Foreground="{DynamicResource BrushPrimary}"
+                       Text="{Binding ActionText, ElementName=Root}" />
+            <i:Icon Value="mdi-chevron-left"
+                    FontSize="{StaticResource IconSizeSmall}"
+                    Foreground="{DynamicResource BrushPrimary}" />
+          </StackPanel>
+        </Button>
+      </Grid>
+      <ContentPresenter Content="{Binding BodyContent, ElementName=Root}" />
+    </StackPanel>
+  </Border>
+</UserControl>

@@ -64,6 +64,10 @@
   <Thickness x:Key="CountBadgePaddingX">6,0</Thickness>
   <x:Double x:Key="CountBadgeHeight">20</x:Double>
 
+  <!-- InsightCallout padding (design-reference §6) — uniform, unlike the horizontal-only pairs
+       above which are sized for their own single-line button/chip content. -->
+  <Thickness x:Key="CalloutPadding">12</Thickness>
+
   <!-- DataGrid row/header geometry (DT-08, TECH_STACK §4) — not in §4.3's table, sized on the same
        4-DIP grid as the rest of this file. -->
   <x:Double x:Key="DataGridRowHeight">48</x:Double>

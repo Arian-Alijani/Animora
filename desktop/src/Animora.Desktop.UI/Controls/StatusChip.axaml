@@ -1,0 +1,13 @@
+<UserControl x:Class="Animora.Desktop.UI.Controls.StatusChip"
+             x:Name="Root"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <!--
+    Status chip (design-reference.md §6): a thin Variant-driven wrapper over
+    Theme/Styles/Chips.axaml's `Border.Chip.*` classes, so a screen writes
+    `<controls:StatusChip Text="..." Variant="Success"/>` instead of hand-picking a class.
+  -->
+  <Border x:Name="ChipBorder" Classes="Chip Success">
+    <TextBlock Text="{Binding Text, ElementName=Root}" />
+  </Border>
+</UserControl>

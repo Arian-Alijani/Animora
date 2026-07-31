@@ -16,4 +16,10 @@
     <PackageReference Include="NSubstitute" />
   </ItemGroup>
 
+  <!-- Localization/JalaliDateFormatter and Localization/PersianNumberFormatter (phase 01, items
+       25-26) are this project's first testable types. -->
+  <ItemGroup>
+    <ProjectReference Include="../../src/Animora.Desktop.UI/Animora.Desktop.UI.csproj" />
+  </ItemGroup>
+
 </Project>

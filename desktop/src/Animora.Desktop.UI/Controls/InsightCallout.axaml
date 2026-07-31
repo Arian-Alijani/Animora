@@ -1,0 +1,24 @@
+<UserControl x:Class="Animora.Desktop.UI.Controls.InsightCallout"
+             x:Name="Root"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:i="https://github.com/projektanker/icons.avalonia">
+  <!--
+    Insight callout (design-reference.md §6): fixed warning accent — the reference never shows this
+    block in another accent, so Border.Callout (Theme/Styles/Surfaces.axaml) already hardcodes the
+    warning tint and this control only supplies the glyph/message content, no Variant property.
+  -->
+  <Border Classes="Callout" Padding="{StaticResource CalloutPadding}">
+    <StackPanel Orientation="Horizontal" Spacing="{StaticResource Spacing8}">
+      <i:Icon Value="{Binding IconGlyph, ElementName=Root}"
+              FontSize="{StaticResource IconSize}"
+              Foreground="{DynamicResource BrushAccentWarningStrong}"
+              VerticalAlignment="Center" />
+      <TextBlock Classes="Caption"
+                 Foreground="{DynamicResource BrushAccentWarningStrong}"
+                 VerticalAlignment="Center"
+                 TextWrapping="Wrap"
+                 Text="{Binding Message, ElementName=Root}" />
+    </StackPanel>
+  </Border>
+</UserControl>
