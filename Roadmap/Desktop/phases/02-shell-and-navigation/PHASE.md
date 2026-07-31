@@ -63,4 +63,8 @@ registration and the data-seam pattern.
 
 ## Step 0
 
-Not run yet. See [`../../_meta/session-protocol.md`](../../_meta/session-protocol.md).
+Run on 2026-07-31 -> [`TODO.md`](TODO.md) (29 items). The two structural calls the list had to make —
+module-facing navigation/app-state abstractions in the leaf `Animora.Desktop.UI` project with their
+implementations in the composition root (AT-09 forbids a module referencing `Animora.Desktop.App`),
+and `Modules.Reporting` as the home of the one example screen — are recorded in `TODO.md`'s header
+rather than restated per item.

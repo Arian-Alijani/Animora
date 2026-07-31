@@ -1,4 +1,4 @@
-using Animora.Desktop.App.Gallery;
+using Animora.Desktop.App.Shell;
 using Animora.Desktop.UI.Services;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
@@ -10,9 +10,8 @@ public partial class App : Application
 {
     public override void Initialize()
     {
-        // TODO(P1-01): registered here only so the throwaway token gallery window (item 35) can
-        // render `{i:Icon ...}` glyphs; phase 02's composition root registers this via
-        // Animora.Desktop.UI.Services.ServiceCollectionExtensions.AddDesktopUi() instead.
+        // TODO(P1-02): drop this direct call once the composition root resolves the design system
+        // through Animora.Desktop.UI.Services.ServiceCollectionExtensions.AddDesktopUi().
         IconProviderRegistrar.Register();
 
         AvaloniaXamlLoader.Load(this);
@@ -22,9 +21,7 @@ public partial class App : Application
     {
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            // TODO(P1-01): shows the phase-01 token gallery (TODO.md item 35) instead of
-            // ShellWindow; revert to `new ShellWindow()` after the phase-01 host check (item 37).
-            desktop.MainWindow = new TokenGalleryWindow();
+            desktop.MainWindow = new ShellWindow();
         }
 
         base.OnFrameworkInitializationCompleted();
