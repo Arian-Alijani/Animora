@@ -8,9 +8,14 @@ namespace Animora.Desktop.UI.Localization;
 /// "Digits are Persian-Indic in every position — counts, money, times, dates, chart axis labels,
 /// percentages"). Domain/handler code keeps plain <see langword="long"/>/<see langword="decimal"/>
 /// values; this is the only place ASCII digits become Persian-Indic ones (DESK-ARCH-14). Reused by
-/// <see cref="JalaliDateFormatter"/> and <c>MoneyFormatter</c> (item 27) for the same reason.
+/// <see cref="JalaliDateFormatter"/> and <see cref="MoneyFormatter"/> for the same reason.
 /// </summary>
-public sealed class PersianNumberFormatter
+/// <remarks>
+/// Static rather than an injected service: the mapping is a pure function with no state and nothing
+/// a caller could substitute, and a stateless instance member breaks this build (CA1822 +
+/// <c>TreatWarningsAsErrors</c>).
+/// </remarks>
+public static class PersianNumberFormatter
 {
     private const string PersianDigits = "۰۱۲۳۴۵۶۷۸۹";
 

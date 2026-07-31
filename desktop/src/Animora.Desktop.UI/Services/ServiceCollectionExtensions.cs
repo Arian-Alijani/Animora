@@ -17,10 +17,10 @@ public static class ServiceCollectionExtensions
     {
         IconProviderRegistrar.Register();
 
+        // Only the time-dependent formatter needs a registration: PersianNumberFormatter and
+        // MoneyFormatter are stateless static helpers, so a container entry would buy nothing.
         services.TryAddSingleton(TimeProvider.System);
-        services.TryAddSingleton<PersianNumberFormatter>();
         services.TryAddSingleton<JalaliDateFormatter>();
-        services.TryAddSingleton<MoneyFormatter>();
 
         services.TryAddSingleton<IDialogService, DialogService>();
         services.TryAddSingleton<IToastService, ToastService>();

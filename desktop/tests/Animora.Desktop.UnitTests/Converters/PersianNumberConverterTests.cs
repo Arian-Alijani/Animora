@@ -1,6 +1,5 @@
 using System.Globalization;
 using Animora.Desktop.UI.Converters;
-using Animora.Desktop.UI.Localization;
 using FluentAssertions;
 using Xunit;
 
@@ -8,7 +7,7 @@ namespace Animora.Desktop.UnitTests.Converters;
 
 public class PersianNumberConverterTests
 {
-    private readonly PersianNumberConverter _converter = new(new PersianNumberFormatter());
+    private readonly PersianNumberConverter _converter = new();
 
     [Theory]
     [InlineData(null, 86450000, "۸۶,۴۵۰,۰۰۰")]

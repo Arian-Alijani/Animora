@@ -10,9 +10,8 @@
   <!--
     TODO(P1-01): throwaway phase-01 host check window (TODO.md item 35) — delete this file, the
     Gallery/ folder, and App.axaml/App.axaml.cs's wiring to it once item 37 confirms
-    Animora.Desktop.UI's tokens/controls render correctly on Windows (`dotnet run --project
-    desktop/src/Animora.Desktop.App`). Every value below is a token/control from
-    Animora.Desktop.UI — nothing here is a screen or a reusable asset.
+    Animora.Desktop.UI's tokens/controls render correctly on Windows. Every value below is a
+    token/control from Animora.Desktop.UI — nothing here is a screen or a reusable asset.
   -->
   <ScrollViewer Padding="{StaticResource ContentPaddingX}">
     <StackPanel Spacing="{StaticResource SectionGap}">

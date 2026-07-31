@@ -14,14 +14,7 @@ namespace Animora.Desktop.UI.Converters;
 public sealed class MoneyConverter : IValueConverter
 {
     /// <summary>Shared instance for `{x:Static}` usage in XAML.</summary>
-    public static readonly MoneyConverter Instance = new(new MoneyFormatter(new PersianNumberFormatter()));
-
-    private readonly MoneyFormatter _formatter;
-
-    public MoneyConverter(MoneyFormatter formatter)
-    {
-        _formatter = formatter;
-    }
+    public static readonly MoneyConverter Instance = new();
 
     public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
@@ -42,8 +35,8 @@ public sealed class MoneyConverter : IValueConverter
 
         string unit = parameter as string ?? string.Empty;
         return unit.Equals("rial", StringComparison.OrdinalIgnoreCase)
-            ? _formatter.FormatRials(amountInRials)
-            : _formatter.FormatTomans(amountInRials);
+            ? MoneyFormatter.FormatRials(amountInRials)
+            : MoneyFormatter.FormatTomans(amountInRials);
     }
 
     public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) =>
