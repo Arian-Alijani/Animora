@@ -17,4 +17,10 @@
     <PackageReference Include="Avalonia.Headless.XUnit" />
   </ItemGroup>
 
+  <!-- AnimoraTheme's headless smoke test (phase 01 item 33) is this project's first test; every
+       per-screen RTL smoke test (desktop screen DoD) references the same UI project going forward. -->
+  <ItemGroup>
+    <ProjectReference Include="../../src/Animora.Desktop.UI/Animora.Desktop.UI.csproj" />
+  </ItemGroup>
+
 </Project>
