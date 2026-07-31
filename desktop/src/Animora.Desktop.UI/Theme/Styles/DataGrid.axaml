@@ -1,0 +1,50 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <!--
+    Row/header tokens over Semi.Avalonia.DataGrid (DT-08, TECH_STACK §4). Only DataGrid's own
+    directly-bindable properties (RowBackground, grid-line brushes/visibility, RowHeight,
+    ColumnHeaderHeight) plus the templated properties Background/Foreground/Padding on
+    DataGrid/DataGridColumnHeader/DataGridCell are set — same approach as the rest of this project's
+    style files. No zebra striping (AlternatingRowBackground matches RowBackground), matching the
+    reference's list rows (§6). Row virtualization is Avalonia.Controls.DataGrid's own default and is
+    never turned off by anything in this file (DT-08).
+  -->
+
+  <Style Selector="DataGrid">
+    <Setter Property="Background" Value="{DynamicResource BrushSurface}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource BrushBorder}" />
+    <Setter Property="BorderThickness" Value="{StaticResource StrokeThickness}" />
+    <Setter Property="CornerRadius" Value="{StaticResource RadiusCard}" />
+    <Setter Property="RowBackground" Value="{DynamicResource BrushSurface}" />
+    <Setter Property="AlternatingRowBackground" Value="{DynamicResource BrushSurface}" />
+    <Setter Property="HorizontalGridLinesBrush" Value="{DynamicResource BrushDivider}" />
+    <Setter Property="VerticalGridLinesBrush" Value="Transparent" />
+    <Setter Property="GridLinesVisibility" Value="Horizontal" />
+    <Setter Property="RowHeight" Value="{StaticResource DataGridRowHeight}" />
+    <Setter Property="ColumnHeaderHeight" Value="{StaticResource DataGridHeaderHeight}" />
+    <Setter Property="FontSize" Value="{StaticResource FontSizeBody}" />
+    <Setter Property="FontWeight" Value="{StaticResource FontWeightBody}" />
+    <Setter Property="Foreground" Value="{DynamicResource BrushTextPrimary}" />
+  </Style>
+
+  <Style Selector="DataGridColumnHeader">
+    <Setter Property="Background" Value="{DynamicResource BrushSurfaceMuted}" />
+    <Setter Property="Foreground" Value="{DynamicResource BrushTextSecondary}" />
+    <Setter Property="FontSize" Value="{StaticResource FontSizeCaption}" />
+    <Setter Property="FontWeight" Value="{StaticResource FontWeightBodyStrong}" />
+    <Setter Property="Padding" Value="{StaticResource DataGridCellPadding}" />
+  </Style>
+
+  <Style Selector="DataGridCell">
+    <Setter Property="Padding" Value="{StaticResource DataGridCellPadding}" />
+    <Setter Property="Foreground" Value="{DynamicResource BrushTextPrimary}" />
+  </Style>
+
+  <Style Selector="DataGridRow:pointerover">
+    <Setter Property="Background" Value="{DynamicResource BrushStateHoverOverlay}" />
+  </Style>
+  <Style Selector="DataGridRow:selected">
+    <Setter Property="Background" Value="{DynamicResource BrushStateSelectedTint}" />
+  </Style>
+
+</Styles>

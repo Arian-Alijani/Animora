@@ -1,0 +1,78 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <!--
+    Form-control styling over Semi.Avalonia's base TextBox/ComboBox/CheckBox/RadioButton themes
+    (design-reference.md §6, DESK-ARCH-12). Only properties Avalonia exposes directly on these
+    controls (Background, BorderBrush, Foreground, Padding, CornerRadius, FontSize/Weight, Opacity)
+    are set here — same approach as Theme/Styles/Buttons.axaml — so Semi's own control templates
+    keep doing the templating work and this file only supplies token values. CheckBox/RadioButton's
+    check-glyph/dot color is Semi's own indicator rendering, not a property this file re-templates;
+    only their label typography is token-driven here.
+
+    Usage: `<TextBox Classes="Search" Watermark="..."/>`, `<ComboBox .../>`, `<CheckBox Content="..."/>`.
+  -->
+
+  <!-- TextBox: default Surface field. -->
+  <Style Selector="TextBox">
+    <Setter Property="Height" Value="{StaticResource ControlHeight}" />
+    <Setter Property="Padding" Value="{StaticResource ButtonPaddingX}" />
+    <Setter Property="CornerRadius" Value="{StaticResource RadiusControl}" />
+    <Setter Property="Background" Value="{DynamicResource BrushSurface}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource BrushBorder}" />
+    <Setter Property="BorderThickness" Value="{StaticResource StrokeThickness}" />
+    <Setter Property="Foreground" Value="{DynamicResource BrushTextPrimary}" />
+    <Setter Property="CaretBrush" Value="{DynamicResource BrushTextPrimary}" />
+    <Setter Property="FontSize" Value="{StaticResource FontSizeBody}" />
+    <Setter Property="FontWeight" Value="{StaticResource FontWeightBody}" />
+    <Setter Property="VerticalContentAlignment" Value="Center" />
+  </Style>
+  <Style Selector="TextBox:focus">
+    <Setter Property="BorderBrush" Value="{DynamicResource BrushPrimaryFocusRing}" />
+  </Style>
+  <Style Selector="TextBox:disabled">
+    <Setter Property="Opacity" Value="0.5" />
+  </Style>
+
+  <!-- Search variant: top-bar search field — muted fill, fully rounded, borderless at rest, a
+       focus ring only once activated (design-reference §6 top bar). -->
+  <Style Selector="TextBox.Search">
+    <Setter Property="Background" Value="{DynamicResource BrushSurfaceMuted}" />
+    <Setter Property="CornerRadius" Value="{StaticResource RadiusPill}" />
+    <Setter Property="BorderThickness" Value="0" />
+  </Style>
+  <Style Selector="TextBox.Search:focus">
+    <Setter Property="BorderThickness" Value="{StaticResource StrokeThickness}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource BrushPrimaryFocusRing}" />
+  </Style>
+
+  <!-- ComboBox: same geometry/typography family as TextBox for visual consistency across forms. -->
+  <Style Selector="ComboBox">
+    <Setter Property="Height" Value="{StaticResource ControlHeight}" />
+    <Setter Property="Padding" Value="{StaticResource ButtonPaddingX}" />
+    <Setter Property="CornerRadius" Value="{StaticResource RadiusControl}" />
+    <Setter Property="Background" Value="{DynamicResource BrushSurface}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource BrushBorder}" />
+    <Setter Property="BorderThickness" Value="{StaticResource StrokeThickness}" />
+    <Setter Property="Foreground" Value="{DynamicResource BrushTextPrimary}" />
+    <Setter Property="FontSize" Value="{StaticResource FontSizeBody}" />
+    <Setter Property="FontWeight" Value="{StaticResource FontWeightBody}" />
+    <Setter Property="VerticalContentAlignment" Value="Center" />
+  </Style>
+  <Style Selector="ComboBox:focus">
+    <Setter Property="BorderBrush" Value="{DynamicResource BrushPrimaryFocusRing}" />
+  </Style>
+  <Style Selector="ComboBox:disabled">
+    <Setter Property="Opacity" Value="0.5" />
+  </Style>
+
+  <!-- CheckBox / RadioButton: label typography only. -->
+  <Style Selector="CheckBox, RadioButton">
+    <Setter Property="Foreground" Value="{DynamicResource BrushTextPrimary}" />
+    <Setter Property="FontSize" Value="{StaticResource FontSizeBody}" />
+    <Setter Property="FontWeight" Value="{StaticResource FontWeightBody}" />
+  </Style>
+  <Style Selector="CheckBox:disabled, RadioButton:disabled">
+    <Setter Property="Opacity" Value="0.5" />
+  </Style>
+
+</Styles>
