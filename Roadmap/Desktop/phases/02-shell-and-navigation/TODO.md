@@ -14,10 +14,10 @@ navigation and app-state **abstractions** live in the leaf `Animora.Desktop.UI` 
 `Animora.Desktop.Modules.Reporting` (the module that will own the real dashboard in phase 10) rather
 than in the shell project.
 
-- [ ] 1. Pin `Mediator.Abstractions` + `Mediator.SourceGenerator` in `Directory.Packages.props` and reference them from `Animora.Desktop.App` and `Animora.Desktop.Modules.Reporting` only (TECH_STACK §4, AG-08, DT-02)
-- [ ] 2. Record this phase's new folders (`Animora.Desktop.UI/Navigation/`, `Animora.Desktop.UI/AppState/`, `Animora.Desktop.App/AppState/`, `Modules.*/Composition/`, `Modules.*/Data/`) and the abstraction-in-UI / implementation-in-App split in `desktop/AGENTS.md`'s project map and `docs/architecture/03-solution-structure.md`'s desktop tree (AG-13, AG-16, DIR-07/AT-08, AT-09, DT-09)
-- [ ] 3. Add `Animora.Desktop.UI/Navigation/RouteDescriptor` (+ `NavigationEntry`): route key, page title, icon key, rail group/order, optional badge value, and the view/view-model factory pair a module supplies (DESK-ARCH-05, DT-09)
-- [ ] 4. Add `Animora.Desktop.UI/Navigation/IRouteRegistry`: the module-facing registration surface (register one route, enumerate rail entries by group/order), with no `App` or module type on it (DESK-ARCH-05, DIR-07)
+- [x] 1. Pin `Mediator.Abstractions` + `Mediator.SourceGenerator` in `Directory.Packages.props` and reference them from `Animora.Desktop.App` and `Animora.Desktop.Modules.Reporting` only (TECH_STACK §4, AG-08, DT-02)
+- [x] 2. Record this phase's new folders (`Animora.Desktop.UI/Navigation/`, `Animora.Desktop.UI/AppState/`, `Animora.Desktop.App/AppState/`, `Modules.*/Composition/`, `Modules.*/Data/`) and the abstraction-in-UI / implementation-in-App split in `desktop/AGENTS.md`'s project map and `docs/architecture/03-solution-structure.md`'s desktop tree (AG-13, AG-16, DIR-07/AT-08, AT-09, DT-09)
+- [x] 3. Add `Animora.Desktop.UI/Navigation/RouteDescriptor` (+ `NavigationEntry`): route key, page title, icon key, rail group/order, optional badge value, and the view/view-model factory pair a module supplies (DESK-ARCH-05, DT-09)
+- [x] 4. Add `Animora.Desktop.UI/Navigation/IRouteRegistry`: the module-facing registration surface (register one route, enumerate rail entries by group/order), with no `App` or module type on it (DESK-ARCH-05, DIR-07)
 - [ ] 5. Add `Animora.Desktop.UI/Navigation/INavigationService`: navigate by route key with optional parameter, current-route property, route-changed notification (DESK-ARCH-05, DESK-ARCH-01)
 - [ ] 6. Add `Animora.Desktop.App/Navigation/RouteRegistry`: duplicate-key rejection, deterministic rail ordering, explicit unknown-key failure (DESK-ARCH-05)
 - [ ] 7. Add `Animora.Desktop.App/Navigation/NavigationService`: resolves the route's view model from DI, builds its view through the descriptor, raises route-changed for the shell — no compile-time module reference (DESK-ARCH-05, DT-09)

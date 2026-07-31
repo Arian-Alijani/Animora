@@ -75,11 +75,17 @@ contract) plus its `Mediator` request/notification types; internal types are `in
 ```
 desktop/
   src/
-    Animora.Desktop.App/        # Avalonia App, composition root, navigation shell, startup
+    Animora.Desktop.App/        # Avalonia App, composition root (Composition/), navigation shell
+                                 # (Shell/), navigation + app-state implementations
+                                 # (Navigation/, AppState/), startup sequence (Startup/)
     Animora.Desktop.UI/         # design tokens, embedded fonts (Assets/Fonts/), shared
                                  # controls/converters, ViewModelBase, dialog/toast/icon
-                                 # services (Services/) (leaf)
+                                 # services (Services/), route/navigation and app-state
+                                 # abstractions (Navigation/, AppState/) (leaf)
     Animora.Desktop.Modules.*/  # mirrors backend module names; Views + ViewModels + local handlers
+                                 # + module-owned data-seam interfaces and their Stage A
+                                 # implementations (Data/) + route/service registration
+                                 # (Composition/)
     Animora.Desktop.Data/       # SQLite DbContext (EF Core writes), Dapper read queries, SQLCipher
     Animora.Desktop.Sync/       # outbox, cursor store, batch client, conflict application
     Animora.Desktop.Infrastructure/ # Kiota generated API client, Serilog, Velopack, printing
@@ -88,6 +94,13 @@ desktop/
     Animora.Desktop.UiTests/    # Avalonia.Headless RTL smoke test per screen
     Animora.Desktop.ArchTests/  # NetArchTest rules for desktop assemblies (DIR-05, DIR-07)
 ```
+
+The module-facing navigation and app-state contracts (`INavigationService`, `IRouteRegistry`,
+`RouteDescriptor`, the current-user/app-status state) sit in the leaf `Animora.Desktop.UI` project
+while their single implementation sits in `Animora.Desktop.App`: DESK-ARCH-05 requires every module
+to register its own routes, and AT-09 forbids a module referencing the composition root, so the
+contract has to live below both. `Animora.Desktop.App` is therefore the only project that may name
+those implementations.
 
 Desktop modules cover `Identity`, `Clients`, `Visits`, `Scheduling`, `Finance`, `Reporting`,
 `Notifications`, `Licensing`, `Files`; `PlatformAdmin` is a web-only back-office and has no desktop

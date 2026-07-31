@@ -10,4 +10,10 @@
     <ProjectReference Include="../../../shared/dotnet/Animora.Contracts/Animora.Contracts.csproj" />
   </ItemGroup>
 
+  <!-- Request/handler types for this module's screens (DT-02). The source generator stays in the
+       composition root, which discovers these handlers through its project reference. -->
+  <ItemGroup>
+    <PackageReference Include="Mediator.Abstractions" />
+  </ItemGroup>
+
 </Project>

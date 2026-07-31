@@ -14,9 +14,9 @@ screen" recipe). Stack: `TECH_STACK.md` §4.
 
 | Project | Owns | May reference |
 |---|---|---|
-| `src/Animora.Desktop.App` | Composition root, DI wiring, single-window shell, `INavigationService`, startup sequence, app assets/fonts | every project below |
-| `src/Animora.Desktop.UI` | Design tokens, embedded Vazirmatn font files (`Assets/Fonts/`), `Semi.Avalonia` overrides, shared controls, value converters, Jalali/number formatters, `ViewModelBase`, dialog/toast/icon-provider services (`Services/`) | `SharedKernel`, `Contracts` |
-| `src/Animora.Desktop.Modules.<Name>` | One module's `Views/`, `ViewModels/`, `Handlers/`, `Models/` | `UI`, `Data`, `Infrastructure`, `SharedKernel`, `Contracts` |
+| `src/Animora.Desktop.App` | Composition root and DI wiring (`Composition/`), single-window shell (`Shell/`), navigation and app-state implementations (`Navigation/`, `AppState/`), startup sequence (`Startup/`), app assets/fonts | every project below |
+| `src/Animora.Desktop.UI` | Design tokens, embedded Vazirmatn font files (`Assets/Fonts/`), `Semi.Avalonia` overrides, shared controls, value converters, Jalali/number formatters, `ViewModelBase`, dialog/toast/icon-provider services (`Services/`), route/navigation abstractions (`Navigation/`), app-state abstractions (`AppState/`) | `SharedKernel`, `Contracts` |
+| `src/Animora.Desktop.Modules.<Name>` | One module's `Views/`, `ViewModels/`, `Handlers/`, `Models/`, its own data-seam interfaces plus their Stage A implementations (`Data/`), and its route/service registration (`Composition/`) | `UI`, `Data`, `Infrastructure`, `SharedKernel`, `Contracts` |
 | `src/Animora.Desktop.Data` | SQLite: `Entities/`, `Configurations/`, `Writes/` (EF Core), `Queries/` (Dapper), `Migrations/`, `Search/` (FTS5), `Backup/`, `Security/` (SQLCipher key via DPAPI) | `SharedKernel`, `Contracts` |
 | `src/Animora.Desktop.Sync` | Outbox drain, cursor store, batch client, conflict application, protocol negotiation — **seam only until P2** | `Data`, `Infrastructure`, modules |
 | `src/Animora.Desktop.Infrastructure` | Kiota `Generated/`, `Http/`, `Connectivity/`, `Jobs/` (local scheduler), `Printing/`, `Documents/` (QuestPDF, ClosedXML), `Imaging/`, `Barcode/`, `Notifications/` (Windows toast), `Licensing/`, `SecureStorage/`, `Logging/`, `Update/` (Velopack) | `SharedKernel`, `Contracts` |
@@ -26,6 +26,11 @@ screen" recipe). Stack: `TECH_STACK.md` §4.
 
 Desktop modules mirror backend module names: `Identity`, `Clients`, `Visits`, `Scheduling`,
 `Finance`, `Reporting`, `Notifications`, `Licensing`, `Files`. `PlatformAdmin` is web-only.
+
+Navigation and app-state types are split across two of those projects on purpose — abstractions in
+`UI/Navigation` + `UI/AppState`, implementations in `App/Navigation` + `App/AppState` — for the
+reason recorded in
+[`03-solution-structure.md`](../docs/architecture/03-solution-structure.md#desktop-solution-net-avalonia).
 
 ## Hard rules for this tree
 
