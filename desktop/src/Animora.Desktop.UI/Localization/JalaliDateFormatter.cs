@@ -20,12 +20,10 @@ public sealed class JalaliDateFormatter
     };
 
     private readonly TimeProvider _timeProvider;
-    private readonly PersianNumberFormatter _numberFormatter;
 
-    public JalaliDateFormatter(TimeProvider timeProvider, PersianNumberFormatter numberFormatter)
+    public JalaliDateFormatter(TimeProvider timeProvider)
     {
         _timeProvider = timeProvider;
-        _numberFormatter = numberFormatter;
     }
 
     /// <summary>Numeric Jalali date, e.g. "۱۴۰۳/۰۴/۱۰".</summary>
@@ -35,7 +33,7 @@ public sealed class JalaliDateFormatter
         var year = Calendar.GetYear(local);
         var month = Calendar.GetMonth(local);
         var day = Calendar.GetDayOfMonth(local);
-        return _numberFormatter.ToPersianDigits($"{year:0000}/{month:00}/{day:00}");
+        return PersianNumberFormatter.ToPersianDigits($"{year:0000}/{month:00}/{day:00}");
     }
 
     /// <summary>Long-form Jalali date with the month name, e.g. "۱۰ تیر ۱۴۰۳".</summary>
@@ -46,14 +44,14 @@ public sealed class JalaliDateFormatter
         var month = Calendar.GetMonth(local);
         var day = Calendar.GetDayOfMonth(local);
         return
-            $"{_numberFormatter.ToPersianDigits(day.ToString(CultureInfo.InvariantCulture))} " +
+            $"{PersianNumberFormatter.ToPersianDigits(day.ToString(CultureInfo.InvariantCulture))} " +
             $"{MonthNames[month - 1]} " +
-            $"{_numberFormatter.ToPersianDigits(year.ToString(CultureInfo.InvariantCulture))}";
+            $"{PersianNumberFormatter.ToPersianDigits(year.ToString(CultureInfo.InvariantCulture))}";
     }
 
     /// <summary>24-hour local clock time, e.g. "۱۴:۳۰".</summary>
     public string FormatTime(DateTime utcValue) =>
-        _numberFormatter.ToPersianDigits(ToLocal(utcValue).ToString("HH:mm", CultureInfo.InvariantCulture));
+        PersianNumberFormatter.ToPersianDigits(ToLocal(utcValue).ToString("HH:mm", CultureInfo.InvariantCulture));
 
     /// <summary>"<see cref="FormatDate"/> <see cref="FormatTime"/>" combined.</summary>
     public string FormatDateTime(DateTime utcValue) => $"{FormatDate(utcValue)} {FormatTime(utcValue)}";

@@ -1,0 +1,224 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:i="https://github.com/projektanker/icons.avalonia"
+        xmlns:controls="clr-namespace:Animora.Desktop.UI.Controls;assembly=Animora.Desktop.UI"
+        x:Class="Animora.Desktop.App.Gallery.TokenGalleryWindow"
+        Title="Animora — Token Gallery"
+        Width="1180"
+        Height="860"
+        Background="{DynamicResource BrushPageBackground}">
+  <!--
+    TODO(P1-01): throwaway phase-01 host check window (TODO.md item 35) — delete this file, the
+    Gallery/ folder, and App.axaml/App.axaml.cs's wiring to it once item 37 confirms
+    Animora.Desktop.UI's tokens/controls render correctly on Windows (`dotnet run --project
+    desktop/src/Animora.Desktop.App`). Every value below is a token/control from
+    Animora.Desktop.UI — nothing here is a screen or a reusable asset.
+  -->
+  <ScrollViewer Padding="{StaticResource ContentPaddingX}">
+    <StackPanel Spacing="{StaticResource SectionGap}">
+
+      <TextBlock Classes="HeroTitle" Foreground="{DynamicResource BrushTextPrimary}" Text="نگارخانه توکن‌ها" />
+
+      <!-- Colors -->
+      <Border Classes="Card" Padding="{StaticResource CardPaddingLarge}">
+        <StackPanel Spacing="{StaticResource Spacing16}">
+          <TextBlock Classes="SectionTitle" Foreground="{DynamicResource BrushTextPrimary}" Text="رنگ‌ها" />
+
+          <TextBlock Classes="Overline" Foreground="{DynamicResource BrushTextMuted}" Text="سطح / متن / حاشیه" />
+          <WrapPanel ItemSpacing="{StaticResource Spacing16}" LineSpacing="{StaticResource Spacing12}">
+            <StackPanel Spacing="{StaticResource Spacing4}">
+              <Border Width="{StaticResource IconTileSize}" Height="{StaticResource IconTileSize}" CornerRadius="{StaticResource RadiusBlock}" Background="{DynamicResource BrushSurface}" BorderBrush="{DynamicResource BrushBorder}" BorderThickness="{StaticResource StrokeThickness}" />
+              <TextBlock Classes="Caption" Foreground="{DynamicResource BrushTextSecondary}" Text="BrushSurface" />
+            </StackPanel>
+            <StackPanel Spacing="{StaticResource Spacing4}">
+              <Border Width="{StaticResource IconTileSize}" Height="{StaticResource IconTileSize}" CornerRadius="{StaticResource RadiusBlock}" Background="{DynamicResource BrushSurfaceMuted}" />
+              <TextBlock Classes="Caption" Foreground="{DynamicResource BrushTextSecondary}" Text="BrushSurfaceMuted" />
+            </StackPanel>
+            <StackPanel Spacing="{StaticResource Spacing4}">
+              <Border Width="{StaticResource IconTileSize}" Height="{StaticResource IconTileSize}" CornerRadius="{StaticResource RadiusBlock}" Background="{DynamicResource BrushRailBackground}" />
+              <TextBlock Classes="Caption" Foreground="{DynamicResource BrushTextSecondary}" Text="BrushRailBackground" />
+            </StackPanel>
+            <StackPanel Spacing="{StaticResource Spacing4}">
+              <Border Width="{StaticResource IconTileSize}" Height="{StaticResource IconTileSize}" CornerRadius="{StaticResource RadiusBlock}" Background="{DynamicResource BrushPrimary}" />
+              <TextBlock Classes="Caption" Foreground="{DynamicResource BrushTextSecondary}" Text="BrushPrimary" />
+            </StackPanel>
+            <StackPanel Spacing="{StaticResource Spacing4}">
+              <Border Width="{StaticResource IconTileSize}" Height="{StaticResource IconTileSize}" CornerRadius="{StaticResource RadiusBlock}" Background="{StaticResource BrushHeroGradient}" />
+              <TextBlock Classes="Caption" Foreground="{DynamicResource BrushTextSecondary}" Text="BrushHeroGradient" />
+            </StackPanel>
+          </WrapPanel>
+
+          <TextBlock Classes="Overline" Foreground="{DynamicResource BrushTextMuted}" Text="طیف تأکیدی (تینت / پایه / قوی)" />
+          <WrapPanel ItemSpacing="{StaticResource Spacing16}" LineSpacing="{StaticResource Spacing12}">
+            <StackPanel Spacing="{StaticResource Spacing4}" Orientation="Horizontal">
+              <Border Width="{StaticResource IconTileSize}" Height="{StaticResource IconTileSize}" CornerRadius="{StaticResource RadiusBlock}" Background="{DynamicResource BrushAccentSuccessTint}" />
+              <Border Width="{StaticResource IconTileSize}" Height="{StaticResource IconTileSize}" CornerRadius="{StaticResource RadiusBlock}" Background="{DynamicResource BrushAccentSuccessBase}" />
+              <Border Width="{StaticResource IconTileSize}" Height="{StaticResource IconTileSize}" CornerRadius="{StaticResource RadiusBlock}" Background="{DynamicResource BrushAccentSuccessStrong}" />
+              <TextBlock Classes="Caption" Foreground="{DynamicResource BrushTextSecondary}" Text="Success" VerticalAlignment="Center" />
+            </StackPanel>
+            <StackPanel Spacing="{StaticResource Spacing4}" Orientation="Horizontal">
+              <Border Width="{StaticResource IconTileSize}" Height="{StaticResource IconTileSize}" CornerRadius="{StaticResource RadiusBlock}" Background="{DynamicResource BrushAccentWarningTint}" />
+              <Border Width="{StaticResource IconTileSize}" Height="{StaticResource IconTileSize}" CornerRadius="{StaticResource RadiusBlock}" Background="{DynamicResource BrushAccentWarningBase}" />
+              <Border Width="{StaticResource IconTileSize}" Height="{StaticResource IconTileSize}" CornerRadius="{StaticResource RadiusBlock}" Background="{DynamicResource BrushAccentWarningStrong}" />
+              <TextBlock Classes="Caption" Foreground="{DynamicResource BrushTextSecondary}" Text="Warning" VerticalAlignment="Center" />
+            </StackPanel>
+            <StackPanel Spacing="{StaticResource Spacing4}" Orientation="Horizontal">
+              <Border Width="{StaticResource IconTileSize}" Height="{StaticResource IconTileSize}" CornerRadius="{StaticResource RadiusBlock}" Background="{DynamicResource BrushAccentDangerTint}" />
+              <Border Width="{StaticResource IconTileSize}" Height="{StaticResource IconTileSize}" CornerRadius="{StaticResource RadiusBlock}" Background="{DynamicResource BrushAccentDangerBase}" />
+              <Border Width="{StaticResource IconTileSize}" Height="{StaticResource IconTileSize}" CornerRadius="{StaticResource RadiusBlock}" Background="{DynamicResource BrushAccentDangerStrong}" />
+              <TextBlock Classes="Caption" Foreground="{DynamicResource BrushTextSecondary}" Text="Danger" VerticalAlignment="Center" />
+            </StackPanel>
+            <StackPanel Spacing="{StaticResource Spacing4}" Orientation="Horizontal">
+              <Border Width="{StaticResource IconTileSize}" Height="{StaticResource IconTileSize}" CornerRadius="{StaticResource RadiusBlock}" Background="{DynamicResource BrushAccentInfoTint}" />
+              <Border Width="{StaticResource IconTileSize}" Height="{StaticResource IconTileSize}" CornerRadius="{StaticResource RadiusBlock}" Background="{DynamicResource BrushAccentInfoBase}" />
+              <Border Width="{StaticResource IconTileSize}" Height="{StaticResource IconTileSize}" CornerRadius="{StaticResource RadiusBlock}" Background="{DynamicResource BrushAccentInfoStrong}" />
+              <TextBlock Classes="Caption" Foreground="{DynamicResource BrushTextSecondary}" Text="Info" VerticalAlignment="Center" />
+            </StackPanel>
+            <StackPanel Spacing="{StaticResource Spacing4}" Orientation="Horizontal">
+              <Border Width="{StaticResource IconTileSize}" Height="{StaticResource IconTileSize}" CornerRadius="{StaticResource RadiusBlock}" Background="{DynamicResource BrushAccentVioletTint}" />
+              <Border Width="{StaticResource IconTileSize}" Height="{StaticResource IconTileSize}" CornerRadius="{StaticResource RadiusBlock}" Background="{DynamicResource BrushAccentVioletBase}" />
+              <Border Width="{StaticResource IconTileSize}" Height="{StaticResource IconTileSize}" CornerRadius="{StaticResource RadiusBlock}" Background="{DynamicResource BrushAccentVioletStrong}" />
+              <TextBlock Classes="Caption" Foreground="{DynamicResource BrushTextSecondary}" Text="Violet" VerticalAlignment="Center" />
+            </StackPanel>
+          </WrapPanel>
+
+          <TextBlock Classes="Overline" Foreground="{DynamicResource BrushTextMuted}" Text="نمودار / نقشه حرارتی" />
+          <StackPanel Orientation="Horizontal" Spacing="{StaticResource Spacing8}">
+            <Border Width="{StaticResource IconTileSize}" Height="{StaticResource IconTileSize}" CornerRadius="{StaticResource RadiusBlock}" Background="{DynamicResource BrushChartSeries1}" />
+            <Border Width="{StaticResource IconTileSize}" Height="{StaticResource IconTileSize}" CornerRadius="{StaticResource RadiusBlock}" Background="{DynamicResource BrushChartSeries2}" />
+            <Border Width="{StaticResource IconTileSize}" Height="{StaticResource IconTileSize}" CornerRadius="{StaticResource RadiusBlock}" Background="{DynamicResource BrushChartSeries3}" />
+            <Border Width="{StaticResource IconTileSize}" Height="{StaticResource IconTileSize}" CornerRadius="{StaticResource RadiusBlock}" Background="{DynamicResource BrushChartSeries4}" />
+            <Border Width="{StaticResource IconTileSize}" Height="{StaticResource IconTileSize}" CornerRadius="{StaticResource RadiusBlock}" Background="{DynamicResource BrushChartSeries5}" />
+            <Border Width="{StaticResource IconTileSize}" Height="{StaticResource IconTileSize}" CornerRadius="{StaticResource RadiusBlock}" Background="{DynamicResource BrushHeatmap1}" />
+            <Border Width="{StaticResource IconTileSize}" Height="{StaticResource IconTileSize}" CornerRadius="{StaticResource RadiusBlock}" Background="{DynamicResource BrushHeatmap2}" />
+            <Border Width="{StaticResource IconTileSize}" Height="{StaticResource IconTileSize}" CornerRadius="{StaticResource RadiusBlock}" Background="{DynamicResource BrushHeatmap3}" />
+            <Border Width="{StaticResource IconTileSize}" Height="{StaticResource IconTileSize}" CornerRadius="{StaticResource RadiusBlock}" Background="{DynamicResource BrushHeatmap4}" />
+            <Border Width="{StaticResource IconTileSize}" Height="{StaticResource IconTileSize}" CornerRadius="{StaticResource RadiusBlock}" Background="{DynamicResource BrushHeatmap5}" />
+          </StackPanel>
+        </StackPanel>
+      </Border>
+
+      <!-- Typography -->
+      <Border Classes="Card" Padding="{StaticResource CardPaddingLarge}">
+        <StackPanel Spacing="{StaticResource Spacing8}">
+          <TextBlock Classes="SectionTitle" Foreground="{DynamicResource BrushTextPrimary}" Text="تایپوگرافی" />
+          <TextBlock Classes="HeroTitle" Foreground="{DynamicResource BrushTextPrimary}" Text="HeroTitle — عنوان قهرمان" />
+          <TextBlock Classes="PageTitle" Foreground="{DynamicResource BrushTextPrimary}" Text="PageTitle — عنوان صفحه" />
+          <TextBlock Classes="SectionTitle" Foreground="{DynamicResource BrushTextPrimary}" Text="SectionTitle — عنوان بخش" />
+          <TextBlock Classes="MetricValue" Foreground="{DynamicResource BrushTextPrimary}" Text="MetricValue — ۱,۲۸۴" />
+          <TextBlock Classes="Body" Foreground="{DynamicResource BrushTextPrimary}" Text="Body — متن معمولی برای خواندن" />
+          <TextBlock Classes="BodyStrong" Foreground="{DynamicResource BrushTextPrimary}" Text="BodyStrong — متن تأکیدی" />
+          <TextBlock Classes="Caption" Foreground="{DynamicResource BrushTextMuted}" Text="Caption — زیرنویس" />
+          <TextBlock Classes="Overline" Foreground="{DynamicResource BrushTextMuted}" Text="OVERLINE — برچسب گروه" />
+        </StackPanel>
+      </Border>
+
+      <!-- Buttons -->
+      <Border Classes="Card" Padding="{StaticResource CardPaddingLarge}">
+        <StackPanel Spacing="{StaticResource Spacing12}">
+          <TextBlock Classes="SectionTitle" Foreground="{DynamicResource BrushTextPrimary}" Text="دکمه‌ها" />
+          <WrapPanel ItemSpacing="{StaticResource Spacing8}" LineSpacing="{StaticResource Spacing8}">
+            <Button Classes="Primary Small" Content="اصلی — کوچک" />
+            <Button Classes="Primary" Content="اصلی" />
+            <Button Classes="Primary Large" Content="اصلی — بزرگ" />
+            <Button Classes="Secondary" Content="ثانویه" />
+            <Button Classes="Subtle" Content="ساده" />
+            <Button Classes="Danger" Content="خطر" />
+            <Button Classes="IconButton"><i:Icon Value="mdi-bell" /></Button>
+          </WrapPanel>
+        </StackPanel>
+      </Border>
+
+      <!-- Inputs -->
+      <Border Classes="Card" Padding="{StaticResource CardPaddingLarge}">
+        <StackPanel Spacing="{StaticResource Spacing12}">
+          <TextBlock Classes="SectionTitle" Foreground="{DynamicResource BrushTextPrimary}" Text="ورودی‌ها" />
+          <WrapPanel ItemSpacing="{StaticResource Spacing12}" LineSpacing="{StaticResource Spacing8}">
+            <TextBox Width="220" Watermark="جستجو در بیماران..." />
+            <TextBox Classes="Search" Width="220" Watermark="جستجو (نوار بالا)" />
+            <ComboBox Width="180" PlaceholderText="انتخاب کلینیک">
+              <ComboBoxItem Content="کلینیک مرکزی" />
+              <ComboBoxItem Content="کلینیک شعبه دو" />
+            </ComboBox>
+            <CheckBox Content="یادآوری فعال باشد" />
+            <RadioButton Content="ریال" GroupName="Currency" IsChecked="True" />
+            <RadioButton Content="تومان" GroupName="Currency" />
+          </WrapPanel>
+        </StackPanel>
+      </Border>
+
+      <!-- Surfaces -->
+      <Border Classes="Card" Padding="{StaticResource CardPaddingLarge}">
+        <StackPanel Spacing="{StaticResource Spacing12}">
+          <TextBlock Classes="SectionTitle" Foreground="{DynamicResource BrushTextPrimary}" Text="سطوح" />
+          <WrapPanel ItemSpacing="{StaticResource Spacing16}" LineSpacing="{StaticResource Spacing12}">
+            <Border Classes="Hero" Width="260" Height="{StaticResource HeroHeight}" Padding="{StaticResource CardPaddingLarge}">
+              <TextBlock Classes="SectionTitle" Foreground="{DynamicResource BrushTextOnBrand}" Text="Hero" VerticalAlignment="Bottom" />
+            </Border>
+            <Border Classes="Rail" Width="120" Height="{StaticResource HeroHeight}" Padding="{StaticResource Spacing12}">
+              <TextBlock Classes="Caption" Foreground="{DynamicResource BrushRailTextInactive}" Text="Rail" />
+            </Border>
+            <Border Classes="TintedAccent Info" Width="{StaticResource IconTileSize}" Height="{StaticResource IconTileSize}">
+              <i:Icon Value="mdi-paw" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            </Border>
+            <controls:InsightCallout IconGlyph="mdi-lightbulb-on" Message="Callout — نکته‌ای درباره بهبود جریان کاری" Width="320" />
+          </WrapPanel>
+        </StackPanel>
+      </Border>
+
+      <!-- Chips and badges -->
+      <Border Classes="Card" Padding="{StaticResource CardPaddingLarge}">
+        <StackPanel Spacing="{StaticResource Spacing12}">
+          <TextBlock Classes="SectionTitle" Foreground="{DynamicResource BrushTextPrimary}" Text="نشان‌ها و برچسب‌های وضعیت" />
+          <WrapPanel ItemSpacing="{StaticResource Spacing8}" LineSpacing="{StaticResource Spacing8}">
+            <controls:StatusChip Text="تأیید شده" Variant="Success" />
+            <controls:StatusChip Text="در انتظار" Variant="Warning" />
+            <controls:StatusChip Text="لغو شده" Variant="Danger" />
+            <controls:StatusChip Text="اصلاح" Variant="Info" />
+            <controls:StatusChip Text="ویژه" Variant="Violet" />
+            <controls:CountBadge Text="۳" />
+            <controls:CountBadge Text="۱۲" Variant="Danger" />
+          </WrapPanel>
+        </StackPanel>
+      </Border>
+
+      <!-- DataGrid -->
+      <Border Classes="Card" Padding="{StaticResource CardPaddingLarge}">
+        <StackPanel Spacing="{StaticResource Spacing12}">
+          <TextBlock Classes="SectionTitle" Foreground="{DynamicResource BrushTextPrimary}" Text="جدول داده" />
+          <DataGrid x:Name="SampleDataGrid" AutoGenerateColumns="False" IsReadOnly="True" Height="180">
+            <DataGrid.Columns>
+              <DataGridTextColumn Header="بیمار" Binding="{Binding Name}" Width="160" />
+              <DataGridTextColumn Header="وضعیت" Binding="{Binding Status}" Width="120" />
+              <DataGridTextColumn Header="مبلغ" Binding="{Binding Amount}" Width="140" />
+            </DataGrid.Columns>
+          </DataGrid>
+        </StackPanel>
+      </Border>
+
+      <!-- Controls -->
+      <Border Classes="Card" Padding="{StaticResource CardPaddingLarge}">
+        <StackPanel Spacing="{StaticResource Spacing16}">
+          <TextBlock Classes="SectionTitle" Foreground="{DynamicResource BrushTextPrimary}" Text="کنترل‌های ترکیبی" />
+          <WrapPanel ItemSpacing="{StaticResource Spacing16}" LineSpacing="{StaticResource Spacing16}">
+            <controls:StatCard Width="260"
+                                IconGlyph="mdi-paw"
+                                IconAccent="Success"
+                                MetricValue="۱,۲۸۴"
+                                Label="بیماران فعال"
+                                DeltaText="۱۲%"
+                                DeltaDirection="Up"
+                                FooterNote="نسبت به ماه گذشته" />
+            <controls:SectionCard Width="380" Title="ویزیت‌های امروز" Eyebrow="امروز" ActionText="مشاهده همه">
+              <controls:SectionCard.BodyContent>
+                <TextBlock Classes="Body" Foreground="{DynamicResource BrushTextSecondary}" Text="۸ ویزیت برنامه‌ریزی شده" />
+              </controls:SectionCard.BodyContent>
+            </controls:SectionCard>
+            <controls:EmptyState Width="260" Title="موردی یافت نشد" Description="هنوز رکوردی ثبت نشده است" />
+          </WrapPanel>
+        </StackPanel>
+      </Border>
+
+    </StackPanel>
+  </ScrollViewer>
+</Window>

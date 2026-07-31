@@ -12,7 +12,7 @@ public class JalaliDateConverterTests
     private static readonly DateTime Nowruz1403 = new(2024, 3, 20, 14, 5, 0, DateTimeKind.Utc);
 
     private static JalaliDateConverter CreateConverter() =>
-        new(new JalaliDateFormatter(new FixedTimeProvider(Nowruz1403), new PersianNumberFormatter()));
+        new(new JalaliDateFormatter(new FixedTimeProvider(Nowruz1403)));
 
     [Theory]
     [InlineData(null, "۱۴۰۳/۰۱/۰۱")]

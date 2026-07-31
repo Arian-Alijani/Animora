@@ -1,5 +1,10 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              x:Class="Animora.Desktop.App.App">
-  <!-- Styles, theme, and fonts are phase 01's; RTL flow direction is phase 02's (DT-06). -->
+  <Application.Styles>
+    <!-- TODO(P1-01): this StyleInclude only exists for the throwaway token gallery window
+         (TODO.md item 35); the real composition root wires Animora.Desktop.UI's theme once in
+         phase 02 (DESK-ARCH-05/06). Remove alongside Gallery/ after the phase-01 host check. -->
+    <StyleInclude Source="avares://Animora.Desktop.UI/Theme/AnimoraTheme.axaml" />
+  </Application.Styles>
 </Application>

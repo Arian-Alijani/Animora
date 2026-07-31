@@ -38,7 +38,7 @@ public sealed class PersianNumberConverter : IValueConverter
 
         if (mode.Equals("digits", StringComparison.OrdinalIgnoreCase))
         {
-            return _formatter.ToPersianDigits(System.Convert.ToString(value, CultureInfo.InvariantCulture) ?? string.Empty);
+            return PersianNumberFormatter.ToPersianDigits(System.Convert.ToString(value, CultureInfo.InvariantCulture) ?? string.Empty);
         }
 
         if (mode.Equals("percent", StringComparison.OrdinalIgnoreCase))

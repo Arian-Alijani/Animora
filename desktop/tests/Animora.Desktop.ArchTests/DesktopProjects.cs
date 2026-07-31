@@ -24,7 +24,9 @@ internal static class DesktopProjects
         return Path.Combine(SourceRoot(), projectName, projectName + ".csproj");
     }
 
-    private static string SourceRoot()
+    // Exposed for TokenDisciplineRules, which walks the same source tree to find .axaml files
+    // rather than a project file (DT-06 is a markup-literal concern, not a reference-direction one).
+    internal static string SourceRoot()
     {
         DirectoryInfo? directory = new(AppContext.BaseDirectory);
 

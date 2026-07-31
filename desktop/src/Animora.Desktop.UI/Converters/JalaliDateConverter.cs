@@ -18,7 +18,7 @@ public sealed class JalaliDateConverter : IValueConverter
     /// <see cref="JalaliDateFormatter"/> in DI and construct a converter over it where a
     /// deterministic clock matters.</summary>
     public static readonly JalaliDateConverter Instance =
-        new(new JalaliDateFormatter(TimeProvider.System, new PersianNumberFormatter()));
+        new(new JalaliDateFormatter(TimeProvider.System));
 
     private readonly JalaliDateFormatter _formatter;
 
