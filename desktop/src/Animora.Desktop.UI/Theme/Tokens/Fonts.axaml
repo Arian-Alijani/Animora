@@ -1,0 +1,14 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <!--
+    Vazirmatn 400/500/600/700 (design-reference.md §2), embedded under ../../Assets/Fonts/Vazirmatn
+    as an Avalonia font collection (DESK-ARCH-13). One token, `FontFamilyDefault`, is the only thing
+    a consumer ever binds to for font family — the four weights are resolved automatically by
+    FontWeight, never by referencing a per-weight file name.
+
+    This is the sole place Vazirmatn's avares:// URI is written; Theme/Tokens/Typography.axaml and
+    every style/control on top of it reference `{StaticResource FontFamilyDefault}` instead of
+    repeating the path (DT-06/DESK-ARCH-12 — no literal font families outside Theme/Tokens/).
+  -->
+  <FontFamily x:Key="FontFamilyDefault">avares://Animora.Desktop.UI/Assets/Fonts/Vazirmatn#Vazirmatn</FontFamily>
+</ResourceDictionary>

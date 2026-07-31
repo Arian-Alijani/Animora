@@ -7,8 +7,26 @@
     <ProjectReference Include="../../../shared/dotnet/Animora.Contracts/Animora.Contracts.csproj" />
   </ItemGroup>
 
+  <!-- Look-and-feel stack (TECH_STACK.md §4). Pinned centrally in Directory.Packages.props;
+       this is the only desktop project allowed to take these package references directly —
+       every module/app project gets them transitively through the ProjectReference above. -->
   <ItemGroup>
     <PackageReference Include="Avalonia" />
+    <PackageReference Include="Semi.Avalonia" />
+    <PackageReference Include="Semi.Avalonia.DataGrid" />
+    <PackageReference Include="Avalonia.Controls.DataGrid" />
+    <PackageReference Include="Projektanker.Icons.Avalonia" />
+    <PackageReference Include="Projektanker.Icons.Avalonia.MaterialDesign" />
+    <PackageReference Include="DialogHost.Avalonia" />
+    <PackageReference Include="CommunityToolkit.Mvvm" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
+  </ItemGroup>
+
+  <!-- Vazirmatn 400/500/600/700 (DESK-ARCH-13), embedded so the app never depends on a
+       system-installed font. Loaded as one Avalonia font collection; Theme/Tokens/Fonts.axaml
+       exposes the single FontFamily token consumers reference. -->
+  <ItemGroup>
+    <AvaloniaResource Include="Assets/Fonts/**" />
   </ItemGroup>
 
 </Project>

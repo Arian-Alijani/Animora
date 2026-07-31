@@ -76,7 +76,9 @@ contract) plus its `Mediator` request/notification types; internal types are `in
 desktop/
   src/
     Animora.Desktop.App/        # Avalonia App, composition root, navigation shell, startup
-    Animora.Desktop.UI/         # design tokens, shared controls/converters, ViewModelBase (leaf)
+    Animora.Desktop.UI/         # design tokens, embedded fonts (Assets/Fonts/), shared
+                                 # controls/converters, ViewModelBase, dialog/toast/icon
+                                 # services (Services/) (leaf)
     Animora.Desktop.Modules.*/  # mirrors backend module names; Views + ViewModels + local handlers
     Animora.Desktop.Data/       # SQLite DbContext (EF Core writes), Dapper read queries, SQLCipher
     Animora.Desktop.Sync/       # outbox, cursor store, batch client, conflict application
