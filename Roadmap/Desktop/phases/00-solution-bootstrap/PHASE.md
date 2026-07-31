@@ -55,4 +55,5 @@ None — this is the first phase. Everything else depends on this phase being `c
 
 ## Step 0
 
-Not run yet. See [`../../_meta/session-protocol.md`](../../_meta/session-protocol.md).
+Done — see [`TODO.md`](TODO.md) for the generated item list and
+[`../../_meta/session-protocol.md`](../../_meta/session-protocol.md) for the resume procedure.
