@@ -13,7 +13,7 @@ in that phase's `TODO.md`; leave it `-/-` until `TODO.md` exists.
 
 | # | Phase | Status | Done/Total | Notes |
 |---|---|---|---|---|
-| 00 | Solution Bootstrap | not-started | -/- | |
+| 00 | Solution Bootstrap | todo-ready | 0/19 | |
 | 01 | Design System Foundation | not-started | -/- | |
 | 02 | Shell & Navigation | not-started | -/- | |
 | 03 | Shared Kernel & Contracts Seed | not-started | -/- | |
