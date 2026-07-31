@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- EF Core / Dapper / SQLite packages arrive with the local data platform, not here (DT-05,
+       AG-01): the Writes/Queries split they must respect does not exist yet. -->
+  <ItemGroup>
+    <ProjectReference Include="../../../shared/dotnet/Animora.SharedKernel/Animora.SharedKernel.csproj" />
+    <ProjectReference Include="../../../shared/dotnet/Animora.Contracts/Animora.Contracts.csproj" />
+  </ItemGroup>
+
+</Project>

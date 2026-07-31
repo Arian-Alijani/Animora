@@ -1,0 +1,5 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="Animora.Desktop.App.App">
+  <!-- Styles, theme, and fonts are phase 01's; RTL flow direction is phase 02's (DT-06). -->
+</Application>

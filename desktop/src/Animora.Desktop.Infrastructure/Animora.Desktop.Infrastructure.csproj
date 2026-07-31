@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Generated/ stays empty and no HTTP stack is referenced while there is no server (DT-12,
+       AG-03). -->
+  <ItemGroup>
+    <ProjectReference Include="../../../shared/dotnet/Animora.SharedKernel/Animora.SharedKernel.csproj" />
+    <ProjectReference Include="../../../shared/dotnet/Animora.Contracts/Animora.Contracts.csproj" />
+  </ItemGroup>
+
+</Project>

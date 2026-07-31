@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- No sibling Modules.* reference and no reference to the App composition root are permitted
+       here; cross-module work goes through Mediator (DIR-01, DIR-05, DT-01, AT-09). -->
+  <ItemGroup>
+    <ProjectReference Include="../Animora.Desktop.UI/Animora.Desktop.UI.csproj" />
+    <ProjectReference Include="../Animora.Desktop.Data/Animora.Desktop.Data.csproj" />
+    <ProjectReference Include="../Animora.Desktop.Infrastructure/Animora.Desktop.Infrastructure.csproj" />
+    <ProjectReference Include="../../../shared/dotnet/Animora.SharedKernel/Animora.SharedKernel.csproj" />
+    <ProjectReference Include="../../../shared/dotnet/Animora.Contracts/Animora.Contracts.csproj" />
+  </ItemGroup>
+
+</Project>
