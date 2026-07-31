@@ -1,0 +1,105 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <!--
+    Brushes are what every view/style actually binds to — nothing outside Theme/Tokens/ references a
+    Color resource directly (DT-06/DESK-ARCH-12).
+
+    Two families:
+    1. Semantic brushes wrap a Colors.Light.axaml/Colors.Dark.axaml key via DynamicResource, so they
+       repaint live when AnimoraTheme.axaml's ThemeVariant changes (item 12 wires those two files
+       under ResourceDictionary.ThemeDictionaries; this file only needs the keys to exist).
+    2. Theme-invariant brushes (hero gradient, sparkline/area fill, chart series, heatmap ramp) are
+       fixed brand-ramp values per design-reference.md §1.5 — they do not change with the theme
+       toggle, so they reference Palette.axaml directly via StaticResource.
+  -->
+
+  <ResourceDictionary.MergedDictionaries>
+    <ResourceInclude Source="avares://Animora.Desktop.UI/Theme/Tokens/Palette.axaml" />
+  </ResourceDictionary.MergedDictionaries>
+
+  <!-- surface / page -->
+  <SolidColorBrush x:Key="BrushPageBackground" Color="{DynamicResource ColorPageBackground}" />
+  <SolidColorBrush x:Key="BrushSurface" Color="{DynamicResource ColorSurface}" />
+  <SolidColorBrush x:Key="BrushSurfaceMuted" Color="{DynamicResource ColorSurfaceMuted}" />
+  <SolidColorBrush x:Key="BrushSurfaceTrack" Color="{DynamicResource ColorSurfaceTrack}" />
+
+  <!-- border / divider -->
+  <SolidColorBrush x:Key="BrushBorder" Color="{DynamicResource ColorBorder}" />
+  <SolidColorBrush x:Key="BrushDivider" Color="{DynamicResource ColorDivider}" />
+
+  <!-- text -->
+  <SolidColorBrush x:Key="BrushTextPrimary" Color="{DynamicResource ColorTextPrimary}" />
+  <SolidColorBrush x:Key="BrushTextSecondary" Color="{DynamicResource ColorTextSecondary}" />
+  <SolidColorBrush x:Key="BrushTextMuted" Color="{DynamicResource ColorTextMuted}" />
+  <SolidColorBrush x:Key="BrushTextOnBrand" Color="{DynamicResource ColorTextOnBrand}" />
+
+  <!-- rail -->
+  <SolidColorBrush x:Key="BrushRailBackground" Color="{DynamicResource ColorRailBackground}" />
+  <SolidColorBrush x:Key="BrushRailItemActive" Color="{DynamicResource ColorRailItemActive}" />
+  <SolidColorBrush x:Key="BrushRailItemHover" Color="{DynamicResource ColorRailItemHover}" />
+  <SolidColorBrush x:Key="BrushRailTextActive" Color="{DynamicResource ColorRailTextActive}" />
+  <SolidColorBrush x:Key="BrushRailTextInactive" Color="{DynamicResource ColorRailTextInactive}" />
+  <SolidColorBrush x:Key="BrushRailSectionLabel" Color="{DynamicResource ColorRailSectionLabel}" />
+
+  <!-- primary -->
+  <SolidColorBrush x:Key="BrushPrimary" Color="{DynamicResource ColorPrimary}" />
+  <SolidColorBrush x:Key="BrushPrimaryPressed" Color="{DynamicResource ColorPrimaryPressed}" />
+  <SolidColorBrush x:Key="BrushPrimaryFocusRing" Color="{DynamicResource ColorPrimaryFocusRing}" />
+
+  <!-- accent tint / base / strong -->
+  <SolidColorBrush x:Key="BrushAccentInfoTint" Color="{DynamicResource ColorAccentInfoTint}" />
+  <SolidColorBrush x:Key="BrushAccentInfoBase" Color="{DynamicResource ColorAccentInfoBase}" />
+  <SolidColorBrush x:Key="BrushAccentInfoStrong" Color="{DynamicResource ColorAccentInfoStrong}" />
+
+  <SolidColorBrush x:Key="BrushAccentWarningTint" Color="{DynamicResource ColorAccentWarningTint}" />
+  <SolidColorBrush x:Key="BrushAccentWarningBase" Color="{DynamicResource ColorAccentWarningBase}" />
+  <SolidColorBrush x:Key="BrushAccentWarningStrong" Color="{DynamicResource ColorAccentWarningStrong}" />
+
+  <SolidColorBrush x:Key="BrushAccentVioletTint" Color="{DynamicResource ColorAccentVioletTint}" />
+  <SolidColorBrush x:Key="BrushAccentVioletBase" Color="{DynamicResource ColorAccentVioletBase}" />
+  <SolidColorBrush x:Key="BrushAccentVioletStrong" Color="{DynamicResource ColorAccentVioletStrong}" />
+
+  <SolidColorBrush x:Key="BrushAccentDangerTint" Color="{DynamicResource ColorAccentDangerTint}" />
+  <SolidColorBrush x:Key="BrushAccentDangerBase" Color="{DynamicResource ColorAccentDangerBase}" />
+  <SolidColorBrush x:Key="BrushAccentDangerStrong" Color="{DynamicResource ColorAccentDangerStrong}" />
+
+  <SolidColorBrush x:Key="BrushAccentSuccessTint" Color="{DynamicResource ColorAccentSuccessTint}" />
+  <SolidColorBrush x:Key="BrushAccentSuccessBase" Color="{DynamicResource ColorAccentSuccessBase}" />
+  <SolidColorBrush x:Key="BrushAccentSuccessStrong" Color="{DynamicResource ColorAccentSuccessStrong}" />
+
+  <!-- state overlays -->
+  <SolidColorBrush x:Key="BrushStateHoverOverlay" Color="{DynamicResource ColorStateHoverOverlay}" />
+  <SolidColorBrush x:Key="BrushStatePressedOverlay" Color="{DynamicResource ColorStatePressedOverlay}" />
+  <SolidColorBrush x:Key="BrushStateFocusRing" Color="{DynamicResource ColorStateFocusRing}" />
+  <SolidColorBrush x:Key="BrushStateSelectedTint" Color="{DynamicResource ColorStateSelectedTint}" />
+
+  <!-- Hero / CTA banner gradient (design-reference §1.5) — RTL flow: leading edge (right) is the
+       lighter stop, trailing edge (left) is the darker stop, fixed regardless of theme. -->
+  <LinearGradientBrush x:Key="BrushHeroGradient" StartPoint="100%,0%" EndPoint="0%,0%">
+    <GradientStop Color="#1FAB9F" Offset="0" />
+    <GradientStop Color="#0E726E" Offset="1" />
+  </LinearGradientBrush>
+
+  <!-- Sparkline / area fill gradient (§1.5): Brand400 at 28% alpha fading to transparent. -->
+  <LinearGradientBrush x:Key="BrushSparklineFill" StartPoint="0%,0%" EndPoint="0%,100%">
+    <GradientStop Color="#4719A09B" Offset="0" />
+    <GradientStop Color="#0019A09B" Offset="1" />
+  </LinearGradientBrush>
+  <SolidColorBrush x:Key="BrushSparklineStroke" Color="{StaticResource Brand500}" />
+
+  <!-- Chart series palette (§1.5) — fixed brand-ramp colors, theme-invariant. -->
+  <SolidColorBrush x:Key="BrushChartSeries1" Color="{StaticResource Brand400}" />
+  <SolidColorBrush x:Key="BrushChartSeries2" Color="#73A0E6" />
+  <SolidColorBrush x:Key="BrushChartSeries3" Color="{StaticResource WarningBase}" />
+  <SolidColorBrush x:Key="BrushChartSeries4" Color="{StaticResource VioletBase}" />
+  <SolidColorBrush x:Key="BrushChartSeries5" Color="{StaticResource DangerBase}" />
+  <SolidColorBrush x:Key="BrushChartDonutSeries2" Color="{StaticResource InfoBase}" />
+
+  <!-- Heatmap ramp, 5 steps (§1.5). -->
+  <SolidColorBrush x:Key="BrushHeatmap1" Color="#E8F5F3" />
+  <SolidColorBrush x:Key="BrushHeatmap2" Color="#B4DEDE" />
+  <SolidColorBrush x:Key="BrushHeatmap3" Color="{StaticResource Brand300}" />
+  <SolidColorBrush x:Key="BrushHeatmap4" Color="{StaticResource Brand400}" />
+  <SolidColorBrush x:Key="BrushHeatmap5" Color="{StaticResource Brand600}" />
+
+</ResourceDictionary>

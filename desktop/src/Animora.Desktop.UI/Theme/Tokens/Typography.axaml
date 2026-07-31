@@ -1,0 +1,60 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <!--
+    Type-scale tokens (design-reference.md §2, DESK-ARCH-12). Each of the eight scale steps observed
+    in the reference gets a FontSize/LineHeight/FontWeight triad; Theme/Styles/Typography.axaml (a
+    later item) turns these into the actual TextBlock style classes. FontFamilyDefault is merged in
+    from Fonts.axaml so importing this one file gives a consumer the whole typography token group —
+    family + scale — per the phase TODO's wording. No literal font family/size/weight belongs outside
+    this file and Fonts.axaml (DT-06).
+
+    FontWeight values map onto Vazirmatn's four embedded weights 1:1: Normal=400, Medium=500,
+    SemiBold=600, Bold=700 (no other weight is embedded, so no other weight may be used).
+  -->
+
+  <ResourceDictionary.MergedDictionaries>
+    <ResourceInclude Source="avares://Animora.Desktop.UI/Theme/Tokens/Fonts.axaml" />
+  </ResourceDictionary.MergedDictionaries>
+
+  <!-- HeroTitle: 32/44, Bold — the dashboard's CTA banner headline. -->
+  <x:Double x:Key="FontSizeHeroTitle">32</x:Double>
+  <x:Double x:Key="LineHeightHeroTitle">44</x:Double>
+  <FontWeight x:Key="FontWeightHeroTitle">Bold</FontWeight>
+
+  <!-- PageTitle: 20/30, Bold — page heading, top-bar title. -->
+  <x:Double x:Key="FontSizePageTitle">20</x:Double>
+  <x:Double x:Key="LineHeightPageTitle">30</x:Double>
+  <FontWeight x:Key="FontWeightPageTitle">Bold</FontWeight>
+
+  <!-- SectionTitle: 16/24, SemiBold — card/section headings. -->
+  <x:Double x:Key="FontSizeSectionTitle">16</x:Double>
+  <x:Double x:Key="LineHeightSectionTitle">24</x:Double>
+  <FontWeight x:Key="FontWeightSectionTitle">SemiBold</FontWeight>
+
+  <!-- MetricValue: 24/32, SemiBold — KPI numbers. -->
+  <x:Double x:Key="FontSizeMetricValue">24</x:Double>
+  <x:Double x:Key="LineHeightMetricValue">32</x:Double>
+  <FontWeight x:Key="FontWeightMetricValue">SemiBold</FontWeight>
+
+  <!-- Body: 14/22, Normal — default reading text. -->
+  <x:Double x:Key="FontSizeBody">14</x:Double>
+  <x:Double x:Key="LineHeightBody">22</x:Double>
+  <FontWeight x:Key="FontWeightBody">Normal</FontWeight>
+
+  <!-- BodyStrong: 14/22, Medium — nav labels, button labels, emphasized inline text. -->
+  <x:Double x:Key="FontSizeBodyStrong">14</x:Double>
+  <x:Double x:Key="LineHeightBodyStrong">22</x:Double>
+  <FontWeight x:Key="FontWeightBodyStrong">Medium</FontWeight>
+
+  <!-- Caption: 12/18, Normal — subtitles, footer notes, axis labels. -->
+  <x:Double x:Key="FontSizeCaption">12</x:Double>
+  <x:Double x:Key="LineHeightCaption">18</x:Double>
+  <FontWeight x:Key="FontWeightCaption">Normal</FontWeight>
+
+  <!-- Overline: 11/16, Medium, slightly tracked out — sidebar group labels, card eyebrows. -->
+  <x:Double x:Key="FontSizeOverline">11</x:Double>
+  <x:Double x:Key="LineHeightOverline">16</x:Double>
+  <FontWeight x:Key="FontWeightOverline">Medium</FontWeight>
+  <x:Double x:Key="LetterSpacingOverline">0.4</x:Double>
+
+</ResourceDictionary>

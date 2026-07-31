@@ -1,0 +1,100 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <!--
+    Raw color ramps only (DESK-ARCH-12). Values are the measured/derived swatches from
+    ../../../../../Roadmap/Desktop/_meta/design-reference.md §1.1-1.4 and §3. No key here names a
+    UI role (surface/page/border/text/...) — that mapping is Colors.Light.axaml / Colors.Dark.axaml's
+    job (item 6/7). Consumers pick a ramp step directly only for theme-invariant needs
+    (Brushes.axaml's gradients, chart series, heatmap); everything else goes through the semantic
+    Colors.* keys so it repaints on ThemeVariant switch.
+
+    Light-theme values are directly observed (design-reference §1.1/§1.2/§1.4). Dark-theme-only
+    values (the "*Dark" suffixed keys, plus the accent tint/strong dark steps) are a designer
+    decision made for this phase — the product owner supplied no dark reference screen, only the
+    sidebar's own dark surfaces (§1.3) and a partial derived table (§3). That decision is recorded in
+    design-reference.md §3's addendum.
+  -->
+
+  <!-- 1.1 Brand ramp (teal) -->
+  <Color x:Key="Brand50">#E6F6F3</Color>
+  <Color x:Key="Brand100">#C7EAE4</Color>
+  <Color x:Key="Brand200">#A3DDD5</Color>
+  <Color x:Key="Brand300">#66C0B4</Color>
+  <Color x:Key="Brand400">#19A09B</Color>
+  <Color x:Key="Brand500">#109089</Color>
+  <Color x:Key="Brand600">#0E7A75</Color>
+  <Color x:Key="Brand700">#0B5F5B</Color>
+  <Color x:Key="Brand800">#113D3C</Color>
+  <Color x:Key="Brand900">#0B2526</Color>
+
+  <!-- 1.2 Neutrals, light-theme swatches -->
+  <Color x:Key="NeutralPageLight">#F2F6F5</Color>
+  <Color x:Key="NeutralSurfaceLight">#FFFFFF</Color>
+  <Color x:Key="NeutralSurfaceMutedLight">#F9FBFA</Color>
+  <Color x:Key="NeutralSurfaceTrackLight">#F0F3F2</Color>
+  <Color x:Key="NeutralBorderLight">#E6EBEA</Color>
+  <Color x:Key="NeutralDividerLight">#EDF0F0</Color>
+  <Color x:Key="NeutralTextPrimaryLight">#14201F</Color>
+  <Color x:Key="NeutralTextSecondaryLight">#5B6664</Color>
+  <Color x:Key="NeutralTextMutedLight">#8A9694</Color>
+  <Color x:Key="NeutralTextOnBrand">#FFFFFF</Color>
+
+  <!-- 1.2/§3 Neutrals, dark-theme swatches (derived — designer decision, see file header) -->
+  <Color x:Key="NeutralPageDark">#0B2526</Color>
+  <Color x:Key="NeutralSurfaceDark">#0F3130</Color>
+  <Color x:Key="NeutralSurfaceMutedDark">#113D3C</Color>
+  <Color x:Key="NeutralSurfaceTrackDark">#174443</Color>
+  <Color x:Key="NeutralBorderDark">#1C4B49</Color>
+  <Color x:Key="NeutralDividerDark">#173F3E</Color>
+  <Color x:Key="NeutralTextPrimaryDark">#E7F2F0</Color>
+  <Color x:Key="NeutralTextSecondaryDark">#A6BCB8</Color>
+  <Color x:Key="NeutralTextMutedDark">#6E8C8B</Color>
+
+  <!-- 1.3 On-dark app rail — the rail stays the darkest anchor surface in both theme variants.
+       Dark-theme keeps a distinct, slightly-darker rail background than the dark page/surface so the
+       rail still reads as an anchor the way it does against the light page (designer decision). -->
+  <Color x:Key="RailBackgroundLight">#0B2526</Color>
+  <Color x:Key="RailBackgroundDark">#081C1D</Color>
+  <Color x:Key="RailItemActive">#113D3C</Color>
+  <Color x:Key="RailItemHoverLight">#0F332C</Color>
+  <Color x:Key="RailItemHoverDark">#0F2F2D</Color>
+  <Color x:Key="RailTextActive">#FFFFFF</Color>
+  <Color x:Key="RailTextInactive">#A6BCB8</Color>
+  <Color x:Key="RailSectionLabel">#6E8C8B</Color>
+
+  <!-- 1.4 Accent hues — tint/base/strong triads. Base is shared across themes (already legible on
+       both light and dark surfaces); tint/strong get theme-specific steps. -->
+  <Color x:Key="InfoBase">#4E84DE</Color>
+  <Color x:Key="InfoTintLight">#E9F1FC</Color>
+  <Color x:Key="InfoStrongLight">#2F5FB0</Color>
+  <Color x:Key="InfoTintDark">#2E4E84DE</Color>
+  <Color x:Key="InfoStrongDark">#9CC4F5</Color>
+
+  <Color x:Key="WarningBase">#EBA53C</Color>
+  <Color x:Key="WarningTintLight">#FFF3E0</Color>
+  <Color x:Key="WarningStrongLight">#9A6410</Color>
+  <Color x:Key="WarningTintDark">#2EEBA53C</Color>
+  <Color x:Key="WarningStrongDark">#F5C878</Color>
+
+  <Color x:Key="VioletBase">#8C64D7</Color>
+  <Color x:Key="VioletTintLight">#EFEAFC</Color>
+  <Color x:Key="VioletStrongLight">#5A3AA0</Color>
+  <Color x:Key="VioletTintDark">#2E8C64D7</Color>
+  <Color x:Key="VioletStrongDark">#C7ADF0</Color>
+
+  <Color x:Key="DangerBase">#E4574C</Color>
+  <Color x:Key="DangerTintLight">#FDECE8</Color>
+  <Color x:Key="DangerStrongLight">#A32A20</Color>
+  <Color x:Key="DangerTintDark">#2EE4574C</Color>
+  <Color x:Key="DangerStrongDark">#F2A79E</Color>
+
+  <!-- Success reuses the brand hue (design-reference §1.4 note) — Brand50/500/700 for light,
+       Brand400/500/300 for dark (dark primary shifts one step lighter, see below). -->
+
+  <!-- State overlays (derived — hover/pressed washes, translucent over the current surface). -->
+  <Color x:Key="StateHoverOverlayLight">#080B2526</Color>
+  <Color x:Key="StatePressedOverlayLight">#140B2526</Color>
+  <Color x:Key="StateHoverOverlayDark">#0AE7F2F0</Color>
+  <Color x:Key="StatePressedOverlayDark">#14E7F2F0</Color>
+
+</ResourceDictionary>
