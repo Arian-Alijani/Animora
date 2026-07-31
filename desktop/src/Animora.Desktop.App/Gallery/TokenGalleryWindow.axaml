@@ -13,7 +13,7 @@
     Animora.Desktop.UI's tokens/controls render correctly on Windows. Every value below is a
     token/control from Animora.Desktop.UI — nothing here is a screen or a reusable asset.
   -->
-  <ScrollViewer Padding="{StaticResource ContentPaddingX}">
+  <ScrollViewer Padding="{StaticResource ContentPadding}">
     <StackPanel Spacing="{StaticResource SectionGap}">
 
       <TextBlock Classes="HeroTitle" Foreground="{DynamicResource BrushTextPrimary}" Text="نگارخانه توکن‌ها" />
@@ -154,7 +154,7 @@
             <Border Classes="Hero" Width="260" Height="{StaticResource HeroHeight}" Padding="{StaticResource CardPaddingLarge}">
               <TextBlock Classes="SectionTitle" Foreground="{DynamicResource BrushTextOnBrand}" Text="Hero" VerticalAlignment="Bottom" />
             </Border>
-            <Border Classes="Rail" Width="120" Height="{StaticResource HeroHeight}" Padding="{StaticResource Spacing12}">
+            <Border Classes="Rail" Width="120" Height="{StaticResource HeroHeight}" Padding="{StaticResource RailPadding}">
               <TextBlock Classes="Caption" Foreground="{DynamicResource BrushRailTextInactive}" Text="Rail" />
             </Border>
             <Border Classes="TintedAccent Info" Width="{StaticResource IconTileSize}" Height="{StaticResource IconTileSize}">

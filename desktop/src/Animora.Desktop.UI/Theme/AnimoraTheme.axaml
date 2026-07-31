@@ -37,6 +37,11 @@
   <!-- Look-and-feel base (TECH_STACK §4). Loaded before this project's own style overrides so
        Root/Typography/Buttons/Inputs/Surfaces/Chips/DataGrid can build directly on top of it. -->
   <semi:SemiTheme />
+  <!-- DataGrid's control theme ships in its own Semi package (Semi.Avalonia docs, "Installation and
+       Usage"): SemiTheme above does not carry it, and Avalonia.Controls.DataGrid brings no default
+       theme of its own, so without this include a DataGrid has no template at all and
+       Theme/Styles/DataGrid.axaml's row/header setters below have nothing to sit on top of. -->
+  <StyleInclude Source="avares://Semi.Avalonia.DataGrid/Index.axaml" />
 
   <StyleInclude Source="avares://Animora.Desktop.UI/Theme/Styles/Root.axaml" />
   <StyleInclude Source="avares://Animora.Desktop.UI/Theme/Styles/Typography.axaml" />
