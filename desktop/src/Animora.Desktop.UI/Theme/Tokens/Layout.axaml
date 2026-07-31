@@ -54,8 +54,11 @@
   <x:Double x:Key="AvatarSizeLarge">40</x:Double>
   <x:Double x:Key="AccentBarWidth">3</x:Double>
   <x:Double x:Key="AccentBarWidthLarge">4</x:Double>
-  <x:Double x:Key="CardPadding">20</x:Double>
-  <x:Double x:Key="CardPaddingLarge">24</x:Double>
+  <!-- Thickness-typed, not x:Double, for the same reason as ButtonPaddingX above: StatCard.axaml
+       and SectionCard.axaml bind these straight to Border.Padding, which needs a Thickness, not a
+       double, to avoid an invalid-cast at compiled-XAML setter time. -->
+  <Thickness x:Key="CardPadding">20</Thickness>
+  <Thickness x:Key="CardPaddingLarge">24</Thickness>
   <Thickness x:Key="StrokeThickness">1</Thickness>
 
   <!-- Chip / count-badge padding (design-reference §6) — Thickness-typed for the same reason as
