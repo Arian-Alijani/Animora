@@ -16,6 +16,7 @@ Roadmap/Desktop/
   _meta/
     session-protocol.md      how to resume work and how Step 0 generates a phase's TODO list
     todo-format.md           the exact TODO.md structure Step 0 must produce
+    host-verification-log.md results of checks only the user can run (real Windows host, printer, ...)
   phases/
     00-solution-bootstrap/
       PHASE.md                Goal, Scope, Completion Criteria, Step 0 placeholder (this exists now)

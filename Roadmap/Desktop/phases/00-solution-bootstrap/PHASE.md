@@ -44,12 +44,24 @@ None — this is the first phase. Everything else depends on this phase being `c
 
 ## Completion Criteria
 
-- [ ] Every project listed in `desktop/AGENTS.md`'s project table exists as a real `.csproj`.
-- [ ] `dotnet build` succeeds for the whole `desktop/` solution.
-- [ ] `dotnet test` runs (0 tests is fine) for all three test projects without errors.
-- [ ] The Avalonia app launches to an empty window.
-- [ ] No project references another in a direction forbidden by DIR-01..DIR-07.
-- [ ] No business/module code, screens, or data access exist yet (scope stayed bounded).
+- [x] Every project listed in `desktop/AGENTS.md`'s project table exists as a real `.csproj`.
+- [x] `dotnet build` succeeds for the whole `desktop/` solution.
+- [x] `dotnet test` runs (0 tests is fine) for all three test projects without errors.
+- [x] The Avalonia app launches to an empty window.
+- [x] No project references another in a direction forbidden by DIR-01..DIR-07.
+- [x] No business/module code, screens, or data access exist yet (scope stayed bounded).
+
+### Verification evidence (2026-07-31)
+
+- `tools/scripts/ci-desktop.sh` on .NET SDK 10.0.302: restore + build (Release, 0 warnings,
+  0 errors) + test green — 33 `ArchTests` passing, `UnitTests`/`UiTests` discovered with 0 tests as
+  designed.
+- 17 desktop `.csproj` + the 2 `shared/dotnet/*` projects present, all in `Animora.Desktop.sln`;
+  dependency directions enforced by the AT-08/AT-09 rules inside those 33 tests, not by inspection.
+- Only `Startup/Program.cs`, `App.axaml(.cs)` and `Shell/ShellWindow.axaml(.cs)` contain code under
+  `desktop/src` — no module, screen, or data-access code.
+- Launch criterion: user-run on the user's own Windows machine (agent environment has no Windows
+  host/display) — see [`../../_meta/host-verification-log.md`](../../_meta/host-verification-log.md).
 
 ---
 
