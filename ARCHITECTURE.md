@@ -26,6 +26,8 @@ Full list with rationale and enforcement: [`docs/architecture/02-principles-and-
 
 | Need | Read |
 |---|---|
+| Work on the code as an agent (phases, scope isolation, code/comment standard) | [`AGENTS.md`](AGENTS.md) + the platform scope file (`desktop/`, `backend/`, `web/`, `shared/`) |
+| Repository/project layout and allowed dependency directions | [`docs/architecture/03-solution-structure.md`](docs/architecture/03-solution-structure.md) |
 | Orient yourself in the docs | [`docs/architecture/00-index.md`](docs/architecture/00-index.md) |
 | Machine-readable routing table | [`docs/architecture/_meta/manifest.yaml`](docs/architecture/_meta/manifest.yaml) |
 | Product/quality context | [`docs/architecture/01-context-and-drivers.md`](docs/architecture/01-context-and-drivers.md) |
