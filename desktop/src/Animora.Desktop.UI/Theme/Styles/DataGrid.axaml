@@ -1,13 +1,14 @@
 <Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <!--
-    Row/header tokens over Semi.Avalonia.DataGrid (DT-08, TECH_STACK §4). Only DataGrid's own
+    Row/header tokens over Avalonia.Controls.DataGrid (DT-08, TECH_STACK §4). Only DataGrid's own
     directly-bindable properties (RowBackground, grid-line brushes/visibility, RowHeight,
     ColumnHeaderHeight) plus the templated properties Background/Foreground/Padding on
     DataGrid/DataGridColumnHeader/DataGridCell are set — same approach as the rest of this project's
-    style files. No zebra striping (AlternatingRowBackground matches RowBackground), matching the
-    reference's list rows (§6). Row virtualization is Avalonia.Controls.DataGrid's own default and is
-    never turned off by anything in this file (DT-08).
+    style files. Avalonia's DataGrid has no AlternatingRowBackground property (unlike WPF's), so no
+    zebra striping is possible or attempted here; RowBackground alone gives the flat rows that match
+    the reference's list rows (§6). Row virtualization is Avalonia.Controls.DataGrid's own default and
+    is never turned off by anything in this file (DT-08).
   -->
 
   <Style Selector="DataGrid">
@@ -16,7 +17,6 @@
     <Setter Property="BorderThickness" Value="{StaticResource StrokeThickness}" />
     <Setter Property="CornerRadius" Value="{StaticResource RadiusCard}" />
     <Setter Property="RowBackground" Value="{DynamicResource BrushSurface}" />
-    <Setter Property="AlternatingRowBackground" Value="{DynamicResource BrushSurface}" />
     <Setter Property="HorizontalGridLinesBrush" Value="{DynamicResource BrushDivider}" />
     <Setter Property="VerticalGridLinesBrush" Value="Transparent" />
     <Setter Property="GridLinesVisibility" Value="Horizontal" />
