@@ -1,0 +1,62 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <!--
+    One style class per Theme/Tokens/Typography.axaml scale step (design-reference.md §2,
+    DESK-ARCH-12), applied identically to TextBlock and SelectableTextBlock. A view sets only
+    Classes="SectionTitle" (etc.) on its text elements — no literal FontSize/FontWeight/LineHeight
+    ever appears outside this file and Typography.axaml (DT-06). FontFamily is not repeated here:
+    it is inherited from Root.axaml's Window-level default. Foreground is likewise left to whichever
+    surface/control the text sits on (Brushes.axaml), since a given scale step (e.g. HeroTitle) is
+    used on both light cards and the dark hero gradient with different text colors.
+  -->
+
+  <Style Selector="TextBlock.HeroTitle, SelectableTextBlock.HeroTitle">
+    <Setter Property="FontSize" Value="{StaticResource FontSizeHeroTitle}" />
+    <Setter Property="LineHeight" Value="{StaticResource LineHeightHeroTitle}" />
+    <Setter Property="FontWeight" Value="{StaticResource FontWeightHeroTitle}" />
+  </Style>
+
+  <Style Selector="TextBlock.PageTitle, SelectableTextBlock.PageTitle">
+    <Setter Property="FontSize" Value="{StaticResource FontSizePageTitle}" />
+    <Setter Property="LineHeight" Value="{StaticResource LineHeightPageTitle}" />
+    <Setter Property="FontWeight" Value="{StaticResource FontWeightPageTitle}" />
+  </Style>
+
+  <Style Selector="TextBlock.SectionTitle, SelectableTextBlock.SectionTitle">
+    <Setter Property="FontSize" Value="{StaticResource FontSizeSectionTitle}" />
+    <Setter Property="LineHeight" Value="{StaticResource LineHeightSectionTitle}" />
+    <Setter Property="FontWeight" Value="{StaticResource FontWeightSectionTitle}" />
+  </Style>
+
+  <Style Selector="TextBlock.MetricValue, SelectableTextBlock.MetricValue">
+    <Setter Property="FontSize" Value="{StaticResource FontSizeMetricValue}" />
+    <Setter Property="LineHeight" Value="{StaticResource LineHeightMetricValue}" />
+    <Setter Property="FontWeight" Value="{StaticResource FontWeightMetricValue}" />
+  </Style>
+
+  <Style Selector="TextBlock.Body, SelectableTextBlock.Body">
+    <Setter Property="FontSize" Value="{StaticResource FontSizeBody}" />
+    <Setter Property="LineHeight" Value="{StaticResource LineHeightBody}" />
+    <Setter Property="FontWeight" Value="{StaticResource FontWeightBody}" />
+  </Style>
+
+  <Style Selector="TextBlock.BodyStrong, SelectableTextBlock.BodyStrong">
+    <Setter Property="FontSize" Value="{StaticResource FontSizeBodyStrong}" />
+    <Setter Property="LineHeight" Value="{StaticResource LineHeightBodyStrong}" />
+    <Setter Property="FontWeight" Value="{StaticResource FontWeightBodyStrong}" />
+  </Style>
+
+  <Style Selector="TextBlock.Caption, SelectableTextBlock.Caption">
+    <Setter Property="FontSize" Value="{StaticResource FontSizeCaption}" />
+    <Setter Property="LineHeight" Value="{StaticResource LineHeightCaption}" />
+    <Setter Property="FontWeight" Value="{StaticResource FontWeightCaption}" />
+  </Style>
+
+  <Style Selector="TextBlock.Overline, SelectableTextBlock.Overline">
+    <Setter Property="FontSize" Value="{StaticResource FontSizeOverline}" />
+    <Setter Property="LineHeight" Value="{StaticResource LineHeightOverline}" />
+    <Setter Property="FontWeight" Value="{StaticResource FontWeightOverline}" />
+    <Setter Property="LetterSpacing" Value="{StaticResource LetterSpacingOverline}" />
+  </Style>
+
+</Styles>

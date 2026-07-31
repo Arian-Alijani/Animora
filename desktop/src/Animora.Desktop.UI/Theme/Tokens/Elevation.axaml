@@ -1,0 +1,24 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <!--
+    Shadow tokens (design-reference.md §5, DESK-ARCH-12). Shadows in the reference are ambient and
+    theme-invariant (rgba over the fixed rail/ink color #0B2526, or brand-tinted for the hero), so
+    these are literal BoxShadows values rather than DynamicResource-wrapped colors — same treatment
+    as Brushes.axaml's theme-invariant gradients. Each BoxShadows resource binds straight to
+    `BoxShadow="{StaticResource ShadowCard}"` with no converter, since BoxShadows has a string
+    TypeConverter Avalonia's XAML parser applies automatically to element content.
+
+    rgba -> #AARRGGBB alpha conversion (rounded to nearest, matching Colors.Light.axaml's overlay
+    rounding): 0.04*255≈0A, 0.05*255≈0D, 0.22*255≈38, 0.16*255≈29.
+  -->
+
+  <!-- ShadowCard: 0 1 2 rgba(11,37,38,0.04) + 0 8 24 rgba(11,37,38,0.05) -->
+  <BoxShadows x:Key="ShadowCard">0 1 2 #0A0B2526, 0 8 24 #0D0B2526</BoxShadows>
+
+  <!-- ShadowHero: 0 12 32 rgba(14,114,110,0.22) — brand-tinted, the only pronounced shadow. -->
+  <BoxShadows x:Key="ShadowHero">0 12 32 #380E726E</BoxShadows>
+
+  <!-- ShadowPopup: 0 24 48 rgba(11,37,38,0.16) — dialog, dropdown, toast. -->
+  <BoxShadows x:Key="ShadowPopup">0 24 48 #290B2526</BoxShadows>
+
+</ResourceDictionary>
