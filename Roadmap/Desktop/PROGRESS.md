@@ -14,7 +14,7 @@ in that phase's `TODO.md`; leave it `-/-` until `TODO.md` exists.
 | # | Phase | Status | Done/Total | Notes |
 |---|---|---|---|---|
 | 00 | Solution Bootstrap | complete | 19/19 | `ci-desktop.sh` green (33 arch tests); app launch verified by the user on Windows — `_meta/host-verification-log.md` |
-| 01 | Design System Foundation | not-started | -/- | |
+| 01 | Design System Foundation | todo-ready | 0/37 | Token values extracted from the owner's reference screens into `_meta/design-reference.md` |
 | 02 | Shell & Navigation | not-started | -/- | |
 | 03 | Shared Kernel & Contracts Seed | not-started | -/- | |
 | 04 | Identity & Auth Screens | not-started | -/- | |

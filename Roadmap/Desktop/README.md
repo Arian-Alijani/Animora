@@ -17,6 +17,8 @@ Roadmap/Desktop/
     session-protocol.md      how to resume work and how Step 0 generates a phase's TODO list
     todo-format.md           the exact TODO.md structure Step 0 must produce
     host-verification-log.md results of checks only the user can run (real Windows host, printer, ...)
+    design-reference.md      token values (palette, type, geometry) read off the owner's reference screens
+    design-reference/        those reference screens, as supplied
   phases/
     00-solution-bootstrap/
       PHASE.md                Goal, Scope, Completion Criteria, Step 0 placeholder (this exists now)
@@ -26,7 +28,11 @@ Roadmap/Desktop/
 ```
 
 A fact about *architecture* lives in `docs/architecture/` or `TECH_STACK.md`, never here. A fact
-about *sequencing/status* lives here, never duplicated into a phase's own prose.
+about *sequencing/status* lives here, never duplicated into a phase's own prose. `_meta/design-reference.md`
+is the one exception in kind, not in rule: it holds no rule at all, only the observed token *values*
+the product owner's reference screens supply as input to phase 01 — the rule that tokens exist and
+where they live is DESK-ARCH-12's, and their canonical machine-readable form is phase 01's resource
+dictionaries.
 
 ## Build order and why UI comes first
 

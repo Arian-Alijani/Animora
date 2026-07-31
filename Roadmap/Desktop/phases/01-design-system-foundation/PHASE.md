@@ -38,6 +38,9 @@ nothing else for look-and-feel.
   virtualization requirement).
 - [`docs/architecture/03-solution-structure.md`](../../../../docs/architecture/03-solution-structure.md) —
   DIR-07/AT-08 (`Animora.Desktop.UI` must not depend on any other `Desktop.*` project).
+- [`../../_meta/design-reference.md`](../../_meta/design-reference.md) — the token *values* (palette,
+  type scale, geometry, elevation, component anatomy) extracted from the product owner's reference
+  screens; this phase turns that file into the resource dictionaries.
 
 ## Dependencies
 
@@ -58,4 +61,6 @@ this phase.
 
 ## Step 0
 
-Not run yet. See [`../../_meta/session-protocol.md`](../../_meta/session-protocol.md).
+Run on 2026-07-31 -> [`TODO.md`](TODO.md) (37 items). The reference screens supplied with the request
+were sampled into [`../../_meta/design-reference.md`](../../_meta/design-reference.md) first, so the
+TODO items name token *groups* and cite that file for their values instead of carrying hex codes.
