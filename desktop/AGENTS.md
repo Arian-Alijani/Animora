@@ -15,7 +15,7 @@ screen" recipe). Stack: `TECH_STACK.md` §4.
 | Project | Owns | May reference |
 |---|---|---|
 | `src/Animora.Desktop.App` | Composition root, DI wiring, single-window shell, `INavigationService`, startup sequence, app assets/fonts | every project below |
-| `src/Animora.Desktop.UI` | Design tokens, `Semi.Avalonia` overrides, shared controls, value converters, Jalali/number formatters, `ViewModelBase`, dialog/toast abstractions | `SharedKernel`, `Contracts` |
+| `src/Animora.Desktop.UI` | Design tokens, embedded Vazirmatn font files (`Assets/Fonts/`), `Semi.Avalonia` overrides, shared controls, value converters, Jalali/number formatters, `ViewModelBase`, dialog/toast/icon-provider services (`Services/`) | `SharedKernel`, `Contracts` |
 | `src/Animora.Desktop.Modules.<Name>` | One module's `Views/`, `ViewModels/`, `Handlers/`, `Models/` | `UI`, `Data`, `Infrastructure`, `SharedKernel`, `Contracts` |
 | `src/Animora.Desktop.Data` | SQLite: `Entities/`, `Configurations/`, `Writes/` (EF Core), `Queries/` (Dapper), `Migrations/`, `Search/` (FTS5), `Backup/`, `Security/` (SQLCipher key via DPAPI) | `SharedKernel`, `Contracts` |
 | `src/Animora.Desktop.Sync` | Outbox drain, cursor store, batch client, conflict application, protocol negotiation — **seam only until P2** | `Data`, `Infrastructure`, modules |
