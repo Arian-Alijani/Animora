@@ -29,6 +29,14 @@
     <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.10" />
   </ItemGroup>
 
+  <!-- In-process messaging (TECH_STACK §4). Only the desktop composition root takes the generator;
+       projects that declare requests/handlers take the abstractions (see the consuming csproj
+       comments for why the split is not symmetric). -->
+  <ItemGroup>
+    <PackageVersion Include="Mediator.Abstractions" Version="3.0.2" />
+    <PackageVersion Include="Mediator.SourceGenerator" Version="3.0.2" />
+  </ItemGroup>
+
   <ItemGroup>
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
     <PackageVersion Include="xunit" Version="2.9.3" />

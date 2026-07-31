@@ -15,7 +15,7 @@ in that phase's `TODO.md`; leave it `-/-` until `TODO.md` exists.
 |---|---|---|---|---|
 | 00 | Solution Bootstrap | complete | 19/19 | `ci-desktop.sh` green (33 arch tests); app launch verified by the user on Windows — `_meta/host-verification-log.md` |
 | 01 | Design System Foundation | complete | 37/37 | Tokens/styles/controls/formatters + headless and token-discipline tests in place; gallery deleted; RTL/Vazirmatn rendering verified by the user on Windows — `_meta/host-verification-log.md` |
-| 02 | Shell & Navigation | todo-ready | 0/29 | Step 0 done; navigation/app-state abstractions go in `Desktop.UI`, implementations in `Desktop.App` (AT-09), example screen in `Modules.Reporting` |
+| 02 | Shell & Navigation | in-progress | 4/29 | `Mediator` pinned (generator in the composition root only, abstractions in `Modules.Reporting`); `UI/Navigation` route abstractions in place; docs record the UI-abstraction/App-implementation split |
 | 03 | Shared Kernel & Contracts Seed | not-started | -/- | |
 | 04 | Identity & Auth Screens | not-started | -/- | |
 | 05 | Clients Module Screens | not-started | -/- | |

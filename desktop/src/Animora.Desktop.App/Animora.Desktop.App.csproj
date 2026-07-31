@@ -30,4 +30,15 @@
     <PackageReference Include="Microsoft.Extensions.Hosting" />
   </ItemGroup>
 
+  <!-- Mediator's generator belongs in the outermost project only: it emits AddMediator() plus the
+       IMediator implementation for handlers declared here and in the referenced module assemblies,
+       so a module needs Mediator.Abstractions alone (TECH_STACK §4). -->
+  <ItemGroup>
+    <PackageReference Include="Mediator.Abstractions" />
+    <PackageReference Include="Mediator.SourceGenerator">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
 </Project>
