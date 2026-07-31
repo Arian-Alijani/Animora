@@ -13,7 +13,7 @@ in that phase's `TODO.md`; leave it `-/-` until `TODO.md` exists.
 
 | # | Phase | Status | Done/Total | Notes |
 |---|---|---|---|---|
-| 00 | Solution Bootstrap | in-progress | 17/19 | `tools/scripts/ci-desktop.sh` green (33 arch tests); item 18 asked, awaiting the launch-verification answer |
+| 00 | Solution Bootstrap | complete | 19/19 | `ci-desktop.sh` green (33 arch tests); app launch verified by the user on Windows — `_meta/host-verification-log.md` |
 | 01 | Design System Foundation | not-started | -/- | |
 | 02 | Shell & Navigation | not-started | -/- | |
 | 03 | Shared Kernel & Contracts Seed | not-started | -/- | |

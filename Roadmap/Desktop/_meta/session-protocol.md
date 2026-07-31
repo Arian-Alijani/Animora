@@ -56,6 +56,36 @@ every phase reuses. When a session runs Step 0 for phase `NN-name`:
 - Keep the whole `TODO.md` short enough to be read in one context load — this is why phases are
   kept small (roadmap-level rule, see `README.md` "Phase design").
 
+## Host-dependent verification (user-run, always last)
+
+Some criteria cannot be observed from an agent session: the agent environment has no Windows host,
+no display, no printer or scanner, no native notification centre, and no real data volume. Those
+checks belong to the user, run on the user's own machine, and they are scheduled at the **end** of a
+phase.
+
+- **The agent never claims a host-dependent result.** Agent-side verification stops at
+  restore/build/test, static/`NetArchTest` evidence, and file inspection, and says exactly which
+  criterion it could not observe (AG-19).
+- **Placement**: a host-dependent item is written at the end of the phase's `TODO.md`, immediately
+  before the final completion-criteria item, so that no earlier item is ever blocked waiting on it
+  (see [`todo-format.md`](todo-format.md) "Host-dependent items").
+- **Wording**: the item starts with `User-run on Windows:` and names one observable outcome plus the
+  smallest command that produces it (e.g. `dotnet run --project desktop/src/Animora.Desktop.App`) —
+  never a test matrix, never a script the user has to assemble.
+- **Automated proxies are optional, not a substitute**: a headless/`Avalonia.Headless` assertion may
+  be added when it is cheap and genuinely guards a regression, but when the user has performed the
+  real run, the phase signs off on that real run (AG-02 — the user decides what "verified" means for
+  their environment).
+- **Record, then sign off**: the user's result is logged as one row in
+  [`host-verification-log.md`](host-verification-log.md); only then may the TODO item be checked and
+  the phase's `PROGRESS.md` status move to `complete`.
+- **A pending host check is not `blocked`**: leave the phase `in-progress` with a Note naming the
+  awaited run; `blocked` stays reserved for missing decisions and invariant conflicts.
+
+Phases whose sign-off is expected to need this: 00 (app launch), 01/02 (RTL + shell rendering), 24
+(printing), 25 (scanner hardware), 27 (native notifications, update), 29 (startup budget on real
+hardware), 30/31 (backup/restore, installer).
+
 ## Why status lives only in PROGRESS.md
 
 `TODO.md` checkboxes are the granular truth; `PROGRESS.md` is the cheap-to-scan rollup. A session
