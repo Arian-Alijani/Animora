@@ -1,0 +1,67 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <!--
+    Border classes for the reference's surface roles (design-reference.md §4.2, §5, §6): card, hero,
+    tinted-accent, rail and callout. Each sets only fill/border/radius/shadow — layout (Padding,
+    Height) is the consuming control's job (StatCard/SectionCard, later items) since it differs per
+    role's content, not per surface. Per §5, only Card and Hero carry a shadow; Rail, Callout and
+    TintedAccent are flat.
+
+    Usage: `<Border Classes="Card">...</Border>`, `<Border Classes="TintedAccent Info">...</Border>`.
+  -->
+
+  <!-- Card: every white card (KPI stat, section, list). -->
+  <Style Selector="Border.Card">
+    <Setter Property="Background" Value="{DynamicResource BrushSurface}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource BrushBorder}" />
+    <Setter Property="BorderThickness" Value="{StaticResource StrokeThickness}" />
+    <Setter Property="CornerRadius" Value="{StaticResource RadiusCard}" />
+    <Setter Property="BoxShadow" Value="{StaticResource ShadowCard}" />
+  </Style>
+
+  <!-- Hero: dashboard CTA banner — brand gradient, theme-invariant, brand-tinted shadow. -->
+  <Style Selector="Border.Hero">
+    <Setter Property="Background" Value="{StaticResource BrushHeroGradient}" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="CornerRadius" Value="{StaticResource RadiusHero}" />
+    <Setter Property="BoxShadow" Value="{StaticResource ShadowHero}" />
+  </Style>
+
+  <!-- Rail: app sidebar — always the dark anchor surface, full-height, no radius/shadow. -->
+  <Style Selector="Border.Rail">
+    <Setter Property="Background" Value="{DynamicResource BrushRailBackground}" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="CornerRadius" Value="0" />
+  </Style>
+
+  <!-- Callout: insight callout footer block — observed only in the warning tint (design-reference
+       §6), so this is a fixed accent, not an accent-variant class like TintedAccent below. -->
+  <Style Selector="Border.Callout">
+    <Setter Property="Background" Value="{DynamicResource BrushAccentWarningTint}" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="CornerRadius" Value="{StaticResource RadiusBlock}" />
+  </Style>
+
+  <!-- TintedAccent: flat accent-tint fill (KPI icon tile, §6). Combine with one accent modifier
+       class; the base class carries the shared geometry, the modifier carries the fill color. -->
+  <Style Selector="Border.TintedAccent">
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="CornerRadius" Value="{StaticResource RadiusBlock}" />
+  </Style>
+  <Style Selector="Border.TintedAccent.Success">
+    <Setter Property="Background" Value="{DynamicResource BrushAccentSuccessTint}" />
+  </Style>
+  <Style Selector="Border.TintedAccent.Info">
+    <Setter Property="Background" Value="{DynamicResource BrushAccentInfoTint}" />
+  </Style>
+  <Style Selector="Border.TintedAccent.Warning">
+    <Setter Property="Background" Value="{DynamicResource BrushAccentWarningTint}" />
+  </Style>
+  <Style Selector="Border.TintedAccent.Violet">
+    <Setter Property="Background" Value="{DynamicResource BrushAccentVioletTint}" />
+  </Style>
+  <Style Selector="Border.TintedAccent.Danger">
+    <Setter Property="Background" Value="{DynamicResource BrushAccentDangerTint}" />
+  </Style>
+
+</Styles>

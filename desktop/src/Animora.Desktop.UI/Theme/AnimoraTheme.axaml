@@ -35,12 +35,15 @@
   </Styles.Resources>
 
   <!-- Look-and-feel base (TECH_STACK §4). Loaded before this project's own style overrides so
-       Root/Typography/Buttons (and later Inputs/Surfaces/Chips/DataGrid) can build directly on top
-       of it. -->
+       Root/Typography/Buttons/Inputs/Surfaces/Chips/DataGrid can build directly on top of it. -->
   <semi:SemiTheme />
 
   <StyleInclude Source="avares://Animora.Desktop.UI/Theme/Styles/Root.axaml" />
   <StyleInclude Source="avares://Animora.Desktop.UI/Theme/Styles/Typography.axaml" />
   <StyleInclude Source="avares://Animora.Desktop.UI/Theme/Styles/Buttons.axaml" />
+  <StyleInclude Source="avares://Animora.Desktop.UI/Theme/Styles/Inputs.axaml" />
+  <StyleInclude Source="avares://Animora.Desktop.UI/Theme/Styles/Surfaces.axaml" />
+  <StyleInclude Source="avares://Animora.Desktop.UI/Theme/Styles/Chips.axaml" />
+  <StyleInclude Source="avares://Animora.Desktop.UI/Theme/Styles/DataGrid.axaml" />
 
 </Styles>

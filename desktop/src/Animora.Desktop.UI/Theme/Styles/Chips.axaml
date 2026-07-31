@@ -1,0 +1,80 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <!--
+    Status-chip variants and the count badge (design-reference.md §6): both are a Border wrapping a
+    TextBlock label. The base class sets shared geometry on the Border and shared typography on any
+    descendant TextBlock; each accent modifier class only sets the Border's fill and the TextBlock's
+    foreground, so a consumer writes `<Border Classes="Chip Success"><TextBlock Text="..."/></Border>`
+    with no per-instance color/typography. Flat — no border, no shadow (§5).
+  -->
+
+  <!-- Base chip geometry: pill shape, ControlHeightSmall, horizontal padding only (vertical
+       centering comes from Height + the TextBlock's VerticalAlignment below). -->
+  <Style Selector="Border.Chip">
+    <Setter Property="Height" Value="{StaticResource ControlHeightSmall}" />
+    <Setter Property="CornerRadius" Value="{StaticResource RadiusPill}" />
+    <Setter Property="Padding" Value="{StaticResource ChipPaddingX}" />
+    <Setter Property="BorderThickness" Value="0" />
+  </Style>
+  <Style Selector="Border.Chip TextBlock">
+    <Setter Property="FontSize" Value="{StaticResource FontSizeCaption}" />
+    <Setter Property="LineHeight" Value="{StaticResource LineHeightCaption}" />
+    <Setter Property="FontWeight" Value="{StaticResource FontWeightCaption}" />
+    <Setter Property="HorizontalAlignment" Value="Center" />
+    <Setter Property="VerticalAlignment" Value="Center" />
+  </Style>
+
+  <Style Selector="Border.Chip.Success">
+    <Setter Property="Background" Value="{DynamicResource BrushAccentSuccessTint}" />
+  </Style>
+  <Style Selector="Border.Chip.Success TextBlock">
+    <Setter Property="Foreground" Value="{DynamicResource BrushAccentSuccessStrong}" />
+  </Style>
+
+  <Style Selector="Border.Chip.Warning">
+    <Setter Property="Background" Value="{DynamicResource BrushAccentWarningTint}" />
+  </Style>
+  <Style Selector="Border.Chip.Warning TextBlock">
+    <Setter Property="Foreground" Value="{DynamicResource BrushAccentWarningStrong}" />
+  </Style>
+
+  <Style Selector="Border.Chip.Danger">
+    <Setter Property="Background" Value="{DynamicResource BrushAccentDangerTint}" />
+  </Style>
+  <Style Selector="Border.Chip.Danger TextBlock">
+    <Setter Property="Foreground" Value="{DynamicResource BrushAccentDangerStrong}" />
+  </Style>
+
+  <Style Selector="Border.Chip.Info">
+    <Setter Property="Background" Value="{DynamicResource BrushAccentInfoTint}" />
+  </Style>
+  <Style Selector="Border.Chip.Info TextBlock">
+    <Setter Property="Foreground" Value="{DynamicResource BrushAccentInfoStrong}" />
+  </Style>
+
+  <Style Selector="Border.Chip.Violet">
+    <Setter Property="Background" Value="{DynamicResource BrushAccentVioletTint}" />
+  </Style>
+  <Style Selector="Border.Chip.Violet TextBlock">
+    <Setter Property="Foreground" Value="{DynamicResource BrushAccentVioletStrong}" />
+  </Style>
+
+  <!-- Count badge: RadiusBadge (not pill), 18-20 tall, Brand800 fill — reuses the rail's active-item
+       brush since that is the same theme-invariant dark fill this badge needs on nav items (§6). -->
+  <Style Selector="Border.CountBadge">
+    <Setter Property="Height" Value="{StaticResource CountBadgeHeight}" />
+    <Setter Property="MinWidth" Value="{StaticResource CountBadgeHeight}" />
+    <Setter Property="CornerRadius" Value="{StaticResource RadiusBadge}" />
+    <Setter Property="Padding" Value="{StaticResource CountBadgePaddingX}" />
+    <Setter Property="Background" Value="{DynamicResource BrushRailItemActive}" />
+  </Style>
+  <Style Selector="Border.CountBadge TextBlock">
+    <Setter Property="FontSize" Value="{StaticResource FontSizeCaption}" />
+    <Setter Property="LineHeight" Value="{StaticResource LineHeightCaption}" />
+    <Setter Property="FontWeight" Value="{StaticResource FontWeightCaption}" />
+    <Setter Property="Foreground" Value="{DynamicResource BrushTextOnBrand}" />
+    <Setter Property="HorizontalAlignment" Value="Center" />
+    <Setter Property="VerticalAlignment" Value="Center" />
+  </Style>
+
+</Styles>
