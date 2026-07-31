@@ -1,0 +1,16 @@
+<Project>
+
+  <!--
+    Central Package Management: projects reference packages without a Version attribute; every
+    version is pinned here once. Pins must match docs/TECH_STACK.md §2 where that file states one.
+    Entries are added when the first project needs them (AG-01: no speculative dependencies).
+  -->
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    <CentralPackageTransitivePinningEnabled>true</CentralPackageTransitivePinningEnabled>
+  </PropertyGroup>
+
+  <ItemGroup>
+  </ItemGroup>
+
+</Project>

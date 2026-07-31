@@ -1,0 +1,26 @@
+<Project>
+
+  <!-- Applies to every .NET project in the repository: desktop/, backend/, shared/. -->
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <AnalysisLevel>latest-recommended</AnalysisLevel>
+    <Deterministic>true</Deterministic>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <!-- Missing XML doc is not an error: docs are required only on cross-boundary surfaces (CM-05). -->
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <!-- Persian culture data and PersianCalendar formatting require full ICU (CONV-05). -->
+    <InvariantGlobalization>false</InvariantGlobalization>
+    <Product>Animora</Product>
+    <Company>Animora</Company>
+    <NeutralLanguage>fa-IR</NeutralLanguage>
+  </PropertyGroup>
+
+</Project>

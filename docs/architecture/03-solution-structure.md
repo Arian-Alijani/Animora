@@ -9,18 +9,34 @@ stability: stable
 
 ## Contract
 
-Decides: the physical project/assembly layout for backend, desktop, and web, the allowed
+Decides: the physical repository/project/assembly layout for backend, desktop, and web, the allowed
 dependency directions, and how those directions are mechanically enforced. Does not decide what
 each module contains (see [04](04-module-catalog.md)) or database schema (see [07](07-server-data-architecture.md)).
+
+## Repository layout (platform-scoped roots)
+
+One top-level directory per platform, so a task on one platform never requires reading another
+(agent context discipline, see `AGENTS.md`):
+
+```
+contracts/          # platform-neutral wire artifacts: openapi/, enums/, errors/, sync/
+shared/dotnet/      # Animora.SharedKernel, Animora.Contracts (backend + desktop, single source)
+desktop/            # Avalonia Windows client:  src/, tests/
+backend/            # ASP.NET Core modular monolith: src/, tests/
+web/                # Next.js workspace: apps/, packages/
+infra/              # compose, caddy, postgres, minio, backup, env templates
+tools/              # codegen/ (Kiota, Orval), scripts/
+```
+
+Repo-root `Directory.Build.props` / `Directory.Packages.props` apply to every .NET project
+(`desktop/`, `backend/`, `shared/`): single TFM, nullable, central package version pinning.
 
 ## Backend solution (.NET, modular monolith — INV-01)
 
 ```
-Animora.sln
+backend/
   src/
     Animora.Api/                # ASP.NET Core Minimal API host, composition root, DI wiring
-    Animora.Contracts/          # OpenAPI-derived shared DTOs/enums, versioned, no logic
-    Animora.SharedKernel/       # Cross-module primitives: TenantId, Money, Result, HLC, base entity
     Modules/
       Animora.Modules.Identity/         # users, roles, permissions, auth
       Animora.Modules.Clients/          # owners, patients (animals), medical file
@@ -39,7 +55,15 @@ Animora.sln
     Animora.UnitTests/
     Animora.IntegrationTests/   # Testcontainers: Postgres, MinIO
     Animora.SyncTests/          # mandatory sync matrix, see 09
+shared/dotnet/
+    Animora.Contracts/          # OpenAPI-derived shared DTOs/enums, versioned, no logic
+    Animora.SharedKernel/       # Cross-module primitives: TenantId, Money, Result, HLC, base entity
 ```
+
+Each `Modules.*` project uses the same internal folder shape: `Contract/` (public in-process
+contract + Mediator types), `Domain/`, `Application/` (handlers, validators), `Data/Writes` (EF
+Core), `Data/Queries` (Dapper), `Endpoints/`, `Configuration/` (module DI) — the split that makes
+AT-03/AT-04/AT-05 mechanically checkable.
 
 Each `Modules.*` project exposes exactly one `I<Module>Contract` interface (public in-process
 contract) plus its `Mediator` request/notification types; internal types are `internal`.
@@ -47,15 +71,24 @@ contract) plus its `Mediator` request/notification types; internal types are `in
 ## Desktop solution (.NET, Avalonia)
 
 ```
+desktop/
   src/
-    Animora.Desktop.App/        # Avalonia App, composition root, navigation shell
-    Animora.Desktop.Modules.*/  # mirrors backend module names; ViewModels + local handlers
+    Animora.Desktop.App/        # Avalonia App, composition root, navigation shell, startup
+    Animora.Desktop.UI/         # design tokens, shared controls/converters, ViewModelBase (leaf)
+    Animora.Desktop.Modules.*/  # mirrors backend module names; Views + ViewModels + local handlers
     Animora.Desktop.Data/       # SQLite DbContext (EF Core writes), Dapper read queries, SQLCipher
     Animora.Desktop.Sync/       # outbox, cursor store, batch client, conflict application
     Animora.Desktop.Infrastructure/ # Kiota generated API client, Serilog, Velopack, printing
-  Animora.SharedKernel/         # referenced from backend repo path (see below), not duplicated
-  Animora.Contracts/            # same generated contracts as backend, via Kiota + shared package
+  tests/
+    Animora.Desktop.UnitTests/  # handlers, validators, formatters
+    Animora.Desktop.UiTests/    # Avalonia.Headless RTL smoke test per screen
+    Animora.Desktop.ArchTests/  # NetArchTest rules for desktop assemblies (DIR-05, DIR-07)
 ```
+
+Desktop modules cover `Identity`, `Clients`, `Visits`, `Scheduling`, `Finance`, `Reporting`,
+`Notifications`, `Licensing`, `Files`; `PlatformAdmin` is a web-only back-office and has no desktop
+counterpart. `Animora.SharedKernel` and `Animora.Contracts` are consumed from `shared/dotnet/`, not
+duplicated.
 
 `Animora.SharedKernel` and `Animora.Contracts` are shared source, not duplicated logic (INV-02):
 desktop and backend both consume the OpenAPI-generated `Animora.Contracts` package; validation
@@ -65,6 +98,7 @@ both backend and desktop projects.
 ## Web workspace (Next.js)
 
 ```
+web/
   apps/web/
     app/
       (marketing)/               # SSG/ISR public pages
@@ -74,11 +108,12 @@ both backend and desktop projects.
       api-client/                # generated: openapi-typescript + Orval hooks
       auth/                      # session/token handling
       offline/                   # Dexie cache + Serwist service worker
+      i18n/                      # next-intl setup (messages/ holds fa, en)
     components/
     styles/
   packages/
     ui/                          # shared shadcn/ui-based components, RTL tokens
-    config/                      # shared eslint/biome/tailwind config
+    config/                      # shared biome/tailwind/ts config
 ```
 
 ## Allowed dependency directions
@@ -91,8 +126,10 @@ flowchart TB
     Infrastructure --> Modules
     Api --> Infrastructure
     DesktopApp[Desktop.App] --> DesktopModules[Desktop.Modules.*]
+    DesktopModules --> DesktopUI[Desktop.UI]
     DesktopModules --> SharedKernel
     DesktopModules --> Contracts
+    DesktopUI --> SharedKernel
     DesktopSync[Desktop.Sync] --> DesktopModules
     Web[apps/web] --> ApiClient[lib/api-client]
     ApiClient --> Contracts
@@ -114,8 +151,12 @@ Rules:
 - **DIR-06**: `apps/web` MUST NOT hand-write API DTOs; all wire types come from `lib/api-client`
   (generated). No module in `apps/web` imports another feature's server actions directly except
   through `lib/api-client` or shared `packages/ui`.
+- **DIR-07**: `Animora.Desktop.UI` is a leaf design-system assembly: it MUST NOT reference any
+  `Desktop.Modules.*`, `Desktop.Data`, `Desktop.Sync`, or `Desktop.Infrastructure` project. It exists
+  so DESK-ARCH-12's shared token/resource dictionary is reachable by every module without coupling
+  modules to the shell or to each other.
 
-## NetArchTest-expressible rules (enforced in `Animora.ArchTests`)
+## NetArchTest-expressible rules (enforced in `Animora.ArchTests`, desktop rules in `Animora.Desktop.ArchTests`)
 
 | Rule ID | Expressed as | Maps to |
 |---|---|---|
@@ -126,13 +167,18 @@ Rules:
 | AT-05 | Types under `*.Data.Writes` must not depend on `Dapper` | INV-20 |
 | AT-06 | Only `Animora.Api` may reference more than one `Modules.*` assembly | DIR-04 |
 | AT-07 | Synced entity classes (marked with `ISyncedEntity`) must not expose a public setter for their primary key | INV-03 |
+| AT-08 | Types in `Animora.Desktop.UI` must not depend on any `Animora.Desktop.*` namespace other than `UI` | DIR-07 |
+| AT-09 | Types in `Desktop.Modules.*` must not depend on `Animora.Desktop.App` or on another `Desktop.Modules.*` | DIR-01, DIR-05 |
 
 ## Where generated clients land
 
 | Generator | Input | Output location |
 |---|---|---|
-| Kiota | Backend OpenAPI spec | `src/Animora.Desktop.Infrastructure/Generated/` (desktop) |
-| openapi-typescript + Orval | Backend OpenAPI spec | `apps/web/lib/api-client/generated/` |
+| Kiota | `contracts/openapi/v1` | `desktop/src/Animora.Desktop.Infrastructure/Generated/` |
+| openapi-typescript + Orval | `contracts/openapi/v1` | `web/apps/web/lib/api-client/generated/` |
+
+Generation scripts live in `tools/codegen/`. `contracts/openapi/snapshots/` holds the frozen spec
+snapshots the breaking-change gate compares against (API-VER-05).
 
 Generated code is committed (deterministic, reviewable diff) and regenerated by a CI check that
 fails the build if the spec and generated output drift (see [06](06-api-contract.md)).

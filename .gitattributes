@@ -1,0 +1,26 @@
+* text=auto eol=lf
+
+*.sln text eol=crlf
+*.csproj text eol=lf
+*.cmd text eol=crlf
+*.ps1 text eol=crlf
+
+*.md text
+*.yaml text
+*.yml text
+*.json text
+*.axaml text
+*.cs text
+*.ts text
+*.tsx text
+
+# Generated clients: reviewable in diffs but not counted as authored code.
+desktop/src/Animora.Desktop.Infrastructure/Generated/** linguist-generated=true
+web/apps/web/lib/api-client/generated/** linguist-generated=true
+
+*.png binary
+*.jpg binary
+*.ico binary
+*.ttf binary
+*.woff2 binary
+*.pdf binary
