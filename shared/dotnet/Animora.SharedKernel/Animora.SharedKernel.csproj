@@ -1,0 +1,5 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Leaf assembly: no ProjectReference is permitted here (DIR-02, AT-02). -->
+
+</Project>

@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <!-- Windows is the only P1 target (TECH_STACK §1); publish-time settings are phase 31's. -->
+    <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
+  </PropertyGroup>
+
+  <!-- Composition root: the only desktop project allowed to reference every other one
+       (DIR-04 desktop analogue). -->
+  <ItemGroup>
+    <ProjectReference Include="../Animora.Desktop.UI/Animora.Desktop.UI.csproj" />
+    <ProjectReference Include="../Animora.Desktop.Data/Animora.Desktop.Data.csproj" />
+    <ProjectReference Include="../Animora.Desktop.Infrastructure/Animora.Desktop.Infrastructure.csproj" />
+    <ProjectReference Include="../Animora.Desktop.Sync/Animora.Desktop.Sync.csproj" />
+    <ProjectReference Include="../Animora.Desktop.Modules.Identity/Animora.Desktop.Modules.Identity.csproj" />
+    <ProjectReference Include="../Animora.Desktop.Modules.Clients/Animora.Desktop.Modules.Clients.csproj" />
+    <ProjectReference Include="../Animora.Desktop.Modules.Visits/Animora.Desktop.Modules.Visits.csproj" />
+    <ProjectReference Include="../Animora.Desktop.Modules.Scheduling/Animora.Desktop.Modules.Scheduling.csproj" />
+    <ProjectReference Include="../Animora.Desktop.Modules.Finance/Animora.Desktop.Modules.Finance.csproj" />
+    <ProjectReference Include="../Animora.Desktop.Modules.Reporting/Animora.Desktop.Modules.Reporting.csproj" />
+    <ProjectReference Include="../Animora.Desktop.Modules.Notifications/Animora.Desktop.Modules.Notifications.csproj" />
+    <ProjectReference Include="../Animora.Desktop.Modules.Licensing/Animora.Desktop.Modules.Licensing.csproj" />
+    <ProjectReference Include="../Animora.Desktop.Modules.Files/Animora.Desktop.Modules.Files.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia" />
+    <PackageReference Include="Avalonia.Desktop" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" />
+  </ItemGroup>
+
+</Project>

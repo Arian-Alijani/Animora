@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Empty seam until there is a server: module references and the batch client belong to P2
+       (DT-12, AG-03). -->
+  <ItemGroup>
+    <ProjectReference Include="../Animora.Desktop.Data/Animora.Desktop.Data.csproj" />
+    <ProjectReference Include="../Animora.Desktop.Infrastructure/Animora.Desktop.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

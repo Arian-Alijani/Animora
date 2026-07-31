@@ -30,6 +30,8 @@ tools/              # codegen/ (Kiota, Orval), scripts/
 
 Repo-root `Directory.Build.props` / `Directory.Packages.props` apply to every .NET project
 (`desktop/`, `backend/`, `shared/`): single TFM, nullable, central package version pinning.
+Repo-root `global.json` pins the SDK feature band that resolves the TFM of `§2 Version Pins`;
+`tools/scripts/bootstrap-dotnet.sh` installs it where the machine has none.
 
 ## Backend solution (.NET, modular monolith — INV-01)
 
