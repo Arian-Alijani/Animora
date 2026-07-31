@@ -1,0 +1,44 @@
+# Machine-readable doc index. Agents: route by read_when/topics before opening a file.
+# Full corpus is NOT meant to be read in one pass. Pick 2-4 docs per task via this file + 00-index.md.
+version: 1
+docs:
+  - {id: 00-index, path: docs/architecture/00-index.md, title: "Doc Map & Routing", read_when: ["orienting in the docs", "unsure which file to read"], topics: [routing, meta], depends_on: [], size_lines: 140}
+  - {id: 01-context, path: docs/architecture/01-context-and-drivers.md, title: "Context & Drivers", read_when: ["understanding actors/externals", "checking a quality target"], topics: [context, quality-attributes, constraints], depends_on: [], size_lines: 200}
+  - {id: 02-invariants, path: docs/architecture/02-principles-and-invariants.md, title: "Principles & Invariants", read_when: ["checking if a design is allowed", "writing a lint/test for a rule"], topics: [invariants, rules], depends_on: [01-context], size_lines: 200}
+  - {id: 03-structure, path: docs/architecture/03-solution-structure.md, title: "Solution Structure", read_when: ["adding a project/assembly", "checking allowed dependency direction"], topics: [projects, netarchtest, layout], depends_on: [02-invariants], size_lines: 250}
+  - {id: 04-modules, path: docs/architecture/04-module-catalog.md, title: "Module Catalog", read_when: ["finding which module owns a feature", "adding a new module"], topics: [modules, feature-map], depends_on: [03-structure], size_lines: 300}
+  - {id: 05-domain, path: docs/architecture/05-domain-model.md, title: "Domain Model", read_when: ["adding/changing an entity", "checking an aggregate boundary or state machine"], topics: [aggregates, entities, state-machine, tenancy], depends_on: [04-modules], size_lines: 350}
+  - {id: 06-api, path: docs/architecture/06-api-contract.md, title: "API Contract", read_when: ["adding an endpoint", "versioning a breaking change"], topics: [rest, openapi, pagination, idempotency, etag], depends_on: [04-modules, 05-domain], size_lines: 300}
+  - {id: 07-server-data, path: docs/architecture/07-server-data-architecture.md, title: "Server Data Architecture", read_when: ["adding a table", "writing an RLS policy", "a report query"], topics: [postgres, rls, indexing, tsvector, migrations], depends_on: [05-domain], size_lines: 350}
+  - {id: 08-desktop-data, path: docs/architecture/08-desktop-local-data.md, title: "Desktop Local Data", read_when: ["adding a local SQLite table", "outbox/reminder work"], topics: [sqlite, sqlcipher, fts5, outbox], depends_on: [05-domain, 07-server-data], size_lines: 300}
+  - {id: 09-sync, path: docs/architecture/09-sync-architecture.md, title: "Sync Architecture", read_when: ["adding a synced entity", "changing the sync protocol", "debugging convergence"], topics: [sync, hlc, outbox, conflict, tombstone], depends_on: [05-domain, 07-server-data, 08-desktop-data], size_lines: 500}
+  - {id: 10-security, path: docs/architecture/10-security-and-access-control.md, title: "Security & Access Control", read_when: ["adding a permission", "an authN/authZ question", "a threat review"], topics: [authn, authz, rbac, audit, threat-model], depends_on: [04-modules, 05-domain], size_lines: 350}
+  - {id: 11-licensing, path: docs/architecture/11-licensing-and-entitlements.md, title: "Licensing & Entitlements", read_when: ["adding a plan-gated feature", "license/heartbeat work"], topics: [entitlement, license-token, heartbeat, grace], depends_on: [04-modules, 10-security], size_lines: 300}
+  - {id: 12-desktop-arch, path: docs/architecture/12-desktop-architecture.md, title: "Desktop Architecture", read_when: ["adding a desktop screen", "desktop UX/state work"], topics: [avalonia, mvvm, mediator, offline-ux], depends_on: [03-structure, 08-desktop-data, 09-sync], size_lines: 350}
+  - {id: 13-web-arch, path: docs/architecture/13-web-architecture.md, title: "Web Architecture", read_when: ["adding a web page", "web data-fetch/caching work"], topics: [nextjs, app-router, rsc, web-offline], depends_on: [03-structure, 06-api], size_lines: 300}
+  - {id: 14-jobs, path: docs/architecture/14-jobs-and-notifications.md, title: "Jobs & Notifications", read_when: ["adding a background job", "adding a notification/alert type"], topics: [hangfire, notification-engine, reminders], depends_on: [04-modules, 08-desktop-data], size_lines: 300}
+  - {id: 15-finance, path: docs/architecture/15-finance-and-ledger.md, title: "Finance & Ledger", read_when: ["touching money, invoices, cheques, cash session"], topics: [ledger, invoice, cheque, cash-session], depends_on: [05-domain, 07-server-data], size_lines: 350}
+  - {id: 16-reporting, path: docs/architecture/16-reporting-and-analytics.md, title: "Reporting & Analytics", read_when: ["adding a report or KPI", "chart data work"], topics: [reporting, materialized-view, kpi, export], depends_on: [07-server-data, 15-finance], size_lines: 250}
+  - {id: 17-files, path: docs/architecture/17-files-and-attachments.md, title: "Files & Attachments", read_when: ["attachment upload/download work"], topics: [s3, minio, upload, thumbnail], depends_on: [05-domain, 09-sync], size_lines: 250}
+  - {id: 18-observability, path: docs/architecture/18-observability-and-operations.md, title: "Observability & Operations", read_when: ["logging/tracing work", "backup/restore work", "admin back-office work"], topics: [logging, tracing, backup, admin], depends_on: [04-modules], size_lines: 250}
+  - {id: 19-deployment, path: docs/architecture/19-deployment-topology.md, title: "Deployment Topology", read_when: ["touching env vars", "container/topology change"], topics: [topology, containers, env-vars, release], depends_on: [03-structure], size_lines: 300}
+  - {id: 20-playbook, path: docs/architecture/20-extensibility-playbook.md, title: "Extensibility Playbook", read_when: ["implementing any new feature"], topics: [recipes, how-to], depends_on: [all], size_lines: 400}
+  - {id: 21-conventions, path: docs/architecture/21-conventions.md, title: "Conventions", read_when: ["naming, id, time, money, error-code questions"], topics: [naming, ids, money, errors], depends_on: [], size_lines: 250}
+  - {id: 22-glossary, path: docs/architecture/22-glossary.md, title: "Glossary", read_when: ["term ambiguity, EN/FA mapping"], topics: [glossary], depends_on: [], size_lines: 150}
+  - {id: 23-risks, path: docs/architecture/23-architecture-risks.md, title: "Architecture Risks", read_when: ["risk review", "postmortem"], topics: [risk], depends_on: [09-sync, 11-licensing], size_lines: 150}
+meta_docs:
+  - {id: open-questions, path: docs/architecture/_meta/open-questions.md, title: "Open Questions"}
+  - {id: adr-template, path: docs/architecture/adr/ADR-0000-template.md, title: "ADR Template"}
+adr_index:
+  - ADR-0001-sync-conflict-resolution
+  - ADR-0002-local-schema-mirroring
+  - ADR-0003-module-boundary-and-communication
+  - ADR-0004-read-write-path-split
+  - ADR-0005-tenancy-isolation-mechanism
+  - ADR-0006-entitlement-enforcement-split
+  - ADR-0007-invoice-ledger-immutability
+  - ADR-0008-calendar-scheduling-data-model
+  - ADR-0009-desktop-offline-job-ownership
+  - ADR-0010-api-versioning-strategy
+  - ADR-0011-web-offline-scope-limitation
+  - ADR-0012-cheque-cash-session-state-ownership
