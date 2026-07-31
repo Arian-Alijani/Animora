@@ -1,6 +1,5 @@
 using System.Globalization;
 using Animora.Desktop.UI.Converters;
-using Animora.Desktop.UI.Localization;
 using FluentAssertions;
 using Xunit;
 
@@ -8,7 +7,7 @@ namespace Animora.Desktop.UnitTests.Converters;
 
 public class MoneyConverterTests
 {
-    private readonly MoneyConverter _converter = new(new MoneyFormatter(new PersianNumberFormatter()));
+    private readonly MoneyConverter _converter = new();
 
     [Fact]
     public void Convert_defaults_to_toman_formatting()

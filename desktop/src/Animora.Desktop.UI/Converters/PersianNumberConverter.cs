@@ -17,14 +17,7 @@ namespace Animora.Desktop.UI.Converters;
 public sealed class PersianNumberConverter : IValueConverter
 {
     /// <summary>Shared instance for `{x:Static}` usage in XAML.</summary>
-    public static readonly PersianNumberConverter Instance = new(new PersianNumberFormatter());
-
-    private readonly PersianNumberFormatter _formatter;
-
-    public PersianNumberConverter(PersianNumberFormatter formatter)
-    {
-        _formatter = formatter;
-    }
+    public static readonly PersianNumberConverter Instance = new();
 
     public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
@@ -46,10 +39,10 @@ public sealed class PersianNumberConverter : IValueConverter
             int decimalDigits = modeAndArgument.Length > 1 && int.TryParse(modeAndArgument[1], NumberStyles.Integer, CultureInfo.InvariantCulture, out int parsedDigits)
                 ? parsedDigits
                 : 0;
-            return TryToDecimal(value, out decimal percentValue) ? _formatter.FormatPercent(percentValue, decimalDigits) : null;
+            return TryToDecimal(value, out decimal percentValue) ? PersianNumberFormatter.FormatPercent(percentValue, decimalDigits) : null;
         }
 
-        return TryToInt64(value, out long numberValue) ? _formatter.FormatNumber(numberValue) : null;
+        return TryToInt64(value, out long numberValue) ? PersianNumberFormatter.FormatNumber(numberValue) : null;
     }
 
     public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) =>
