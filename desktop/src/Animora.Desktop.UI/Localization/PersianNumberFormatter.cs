@@ -16,7 +16,7 @@ public sealed class PersianNumberFormatter
 
     /// <summary>Replaces every ASCII digit 0-9 with its Persian-Indic equivalent; every other
     /// character (separators, currency words, RTL marks) passes through untouched.</summary>
-    public string ToPersianDigits(string value)
+    public static string ToPersianDigits(string value)
     {
         var builder = new StringBuilder(value.Length);
         foreach (char character in value)
@@ -30,12 +30,12 @@ public sealed class PersianNumberFormatter
     /// <summary>Thousands-grouped integer with Persian-Indic digits, e.g. <c>86450000</c> →
     /// "۸۶,۴۵۰,۰۰۰". The grouping separator is a plain comma, matching the values observed in
     /// design-reference.md §2 ("۱,۲۸۴", "۸۶,۴۵۰,۰۰۰") rather than fa-IR's default "٬" (U+066C).</summary>
-    public string FormatNumber(long value) => ToPersianDigits(value.ToString("#,##0", CultureInfo.InvariantCulture));
+    public static string FormatNumber(long value) => ToPersianDigits(value.ToString("#,##0", CultureInfo.InvariantCulture));
 
     /// <summary>Percentage with Persian-Indic digits and an ASCII "%", e.g.
     /// <c>FormatPercent(12)</c> → "۱۲%". <paramref name="value"/> is the percentage itself
     /// (<c>12</c>, not <c>0.12</c>).</summary>
-    public string FormatPercent(decimal value, int decimalDigits = 0)
+    public static string FormatPercent(decimal value, int decimalDigits = 0)
     {
         string formatted = value.ToString(decimalDigits > 0 ? $"F{decimalDigits}" : "F0", CultureInfo.InvariantCulture);
         return ToPersianDigits(formatted) + "%";

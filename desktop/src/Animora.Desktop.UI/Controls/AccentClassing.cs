@@ -20,6 +20,8 @@ internal static class AccentClassing
         nameof(AccentVariant.Violet),
     };
 
+    /// <param name="target">The Border already carrying a base style class (Chip, TintedAccent,
+    /// CountBadge) whose accent modifier class is being swapped.</param>
     /// <param name="variant">
     /// <see langword="null"/> clears every variant class, leaving the target on its base rule's
     /// default look (used by CountBadge, whose Variant is optional).

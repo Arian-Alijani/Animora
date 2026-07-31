@@ -11,7 +11,7 @@ public class JalaliDateFormatterTests
     private static readonly DateTime Nowruz1403 = new(2024, 3, 20, 10, 0, 0, DateTimeKind.Utc);
 
     private static JalaliDateFormatter CreateFormatter(DateTimeOffset? now = null) =>
-        new(new FixedTimeProvider(now ?? DateTimeOffset.UtcNow), new PersianNumberFormatter());
+        new(new FixedTimeProvider(now ?? DateTimeOffset.UtcNow));
 
     [Fact]
     public void FormatDate_converts_to_persian_digit_jalali_date()
