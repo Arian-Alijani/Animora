@@ -40,6 +40,11 @@
     <PackageVersion Include="NSubstitute" Version="6.0.0" />
     <PackageVersion Include="Avalonia.Headless" Version="11.3.18" />
     <PackageVersion Include="Avalonia.Headless.XUnit" Version="11.3.18" />
+    <!-- Real Skia rendering backend for the headless test host (TestAppBuilder): the fake
+         headless drawing backend registers every custom/embedded font under a stub "$Default"
+         family name instead of its real name, so any test that shapes text in a custom font
+         (Vazirmatn) needs the real Skia font manager instead (see UiTests/TestAppBuilder.cs). -->
+    <PackageVersion Include="Avalonia.Skia" Version="11.3.18" />
     <PackageVersion Include="NetArchTest.Rules" Version="1.3.2" />
   </ItemGroup>
 

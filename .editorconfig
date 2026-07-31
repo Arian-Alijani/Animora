@@ -47,6 +47,11 @@ dotnet_naming_symbols.private_field_symbols.applicable_accessibilities = private
 dotnet_naming_style.underscore_camel_style.required_prefix = _
 dotnet_naming_style.underscore_camel_style.capitalization = camel_case
 
+[**/tests/**.cs]
+# Test methods are not public API surface, so the CA1707 public-naming rule does not apply;
+# underscore-separated Given_When_Then names are the readable convention here (CONV-22).
+dotnet_diagnostic.CA1707.severity = none
+
 [*.axaml]
 indent_size = 2
 

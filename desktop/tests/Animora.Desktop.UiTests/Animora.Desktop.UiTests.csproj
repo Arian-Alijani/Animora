@@ -15,6 +15,7 @@
     <PackageReference Include="FluentAssertions" />
     <PackageReference Include="Avalonia.Headless" />
     <PackageReference Include="Avalonia.Headless.XUnit" />
+    <PackageReference Include="Avalonia.Skia" />
   </ItemGroup>
 
   <!-- AnimoraTheme's headless smoke test (phase 01 item 33) is this project's first test; every

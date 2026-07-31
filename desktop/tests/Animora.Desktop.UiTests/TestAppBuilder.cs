@@ -30,6 +30,12 @@ public sealed class TestApp : Application
 
 public static class TestAppBuilder
 {
+    // UseHeadlessDrawing defaults to true (a fake drawing backend), which registers every
+    // custom/embedded font under a stub "$Default" family name instead of Vazirmatn's real name
+    // and breaks text shaping for it (Avalonia headless testing docs, "Visual regression
+    // testing"); UseSkia() + UseHeadlessDrawing = false swaps in the real Skia font manager.
     public static AppBuilder BuildAvaloniaApp() =>
-        AppBuilder.Configure<TestApp>().UseHeadless(new AvaloniaHeadlessPlatformOptions());
+        AppBuilder.Configure<TestApp>()
+            .UseSkia()
+            .UseHeadless(new AvaloniaHeadlessPlatformOptions { UseHeadlessDrawing = false });
 }

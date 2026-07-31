@@ -100,6 +100,13 @@ elsewhere (e.g., entity names — see [22-glossary.md](22-glossary.md) for canon
 - CONV-20: a DTO's shape changes only through the OpenAPI-first workflow ([06](06-api-contract.md));
   editing generated code by hand is forbidden — fix the spec and regenerate.
 
+## Test naming
+
+- CONV-22: test method names use underscore-separated `MethodOrScenario_Condition_ExpectedResult`
+  form (e.g. `FormatTomans_rounds_a_fractional_toman_remainder_to_the_nearest_whole_toman`) for
+  readability; test methods are not public API surface, so CA1707 is disabled for `**/tests/**.cs`
+  in `.editorconfig` rather than suppressed per-method.
+
 ## Logging fields
 
 - CONV-21: every structured log line includes, when available: `timestamp` (UTC), `level`,
