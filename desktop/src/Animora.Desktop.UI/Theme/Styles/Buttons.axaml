@@ -1,0 +1,137 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <!--
+    Button style classes over Semi.Avalonia's base Button theme (design-reference.md §6,
+    DESK-ARCH-12). Five variants — Primary (filled brand), Secondary (outline), Subtle (ghost),
+    Danger (filled destructive), IconButton (circular, icon-only) — each usable at the three control
+    heights via an optional `.Small` / `.Large` modifier class (default = ControlHeight). Every
+    color, radius, spacing and typography value below is a StaticResource/DynamicResource lookup
+    into Theme/Tokens/; the only non-token literals are structural zeros, the pointer-over/disabled
+    Opacity multipliers, and the "Hand" cursor, none of which are colors/fonts/radii (DT-06).
+
+    Usage: `<Button Classes="Primary" Content="..."/>`, `<Button Classes="Secondary Large" .../>`,
+    `<Button Classes="IconButton" Content="{ia:Icon mdi-bell}"/>`.
+  -->
+
+  <!-- Shared metrics for every variant, default (ControlHeight) size. -->
+  <Style Selector="Button.Primary, Button.Secondary, Button.Subtle, Button.Danger, Button.IconButton">
+    <Setter Property="Height" Value="{StaticResource ControlHeight}" />
+    <Setter Property="FontSize" Value="{StaticResource FontSizeBodyStrong}" />
+    <Setter Property="FontWeight" Value="{StaticResource FontWeightBodyStrong}" />
+    <Setter Property="HorizontalContentAlignment" Value="Center" />
+    <Setter Property="VerticalContentAlignment" Value="Center" />
+    <Setter Property="Cursor" Value="Hand" />
+  </Style>
+
+  <!-- Text-button geometry: rounded rectangle, horizontal padding, no border by default. -->
+  <Style Selector="Button.Primary, Button.Secondary, Button.Subtle, Button.Danger">
+    <Setter Property="CornerRadius" Value="{StaticResource RadiusControl}" />
+    <Setter Property="Padding" Value="{StaticResource ButtonPaddingX}" />
+    <Setter Property="BorderThickness" Value="0" />
+  </Style>
+
+  <!-- Icon-button geometry: a circle exactly ControlHeight wide/tall, no padding (§6 "circular icon
+       buttons": notification bell, theme toggle). -->
+  <Style Selector="Button.IconButton">
+    <Setter Property="Width" Value="{StaticResource ControlHeight}" />
+    <Setter Property="CornerRadius" Value="{StaticResource RadiusPill}" />
+    <Setter Property="Padding" Value="0" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="Foreground" Value="{DynamicResource BrushTextPrimary}" />
+  </Style>
+
+  <!-- Size modifiers — override the shared Height (+ Width for IconButton, + Padding for text
+       buttons). Declared after the default-size rules above so equal-specificity ordering makes
+       these win, per Avalonia style precedence. -->
+  <Style Selector="Button.Small">
+    <Setter Property="Height" Value="{StaticResource ControlHeightSmall}" />
+  </Style>
+  <Style Selector="Button.Large">
+    <Setter Property="Height" Value="{StaticResource ControlHeightLarge}" />
+  </Style>
+  <Style Selector="Button.IconButton.Small">
+    <Setter Property="Width" Value="{StaticResource ControlHeightSmall}" />
+  </Style>
+  <Style Selector="Button.IconButton.Large">
+    <Setter Property="Width" Value="{StaticResource ControlHeightLarge}" />
+  </Style>
+  <Style Selector="Button.Primary.Large, Button.Secondary.Large, Button.Subtle.Large, Button.Danger.Large">
+    <Setter Property="Padding" Value="{StaticResource ButtonPaddingXLarge}" />
+  </Style>
+
+  <!-- Primary: filled brand button (design-reference §6 hero CTA / KPI primary actions). -->
+  <Style Selector="Button.Primary">
+    <Setter Property="Background" Value="{DynamicResource BrushPrimary}" />
+    <Setter Property="Foreground" Value="{DynamicResource BrushTextOnBrand}" />
+  </Style>
+  <Style Selector="Button.Primary:pointerover">
+    <Setter Property="Opacity" Value="0.92" />
+  </Style>
+  <Style Selector="Button.Primary:pressed">
+    <Setter Property="Background" Value="{DynamicResource BrushPrimaryPressed}" />
+  </Style>
+  <Style Selector="Button.Primary:disabled">
+    <Setter Property="Opacity" Value="0.5" />
+  </Style>
+
+  <!-- Secondary: outline button over Surface. -->
+  <Style Selector="Button.Secondary">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="Foreground" Value="{DynamicResource BrushTextPrimary}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource BrushBorder}" />
+    <Setter Property="BorderThickness" Value="{StaticResource StrokeThickness}" />
+  </Style>
+  <Style Selector="Button.Secondary:pointerover">
+    <Setter Property="Background" Value="{DynamicResource BrushStateHoverOverlay}" />
+  </Style>
+  <Style Selector="Button.Secondary:pressed">
+    <Setter Property="Background" Value="{DynamicResource BrushStatePressedOverlay}" />
+  </Style>
+  <Style Selector="Button.Secondary:disabled">
+    <Setter Property="Opacity" Value="0.5" />
+  </Style>
+
+  <!-- Subtle: ghost/text button, no fill or border at rest. -->
+  <Style Selector="Button.Subtle">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="Foreground" Value="{DynamicResource BrushTextPrimary}" />
+  </Style>
+  <Style Selector="Button.Subtle:pointerover">
+    <Setter Property="Background" Value="{DynamicResource BrushStateHoverOverlay}" />
+  </Style>
+  <Style Selector="Button.Subtle:pressed">
+    <Setter Property="Background" Value="{DynamicResource BrushStatePressedOverlay}" />
+  </Style>
+  <Style Selector="Button.Subtle:disabled">
+    <Setter Property="Opacity" Value="0.5" />
+  </Style>
+
+  <!-- Danger: filled destructive button. -->
+  <Style Selector="Button.Danger">
+    <Setter Property="Background" Value="{DynamicResource BrushAccentDangerBase}" />
+    <Setter Property="Foreground" Value="{DynamicResource BrushTextOnBrand}" />
+  </Style>
+  <Style Selector="Button.Danger:pointerover">
+    <Setter Property="Opacity" Value="0.92" />
+  </Style>
+  <Style Selector="Button.Danger:pressed">
+    <Setter Property="Background" Value="{DynamicResource BrushAccentDangerStrong}" />
+  </Style>
+  <Style Selector="Button.Danger:disabled">
+    <Setter Property="Opacity" Value="0.5" />
+  </Style>
+
+  <!-- IconButton: transparent by rest, tinted overlay on hover/press (top-bar notification/theme
+       toggle per §6). -->
+  <Style Selector="Button.IconButton:pointerover">
+    <Setter Property="Background" Value="{DynamicResource BrushStateHoverOverlay}" />
+  </Style>
+  <Style Selector="Button.IconButton:pressed">
+    <Setter Property="Background" Value="{DynamicResource BrushStatePressedOverlay}" />
+  </Style>
+  <Style Selector="Button.IconButton:disabled">
+    <Setter Property="Opacity" Value="0.5" />
+  </Style>
+
+</Styles>

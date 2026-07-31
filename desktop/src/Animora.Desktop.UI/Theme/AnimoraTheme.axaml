@@ -1,0 +1,46 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:semi="https://irihi.tech/semi">
+  <!--
+    The single include point for the whole design system (DIR-07, DESK-ARCH-12): a consumer
+    (Animora.Desktop.App's App.axaml, or a headless test host) references only
+    `avares://Animora.Desktop.UI/Theme/AnimoraTheme.axaml` via a StyleInclude and gets Semi.Avalonia,
+    every token dictionary, and every style file in this project — nothing else to wire up, no
+    per-file references anywhere outside this project.
+
+    `Styles` (not a bare `ResourceDictionary`) is the root because `semi:SemiTheme` is itself a
+    `Styles`-derived object, so it must be composed as a style entry rather than merged as a
+    resource dictionary.
+  -->
+
+  <Styles.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceInclude Source="avares://Animora.Desktop.UI/Theme/Tokens/Fonts.axaml" />
+        <ResourceInclude Source="avares://Animora.Desktop.UI/Theme/Tokens/Palette.axaml" />
+        <ResourceInclude Source="avares://Animora.Desktop.UI/Theme/Tokens/Typography.axaml" />
+        <ResourceInclude Source="avares://Animora.Desktop.UI/Theme/Tokens/Brushes.axaml" />
+        <ResourceInclude Source="avares://Animora.Desktop.UI/Theme/Tokens/Layout.axaml" />
+        <ResourceInclude Source="avares://Animora.Desktop.UI/Theme/Tokens/Elevation.axaml" />
+      </ResourceDictionary.MergedDictionaries>
+
+      <!-- Semantic Colors.* keys resolve per the active ThemeVariant (DESK-ARCH-12, design-reference
+           §3). Brushes.axaml's DynamicResource lookups repaint automatically when the variant
+           flips. -->
+      <ResourceDictionary.ThemeDictionaries>
+        <ResourceInclude x:Key="Light" Source="avares://Animora.Desktop.UI/Theme/Tokens/Colors.Light.axaml" />
+        <ResourceInclude x:Key="Dark" Source="avares://Animora.Desktop.UI/Theme/Tokens/Colors.Dark.axaml" />
+      </ResourceDictionary.ThemeDictionaries>
+    </ResourceDictionary>
+  </Styles.Resources>
+
+  <!-- Look-and-feel base (TECH_STACK §4). Loaded before this project's own style overrides so
+       Root/Typography/Buttons (and later Inputs/Surfaces/Chips/DataGrid) can build directly on top
+       of it. -->
+  <semi:SemiTheme />
+
+  <StyleInclude Source="avares://Animora.Desktop.UI/Theme/Styles/Root.axaml" />
+  <StyleInclude Source="avares://Animora.Desktop.UI/Theme/Styles/Typography.axaml" />
+  <StyleInclude Source="avares://Animora.Desktop.UI/Theme/Styles/Buttons.axaml" />
+
+</Styles>

@@ -1,0 +1,17 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <!--
+    Establishes FlowDirection=RightToLeft and the default Vazirmatn font family on the app's single
+    top-level surface (DT-06, DESK-ARCH-06). Both properties are inherited down the visual tree, so
+    setting them once here on Window is the one and only place the whole app's RTL/font baseline is
+    declared. Phase 02's shell window picks this up automatically the moment it (transitively, via
+    Theme/AnimoraTheme.axaml) merges this style — no screen or window ever sets FlowDirection or
+    FontFamily itself.
+  -->
+
+  <Style Selector="Window">
+    <Setter Property="FlowDirection" Value="RightToLeft" />
+    <Setter Property="FontFamily" Value="{StaticResource FontFamilyDefault}" />
+  </Style>
+
+</Styles>

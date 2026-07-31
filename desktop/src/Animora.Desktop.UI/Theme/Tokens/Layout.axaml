@@ -1,0 +1,61 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <!--
+    Geometry tokens (design-reference.md §4, DESK-ARCH-12): spacing scale, corner radii, control
+    heights/paddings, icon/avatar/accent-bar sizes, and the rail/top-bar dimensions. Most values are
+    plain scalars (x:Double); radii are typed as CornerRadius and the two button paddings as
+    Thickness (horizontal-only, vertical centering comes from Height + VerticalContentAlignment) so
+    a consumer binds e.g. `CornerRadius="{StaticResource RadiusCard}"` / `Padding="{StaticResource
+    ButtonPaddingX}"` directly with no converter. No literal length, radius, or size belongs outside
+    this file (DT-06).
+  -->
+
+  <!-- 4.4 Spacing scale — the only gap values allowed anywhere in this project. -->
+  <x:Double x:Key="Spacing2">2</x:Double>
+  <x:Double x:Key="Spacing4">4</x:Double>
+  <x:Double x:Key="Spacing8">8</x:Double>
+  <x:Double x:Key="Spacing12">12</x:Double>
+  <x:Double x:Key="Spacing16">16</x:Double>
+  <x:Double x:Key="Spacing20">20</x:Double>
+  <x:Double x:Key="Spacing24">24</x:Double>
+  <x:Double x:Key="Spacing32">32</x:Double>
+  <x:Double x:Key="Spacing40">40</x:Double>
+  <x:Double x:Key="Spacing48">48</x:Double>
+
+  <!-- 4.1 Layout -->
+  <x:Double x:Key="RailWidth">240</x:Double>
+  <x:Double x:Key="TopBarHeight">88</x:Double>
+  <x:Double x:Key="ContentPaddingX">32</x:Double>
+  <x:Double x:Key="ContentPaddingY">24</x:Double>
+  <x:Double x:Key="CardGap">16</x:Double>
+  <x:Double x:Key="HeroHeight">216</x:Double>
+  <x:Double x:Key="SectionGap">24</x:Double>
+
+  <!-- 4.2 Radii -->
+  <CornerRadius x:Key="RadiusHero">20</CornerRadius>
+  <CornerRadius x:Key="RadiusCard">16</CornerRadius>
+  <CornerRadius x:Key="RadiusBlock">12</CornerRadius>
+  <CornerRadius x:Key="RadiusControl">10</CornerRadius>
+  <CornerRadius x:Key="RadiusBadge">8</CornerRadius>
+  <CornerRadius x:Key="RadiusPill">999</CornerRadius>
+
+  <!-- 4.3 Sizes -->
+  <x:Double x:Key="ControlHeight">36</x:Double>
+  <x:Double x:Key="ControlHeightSmall">28</x:Double>
+  <x:Double x:Key="ControlHeightLarge">44</x:Double>
+  <Thickness x:Key="ButtonPaddingX">16,0</Thickness>
+  <Thickness x:Key="ButtonPaddingXLarge">20,0</Thickness>
+  <x:Double x:Key="NavItemHeight">40</x:Double>
+  <x:Double x:Key="IconSizeSmall">16</x:Double>
+  <x:Double x:Key="IconSize">20</x:Double>
+  <x:Double x:Key="IconSizeLarge">24</x:Double>
+  <x:Double x:Key="IconTileSize">40</x:Double>
+  <x:Double x:Key="AvatarSize">32</x:Double>
+  <x:Double x:Key="AvatarSizeLarge">40</x:Double>
+  <x:Double x:Key="AccentBarWidth">3</x:Double>
+  <x:Double x:Key="AccentBarWidthLarge">4</x:Double>
+  <x:Double x:Key="CardPadding">20</x:Double>
+  <x:Double x:Key="CardPaddingLarge">24</x:Double>
+  <Thickness x:Key="StrokeThickness">1</Thickness>
+
+</ResourceDictionary>
