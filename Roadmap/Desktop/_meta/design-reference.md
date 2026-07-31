@@ -133,6 +133,26 @@ contains. Confirm with the product owner before treating these as final.
 | Primary | `Brand400` (`#19A09B`) — one step lighter than light theme, for contrast on dark surfaces |
 | Accent tints | accent base at 18 % alpha over `Surface`, instead of the light tint hexes |
 
+### 3.1 Addendum — phase 01 dark-theme decision
+
+No dark reference screen followed this table. Per the phase owner's direction (phase 01 TODO item 2),
+the design system was completed rather than blocked: the table above is treated as final, and the
+following additional tokens — not observable from any reference — were designed to round it out:
+
+| Token | Hex | Rationale |
+|---|---|---|
+| `SurfaceTrack` | `#174443` | Interpolated between `SurfaceMuted` (`#113D3C`) and `Border` (`#1C4B49`); light theme's `SurfaceTrack` sits the same way between its `SurfaceMuted`/`Border`. |
+| `RailBackground` | `#081C1D` | One notch darker than dark `PageBackground`/`Surface`, so the rail keeps acting as the darkest anchor surface the way it does in light theme (where it is far darker than the mint page). |
+| `RailItemHover` | `#0F2F2D` | Between `RailBackground` and `RailItemActive` (`#113D3C`, unchanged), mirroring light theme's hover-lighter-than-background, darker-than-active relationship. |
+| Accent `Strong` (info/warning/violet/danger) | `#9CC4F5` / `#F5C878` / `#C7ADF0` / `#F2A79E` | Lightened versions of each accent `Base`, since the light theme's near-black `Strong` text would fail contrast on a translucent dark tint. `Base` itself is reused unchanged (already legible on dark). |
+| Accent `Tint` (info/warning/violet/danger) | `Base` colour at 18 % alpha (`#2E` + base hex) | Direct application of this table's own "accent base at 18 % alpha" instruction, made concrete as literal ARGB colors so `Color` resources stay solid values. |
+| Success accent | `Brand400`/`Brand400`@18 %/`Brand300` | Success keeps reusing the brand ramp (per §1.4), shifted one step lighter to follow the dark-theme primary shift. |
+| `StateHoverOverlay` / `StatePressedOverlay` | `#0AE7F2F0` / `#14E7F2F0` (white @ ~4 %/8 %) | Mirrors light theme's black-at-3 %/8 % overlay pattern, inverted for a dark base. |
+| `StateFocusRing` | `Brand300` (`#66C0B4`) | `Brand700`, light theme's focus ring, is too close to the dark surface colors to read; `Brand300` is the ramp step that stays visible on both dark page and dark card surfaces. |
+
+Canonical machine-readable form: `desktop/src/Animora.Desktop.UI/Theme/Tokens/Colors.Dark.axaml`
+(semantic keys) and `Theme/Tokens/Palette.axaml` (raw values, `*Dark` suffix).
+
 ## 4. Geometry (4-DIP grid)
 
 ### 4.1 Layout

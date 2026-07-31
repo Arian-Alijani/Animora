@@ -1,0 +1,70 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <!--
+    Semantic color keys for ThemeVariant.Light (DESK-ARCH-12). Every value here is one of
+    Palette.axaml's raw ramp steps, copied in literally (Avalonia theme-variant dictionaries are
+    plain per-variant value sets, not cross-references, matching how Avalonia's own FluentTheme
+    Colors.xaml files are authored) — the comment on each line names the Palette source key so the
+    mapping stays auditable. AnimoraTheme.axaml (phase item 12) merges this file and Colors.Dark.axaml
+    under a ResourceDictionary.ThemeDictionaries block keyed "Light"/"Dark" so these keys resolve per
+    the active ThemeVariant. Nothing here is consumed directly by a view — Brushes.axaml wraps every
+    key below in a SolidColorBrush via DynamicResource.
+  -->
+
+  <!-- surface / page -->
+  <Color x:Key="ColorPageBackground">#F2F6F5</Color>       <!-- NeutralPageLight -->
+  <Color x:Key="ColorSurface">#FFFFFF</Color>               <!-- NeutralSurfaceLight -->
+  <Color x:Key="ColorSurfaceMuted">#F9FBFA</Color>          <!-- NeutralSurfaceMutedLight -->
+  <Color x:Key="ColorSurfaceTrack">#F0F3F2</Color>          <!-- NeutralSurfaceTrackLight -->
+
+  <!-- border / divider -->
+  <Color x:Key="ColorBorder">#E6EBEA</Color>                <!-- NeutralBorderLight -->
+  <Color x:Key="ColorDivider">#EDF0F0</Color>               <!-- NeutralDividerLight -->
+
+  <!-- text -->
+  <Color x:Key="ColorTextPrimary">#14201F</Color>           <!-- NeutralTextPrimaryLight -->
+  <Color x:Key="ColorTextSecondary">#5B6664</Color>         <!-- NeutralTextSecondaryLight -->
+  <Color x:Key="ColorTextMuted">#8A9694</Color>             <!-- NeutralTextMutedLight -->
+  <Color x:Key="ColorTextOnBrand">#FFFFFF</Color>           <!-- NeutralTextOnBrand -->
+
+  <!-- rail (app sidebar, always the dark anchor surface) -->
+  <Color x:Key="ColorRailBackground">#0B2526</Color>        <!-- RailBackgroundLight -->
+  <Color x:Key="ColorRailItemActive">#113D3C</Color>        <!-- RailItemActive -->
+  <Color x:Key="ColorRailItemHover">#0F332C</Color>         <!-- RailItemHoverLight -->
+  <Color x:Key="ColorRailTextActive">#FFFFFF</Color>        <!-- RailTextActive -->
+  <Color x:Key="ColorRailTextInactive">#A6BCB8</Color>      <!-- RailTextInactive -->
+  <Color x:Key="ColorRailSectionLabel">#6E8C8B</Color>      <!-- RailSectionLabel -->
+
+  <!-- primary (brand-filled controls, links, focus) -->
+  <Color x:Key="ColorPrimary">#109089</Color>               <!-- Brand500 -->
+  <Color x:Key="ColorPrimaryPressed">#0E7A75</Color>        <!-- Brand600 -->
+  <Color x:Key="ColorPrimaryFocusRing">#0B5F5B</Color>      <!-- Brand700 -->
+
+  <!-- accent tint / base / strong triads -->
+  <Color x:Key="ColorAccentInfoTint">#E9F1FC</Color>        <!-- InfoTintLight -->
+  <Color x:Key="ColorAccentInfoBase">#4E84DE</Color>        <!-- InfoBase -->
+  <Color x:Key="ColorAccentInfoStrong">#2F5FB0</Color>      <!-- InfoStrongLight -->
+
+  <Color x:Key="ColorAccentWarningTint">#FFF3E0</Color>     <!-- WarningTintLight -->
+  <Color x:Key="ColorAccentWarningBase">#EBA53C</Color>     <!-- WarningBase -->
+  <Color x:Key="ColorAccentWarningStrong">#9A6410</Color>   <!-- WarningStrongLight -->
+
+  <Color x:Key="ColorAccentVioletTint">#EFEAFC</Color>      <!-- VioletTintLight -->
+  <Color x:Key="ColorAccentVioletBase">#8C64D7</Color>      <!-- VioletBase -->
+  <Color x:Key="ColorAccentVioletStrong">#5A3AA0</Color>    <!-- VioletStrongLight -->
+
+  <Color x:Key="ColorAccentDangerTint">#FDECE8</Color>      <!-- DangerTintLight -->
+  <Color x:Key="ColorAccentDangerBase">#E4574C</Color>      <!-- DangerBase -->
+  <Color x:Key="ColorAccentDangerStrong">#A32A20</Color>    <!-- DangerStrongLight -->
+
+  <Color x:Key="ColorAccentSuccessTint">#E6F6F3</Color>     <!-- Brand50 (success reuses brand) -->
+  <Color x:Key="ColorAccentSuccessBase">#109089</Color>     <!-- Brand500 -->
+  <Color x:Key="ColorAccentSuccessStrong">#0B5F5B</Color>   <!-- Brand700 -->
+
+  <!-- state overlays -->
+  <Color x:Key="ColorStateHoverOverlay">#080B2526</Color>   <!-- StateHoverOverlayLight -->
+  <Color x:Key="ColorStatePressedOverlay">#140B2526</Color> <!-- StatePressedOverlayLight -->
+  <Color x:Key="ColorStateFocusRing">#0B5F5B</Color>        <!-- Brand700 -->
+  <Color x:Key="ColorStateSelectedTint">#E6F6F3</Color>     <!-- Brand50 -->
+
+</ResourceDictionary>
