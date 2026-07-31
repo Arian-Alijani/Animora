@@ -2,9 +2,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              x:Class="Animora.Desktop.App.App">
   <Application.Styles>
-    <!-- TODO(P1-01): this StyleInclude only exists for the throwaway token gallery window
-         (TODO.md item 35); the real composition root wires Animora.Desktop.UI's theme once in
-         phase 02 (DESK-ARCH-05/06). Remove alongside Gallery/ after the phase-01 host check. -->
+    <!-- The one place the design system is applied: theme, tokens and the RTL root style come from
+         Animora.Desktop.UI only, never per screen (DT-06, DESK-ARCH-06/12). -->
     <StyleInclude Source="avares://Animora.Desktop.UI/Theme/AnimoraTheme.axaml" />
   </Application.Styles>
 </Application>

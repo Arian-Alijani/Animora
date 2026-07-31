@@ -49,13 +49,27 @@ this phase.
 
 ## Completion Criteria
 
-- [ ] `Animora.Desktop.UI` builds with zero references to any `Desktop.Modules.*`, `Desktop.App`,
+- [x] `Animora.Desktop.UI` builds with zero references to any `Desktop.Modules.*`, `Desktop.App`,
       `Desktop.Data`, `Desktop.Sync`, or `Desktop.Infrastructure` project (AT-08 satisfied).
-- [ ] RTL + Vazirmatn + theme tokens render correctly in at least one headless smoke check.
-- [ ] Jalali and money/number converters exist and have unit tests independent of any screen.
-- [ ] `ViewModelBase` and dialog/toast abstractions are ready for module ViewModels to consume.
-- [ ] No hardcoded colors/spacing/fonts exist anywhere in this project (they define the tokens,
+- [x] RTL + Vazirmatn + theme tokens render correctly in at least one headless smoke check.
+- [x] Jalali and money/number converters exist and have unit tests independent of any screen.
+- [x] `ViewModelBase` and dialog/toast abstractions are ready for module ViewModels to consume.
+- [x] No hardcoded colors/spacing/fonts exist anywhere in this project (they define the tokens,
       they don't bypass them).
+
+### Verification evidence (2026-07-31)
+
+- AT-08: enforced by `ArchTests/AssemblyBoundaryRules` (`DesignSystemProjectReferencesNoOtherDesktopProject`,
+  `DesignSystemTypesDependOnNoOtherDesktopNamespace`), not by inspection.
+- RTL/Vazirmatn/token rendering: `UiTests/Theme/AnimoraThemeSmokeTests` (flow direction, effective
+  default family, `StatCard`/`StatusChip` token brushes) plus the user's real Windows run of the
+  item-35 gallery — [`../../_meta/host-verification-log.md`](../../_meta/host-verification-log.md).
+- Converters/formatters: `UnitTests/Converters` + `UnitTests/Localization`, screen-independent.
+- `Mvvm/ViewModelBase`, `Services/IDialogService`, `Services/IToastService` exist and are wired for
+  consumers through `Services/ServiceCollectionExtensions.AddDesktopUi()`.
+- No hardcoded values: enforced by `ArchTests/TokenDisciplineRules.XamlOutsideTokensHasNoLiteralColorFontOrRadiusValues`.
+- The throwaway gallery (item 35) was deleted and `App` shows `Shell/ShellWindow` again; the theme
+  include stays at the application root, which is where phase 02 keeps it (DT-06).
 
 ---
 

@@ -13,6 +13,7 @@ become `complete`.
 | Date | Phase | TODO item | What was checked | Environment | Result | Reported by |
 |---|---|---|---|---|---|---|
 | 2026-07-31 | 00 Solution Bootstrap | 18 | `Animora.Desktop.App` starts and shows the empty shell window | User's Windows machine (real desktop session) | Pass — app launched, blank window shown | User |
+| 2026-07-31 | 01 Design System Foundation | 36 | Token gallery renders RTL with Vazirmatn, token colors, shadows and controls as in the reference screens | User's Windows machine (real desktop session) | Pass — gallery launched with zero warnings and zero errors, rendering matched the reference | User |
 
 ## Notes
 
