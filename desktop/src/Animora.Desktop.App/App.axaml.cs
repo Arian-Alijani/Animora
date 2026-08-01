@@ -1,7 +1,5 @@
-using Animora.Desktop.App.Shell;
 using Animora.Desktop.UI.Services;
 using Avalonia;
-using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 
 namespace Animora.Desktop.App;
@@ -17,13 +15,7 @@ public partial class App : Application
         AvaloniaXamlLoader.Load(this);
     }
 
-    public override void OnFrameworkInitializationCompleted()
-    {
-        if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
-        {
-            desktop.MainWindow = new ShellWindow();
-        }
-
-        base.OnFrameworkInitializationCompleted();
-    }
+    // TODO(P1-02): assign MainWindow from the host container here — ShellWindow now takes its
+    // ShellViewModel by constructor injection, so the startup sequence resolves the window instead of
+    // this method newing it up (DESK-ARCH-05/16).
 }
