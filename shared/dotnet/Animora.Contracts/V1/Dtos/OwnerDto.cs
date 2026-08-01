@@ -25,4 +25,16 @@ public sealed record OwnerDto
 
     /// <summary>Optional 10-digit Iranian national ID.</summary>
     public string? NationalId { get; init; }
+
+    /// <summary>Optional street address; see <c>IOwnerInput.Address</c>.</summary>
+    public string? Address { get; init; }
+
+    /// <summary>Optional city name; see <c>IOwnerInput.City</c>.</summary>
+    public string? City { get; init; }
+
+    /// <summary>Clinic-internal note about the owner, never shown to the owner; see <c>IOwnerInput.Notes</c>.</summary>
+    public string? Notes { get; init; }
+
+    /// <summary>When this owner's file was opened, in UTC; see <c>IOwnerInput.IntakeDateUtc</c>.</summary>
+    public required DateTime IntakeDateUtc { get; init; }
 }

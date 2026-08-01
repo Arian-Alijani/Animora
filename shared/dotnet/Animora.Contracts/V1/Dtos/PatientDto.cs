@@ -39,4 +39,56 @@ public sealed record PatientDto
     /// <c>Animora.SharedKernel.Validation.Clients.PatientValidator.AllowedSexes</c>.
     /// </summary>
     public required string Sex { get; init; }
+
+    /// <summary>Optional breed within <see cref="Species"/>; see <c>IPatientInput.Breed</c>.</summary>
+    public string? Breed { get; init; }
+
+    /// <summary>The patient's birth date (UTC midnight), or <see langword="null"/> when unknown; see <c>IPatientInput.BirthDateUtc</c>.</summary>
+    public DateTime? BirthDateUtc { get; init; }
+
+    /// <summary>
+    /// Whether <see cref="BirthDateUtc"/> was derived from a staff-entered approximate age rather
+    /// than a precisely known date. A status/provenance flag, not part of <c>IPatientInput</c>'s
+    /// validated surface — the same reason <c>StaffMember.IsActive</c> sits beside, not inside,
+    /// <c>IStaffInput</c>.
+    /// </summary>
+    public bool IsBirthDateEstimated { get; init; }
+
+    /// <summary>
+    /// The patient's most recently recorded weight in kilograms, or <see langword="null"/> when
+    /// never weighed; see <c>IPatientInput.WeightKg</c>. The weight-over-time trend chart is
+    /// sourced from Visits' <c>BiometricReading</c> rows instead (05-domain-model.md), left as
+    /// <c>TODO(P1-07)</c> on the medical-file summary screen rather than duplicated here.
+    /// </summary>
+    public decimal? WeightKg { get; init; }
+
+    /// <summary>Whether the patient has been sterilized; a status flag, kept beside rather than inside <c>IPatientInput</c>.</summary>
+    public bool IsSterilized { get; init; }
+
+    /// <summary>Optional microchip identifier; see <c>IPatientInput.MicrochipId</c>.</summary>
+    public string? MicrochipId { get; init; }
+
+    /// <summary>When <see cref="MicrochipId"/> was implanted, in UTC; see <c>IPatientInput.MicrochipImplantedAtUtc</c>.</summary>
+    public DateTime? MicrochipImplantedAtUtc { get; init; }
+
+    /// <summary>Optional coat/plumage color description; see <c>IPatientInput.Color</c>.</summary>
+    public string? Color { get; init; }
+
+    /// <summary>Optional free-text behavior/temperament note; see <c>IPatientInput.Temperament</c>.</summary>
+    public string? Temperament { get; init; }
+
+    /// <summary>
+    /// The patient's living environment; validated against
+    /// <c>Animora.SharedKernel.Validation.Clients.PatientValidator.AllowedHousingTypes</c>.
+    /// </summary>
+    public string? HousingType { get; init; }
+
+    /// <summary>Optional free-text diet/feeding-regimen note; see <c>IPatientInput.Diet</c>.</summary>
+    public string? Diet { get; init; }
+
+    /// <summary>Optional physical-file/label barcode value; see <c>IPatientInput.BarcodeValue</c>.</summary>
+    public string? BarcodeValue { get; init; }
+
+    /// <summary>Optional free-text surgical history known at intake; see <c>IPatientInput.SurgicalHistory</c>.</summary>
+    public string? SurgicalHistory { get; init; }
 }
