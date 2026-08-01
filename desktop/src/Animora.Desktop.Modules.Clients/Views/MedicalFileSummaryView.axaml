@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:controls="using:Animora.Desktop.UI.Controls"
              xmlns:converters="using:Animora.Desktop.UI.Converters"
-             xmlns:views="using:Animora.Desktop.Modules.Clients.Views">
+             xmlns:views="using:Animora.Desktop.Modules.Clients.Views"
+             xmlns:vm="using:Animora.Desktop.Modules.Clients.ViewModels">
   <!--
     The medical-file summary route (item 27, playbook step 1): a read-only header over item 22's
     GetMedicalFileSummaryQuery, Jalali-stamped at this binding edge (DESK-ARCH-14). The
@@ -118,10 +119,10 @@
         <StackPanel Orientation="Horizontal" Spacing="{StaticResource CardGap}">
           <Button Classes="Secondary"
                   Content="تاریخچه ویزیت‌ها (به‌زودی)"
-                  IsEnabled="{Binding HasVisitHistoryLink}" />
+                  IsEnabled="{x:Static vm:MedicalFileSummaryViewModel.HasVisitHistoryLink}" />
           <Button Classes="Secondary"
                   Content="پیوست‌ها (به‌زودی)"
-                  IsEnabled="{Binding HasAttachmentsLink}" />
+                  IsEnabled="{x:Static vm:MedicalFileSummaryViewModel.HasAttachmentsLink}" />
         </StackPanel>
 
         <Button Classes="Subtle"

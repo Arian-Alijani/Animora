@@ -165,6 +165,71 @@ public class OwnerValidatorTests
         result.FailedProperties().Should().Contain(nameof(IOwnerInput.NationalId));
     }
 
+    [Theory]
+    [InlineData(null)]
+    [InlineData("")]
+    public void Address_is_optional(string? address)
+    {
+        _validator.Validate(new OwnerInput { Address = address }).IsValid.Should().BeTrue();
+    }
+
+    [Fact]
+    public void Address_is_capped_at_500_characters()
+    {
+        _validator.Validate(new OwnerInput { Address = new string('آ', 500) }).IsValid.Should().BeTrue();
+        _validator.Validate(new OwnerInput { Address = new string('آ', 501) }).IsValid.Should().BeFalse();
+    }
+
+    [Theory]
+    [InlineData(null)]
+    [InlineData("")]
+    public void City_is_optional(string? city)
+    {
+        _validator.Validate(new OwnerInput { City = city }).IsValid.Should().BeTrue();
+    }
+
+    [Fact]
+    public void City_is_capped_at_100_characters()
+    {
+        _validator.Validate(new OwnerInput { City = new string('ت', 100) }).IsValid.Should().BeTrue();
+        _validator.Validate(new OwnerInput { City = new string('ت', 101) }).IsValid.Should().BeFalse();
+    }
+
+    [Theory]
+    [InlineData(null)]
+    [InlineData("")]
+    public void Notes_is_optional(string? notes)
+    {
+        _validator.Validate(new OwnerInput { Notes = notes }).IsValid.Should().BeTrue();
+    }
+
+    [Fact]
+    public void Notes_is_capped_at_2000_characters()
+    {
+        _validator.Validate(new OwnerInput { Notes = new string('ن', 2000) }).IsValid.Should().BeTrue();
+        _validator.Validate(new OwnerInput { Notes = new string('ن', 2001) }).IsValid.Should().BeFalse();
+    }
+
+    [Fact]
+    public void Intake_date_is_required()
+    {
+        // The default(DateTime) literal a missed assignment would leave behind (CONV-01/02) is
+        // rejected explicitly rather than left to fail some unrelated rule by accident.
+        ValidationResult result = _validator.Validate(new OwnerInput { IntakeDateUtc = default });
+
+        result.FailedProperties().Should().Contain(nameof(IOwnerInput.IntakeDateUtc));
+    }
+
+    [Fact]
+    public void Intake_date_must_be_utc()
+    {
+        var localDate = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Local);
+
+        ValidationResult result = _validator.Validate(new OwnerInput { IntakeDateUtc = localDate });
+
+        result.FailedProperties().Should().Contain(nameof(IOwnerInput.IntakeDateUtc));
+    }
+
     [Fact]
     public void Every_broken_field_is_reported_in_one_pass()
     {

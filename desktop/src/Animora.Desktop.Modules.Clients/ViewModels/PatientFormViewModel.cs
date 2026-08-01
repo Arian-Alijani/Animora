@@ -119,12 +119,14 @@ public sealed class PatientFormViewModel : ViewModelBase, INavigationAware
 
     /// <summary>Registry the species <c>ComboBox</c> binds its <c>ItemsSource</c> to — the same
     /// list <see cref="PatientValidator"/> checks against, so the form can never offer a value the
-    /// handler would reject (SH-05, INV-02).</summary>
-    public IReadOnlyCollection<string> AllowedSpecies => PatientValidator.AllowedSpecies;
+    /// handler would reject (SH-05, INV-02). Static, not an instance facade: it never reads
+    /// instance state (CA1822 + <c>TreatWarningsAsErrors</c>), and the View reaches it through
+    /// <c>{x:Static}</c> the same way <c>ShellText</c>'s members are reached.</summary>
+    public static IReadOnlyCollection<string> AllowedSpecies => PatientValidator.AllowedSpecies;
 
-    public IReadOnlyCollection<string> AllowedSexes => PatientValidator.AllowedSexes;
+    public static IReadOnlyCollection<string> AllowedSexes => PatientValidator.AllowedSexes;
 
-    public IReadOnlyCollection<string> AllowedHousingTypes => PatientValidator.AllowedHousingTypes;
+    public static IReadOnlyCollection<string> AllowedHousingTypes => PatientValidator.AllowedHousingTypes;
 
     public string Species
     {

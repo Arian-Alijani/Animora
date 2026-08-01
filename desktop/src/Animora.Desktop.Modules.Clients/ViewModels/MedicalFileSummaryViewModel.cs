@@ -217,14 +217,19 @@ public sealed class MedicalFileSummaryViewModel : ViewModelBase, INavigationAwar
     // NavigateTo(VisitHistoryViewModel.RouteKey, _patientId) command instead of a disabled marker
     // (the phase 05 TODO header's "links out stay markers" decision, DT-01, CM-06).
     /// <summary>Always <see langword="false"/> in this phase — the View shows the visit-history
-    /// link disabled, never wired to a command, until phase 07 lands.</summary>
-    public bool HasVisitHistoryLink => false;
+    /// link disabled, never wired to a command, until phase 07 lands. Static, not an instance
+    /// facade: it never reads instance state (CA1822 + <c>TreatWarningsAsErrors</c>), and the View
+    /// reaches it through <c>{x:Static}</c> the same way <c>ShellText</c>'s members are reached.
+    /// Becomes an instance property again once phase 07 gives it real per-patient state to
+    /// read.</summary>
+    public static bool HasVisitHistoryLink => false;
 
     // TODO(P1-08): attachments are Files' own screen; once it exists, this becomes a real
     // NavigateTo(...) command the same way as the visit-history marker above.
     /// <summary>Always <see langword="false"/> in this phase — the View shows the attachments link
-    /// disabled, never wired to a command, until phase 08 lands.</summary>
-    public bool HasAttachmentsLink => false;
+    /// disabled, never wired to a command, until phase 08 lands. Static for the same CA1822 reason
+    /// as <see cref="HasVisitHistoryLink"/>.</summary>
+    public static bool HasAttachmentsLink => false;
 
     /// <inheritdoc />
     public void OnNavigatedTo(object? parameter)
