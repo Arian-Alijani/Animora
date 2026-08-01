@@ -60,4 +60,4 @@ logged-in staff context from here).
 
 ## Step 0
 
-Not run yet. See [`../../_meta/session-protocol.md`](../../_meta/session-protocol.md).
+Run. See [`TODO.md`](TODO.md) and [`../../_meta/session-protocol.md`](../../_meta/session-protocol.md).
