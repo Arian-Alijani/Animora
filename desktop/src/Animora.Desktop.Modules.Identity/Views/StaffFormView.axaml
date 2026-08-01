@@ -1,0 +1,92 @@
+<UserControl x:Class="Animora.Desktop.Modules.Identity.Views.StaffFormView"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="using:Animora.Desktop.UI.Controls">
+  <!--
+    The staff create/edit route (item 28, playbook steps 1/3/4). Nothing here sets FlowDirection:
+    RightToLeft is inherited from the shell root (DT-06, DESK-ARCH-06). The username field renders
+    one of two ways depending on StaffFormViewModel.ShowUsernamePrefix — a fixed SEC-17 anchor prefix
+    beside a suffix-only TextBox for a subordinate create, or one freeform TextBox otherwise (item
+    28's UI rule) — never both at once, since the two StackPanels below are mutually exclusive on the
+    same boolean.
+  -->
+  <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+    <StackPanel Spacing="{StaticResource SectionGap}" MaxWidth="640">
+      <controls:SectionCard Title="{Binding HeaderTitle}">
+        <controls:SectionCard.BodyContent>
+          <StackPanel Spacing="{StaticResource Spacing16}">
+            <StackPanel Spacing="{StaticResource Spacing8}">
+              <TextBlock Classes="Caption" Foreground="{DynamicResource BrushTextSecondary}" Text="نام و نام خانوادگی" />
+              <TextBox Text="{Binding FullName, Mode=TwoWay}" Watermark="مثلاً دکتر رضایی" />
+            </StackPanel>
+
+            <StackPanel Spacing="{StaticResource Spacing8}">
+              <TextBlock Classes="Caption" Foreground="{DynamicResource BrushTextSecondary}" Text="نقش" />
+              <ComboBox HorizontalAlignment="Stretch"
+                        ItemsSource="{Binding Roles}"
+                        SelectedItem="{Binding SelectedRole, Mode=TwoWay}">
+                <ComboBox.ItemTemplate>
+                  <DataTemplate>
+                    <TextBlock Text="{Binding DisplayName}" />
+                  </DataTemplate>
+                </ComboBox.ItemTemplate>
+              </ComboBox>
+            </StackPanel>
+
+            <!-- SEC-17 anchor prefix, shown only for a subordinate create (ShowUsernamePrefix). -->
+            <StackPanel Spacing="{StaticResource Spacing8}" IsVisible="{Binding ShowUsernamePrefix}">
+              <TextBlock Classes="Caption" Foreground="{DynamicResource BrushTextSecondary}" Text="نام کاربری" />
+              <Grid ColumnDefinitions="Auto,Auto,*" ColumnSpacing="{StaticResource Spacing8}">
+                <Border Grid.Column="0"
+                        Classes="Card"
+                        Padding="12,0"
+                        Background="{DynamicResource BrushSurfaceMuted}">
+                  <TextBlock VerticalAlignment="Center"
+                             Foreground="{DynamicResource BrushTextSecondary}"
+                             Text="{Binding OwnerAdminUsername}" />
+                </Border>
+                <TextBlock Grid.Column="1"
+                           VerticalAlignment="Center"
+                           Foreground="{DynamicResource BrushTextSecondary}"
+                           Text="-" />
+                <TextBox Grid.Column="2" Text="{Binding UsernameSuffix, Mode=TwoWay}" Watermark="drahmadi" />
+              </Grid>
+            </StackPanel>
+
+            <!-- Freeform username, shown for an edit or a system-role (owner-admin) create. -->
+            <StackPanel Spacing="{StaticResource Spacing8}" IsVisible="{Binding ShowFreeformUsername}">
+              <TextBlock Classes="Caption" Foreground="{DynamicResource BrushTextSecondary}" Text="نام کاربری" />
+              <TextBox Text="{Binding Username, Mode=TwoWay}" Watermark="petshop" />
+            </StackPanel>
+
+            <StackPanel Spacing="{StaticResource Spacing8}">
+              <TextBlock Classes="Caption" Foreground="{DynamicResource BrushTextSecondary}" Text="شماره موبایل" />
+              <TextBox Text="{Binding MobileNumber, Mode=TwoWay}" Watermark="0912xxxxxxx" />
+            </StackPanel>
+
+            <StackPanel Spacing="{StaticResource Spacing8}">
+              <TextBlock Classes="Caption" Foreground="{DynamicResource BrushTextSecondary}" Text="ایمیل (اختیاری)" />
+              <TextBox Text="{Binding Email, Mode=TwoWay}" Watermark="name@example.com" />
+            </StackPanel>
+
+            <CheckBox Content="حساب فعال است (امکان ورود دارد)" IsChecked="{Binding IsActive, Mode=TwoWay}" />
+
+            <TextBlock Classes="Caption"
+                       Foreground="{DynamicResource BrushAccentDangerStrong}"
+                       TextWrapping="Wrap"
+                       Text="{Binding ErrorMessage}"
+                       IsVisible="{Binding HasError}" />
+
+            <StackPanel Orientation="Horizontal" Spacing="{StaticResource CardGap}">
+              <Button Classes="Primary"
+                      Content="{Binding SaveButtonText}"
+                      Command="{Binding SaveCommand}"
+                      IsEnabled="{Binding !IsSaving}" />
+              <Button Classes="Secondary" Content="انصراف" Command="{Binding CancelCommand}" />
+            </StackPanel>
+          </StackPanel>
+        </controls:SectionCard.BodyContent>
+      </controls:SectionCard>
+    </StackPanel>
+  </ScrollViewer>
+</UserControl>
