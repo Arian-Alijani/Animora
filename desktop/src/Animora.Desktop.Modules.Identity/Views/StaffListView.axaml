@@ -1,0 +1,67 @@
+<UserControl x:Class="Animora.Desktop.Modules.Identity.Views.StaffListView"
+             x:Name="Root"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="using:Animora.Desktop.UI.Controls"
+             xmlns:views="using:Animora.Desktop.Modules.Identity.Views">
+  <!--
+    The staff list route (DT-08): search + create above a virtualized, keyset-paged DataGrid.
+    Nothing here sets FlowDirection: RightToLeft is inherited from the shell root (DT-06,
+    DESK-ARCH-06). DataGrid row virtualization is Avalonia.Controls.DataGrid's own default and is
+    never turned off here.
+  -->
+  <StackPanel Spacing="{StaticResource SectionGap}">
+    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="{StaticResource CardGap}">
+      <TextBox Grid.Column="0"
+               Classes="Search"
+               Watermark="جستجوی نام، نام کاربری یا شماره موبایل"
+               Text="{Binding SearchTerm, Mode=TwoWay}">
+        <TextBox.KeyBindings>
+          <KeyBinding Gesture="Enter" Command="{Binding SearchCommand}" />
+        </TextBox.KeyBindings>
+      </TextBox>
+      <Button Grid.Column="1"
+              Classes="Primary"
+              Content="افزودن کارمند"
+              Command="{Binding CreateCommand}" />
+    </Grid>
+
+    <DataGrid ItemsSource="{Binding Items}"
+              IsReadOnly="True"
+              CanUserReorderColumns="False"
+              CanUserSortColumns="False"
+              AutoGenerateColumns="False">
+      <DataGrid.Columns>
+        <DataGridTextColumn Header="نام و نام خانوادگی" Binding="{Binding FullName}" Width="2*" />
+        <DataGridTextColumn Header="نام کاربری" Binding="{Binding Username}" Width="*" />
+        <DataGridTextColumn Header="نقش" Binding="{Binding RoleDisplayName}" Width="*" />
+        <DataGridTextColumn Header="شماره موبایل" Binding="{Binding MobileNumber}" Width="*" />
+        <DataGridTemplateColumn Header="وضعیت" Width="Auto">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <controls:StatusChip
+                Text="{Binding IsActive, Converter={x:Static views:StaffStatusConverter.Instance}, ConverterParameter=Text}"
+                Variant="{Binding IsActive, Converter={x:Static views:StaffStatusConverter.Instance}, ConverterParameter=Variant}" />
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+        <DataGridTemplateColumn Header="" Width="Auto">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <Button Classes="Subtle Small"
+                      Content="ویرایش"
+                      Command="{Binding DataContext.EditCommand, ElementName=Root}"
+                      CommandParameter="{Binding}" />
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+      </DataGrid.Columns>
+    </DataGrid>
+
+    <Button Classes="Secondary"
+            HorizontalAlignment="Center"
+            Content="بارگذاری بیشتر"
+            IsVisible="{Binding HasMore}"
+            Command="{Binding LoadMoreCommand}" />
+  </StackPanel>
+</UserControl>

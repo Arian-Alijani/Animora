@@ -1,0 +1,50 @@
+<UserControl x:Class="Animora.Desktop.Modules.Identity.Views.LoginView"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <!--
+    The login route's credential form (PHASE.md scope, DT-12: no network call). Rail-visible in
+    Stage A per the phase TODO's six-decision note — no pre-shell auth window exists yet. Nothing
+    here sets FlowDirection: RightToLeft is inherited from the shell root (DT-06, DESK-ARCH-06).
+  -->
+  <Grid Background="{DynamicResource BrushPageBackground}">
+    <Border Classes="Card"
+            Padding="{StaticResource CardPaddingLarge}"
+            Width="360"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center">
+      <StackPanel Spacing="{StaticResource Spacing16}">
+        <StackPanel Spacing="{StaticResource Spacing4}">
+          <TextBlock Classes="PageTitle"
+                     Foreground="{DynamicResource BrushTextPrimary}"
+                     Text="ورود به آنیمورا" />
+          <TextBlock Classes="Body"
+                     Foreground="{DynamicResource BrushTextSecondary}"
+                     TextWrapping="Wrap"
+                     Text="با نام کاربری و رمز عبور کارکنان خود وارد شوید." />
+        </StackPanel>
+
+        <StackPanel Spacing="{StaticResource Spacing8}">
+          <TextBlock Classes="Caption" Foreground="{DynamicResource BrushTextSecondary}" Text="نام کاربری" />
+          <TextBox Text="{Binding Username, Mode=TwoWay}" Watermark="petshop" />
+        </StackPanel>
+
+        <StackPanel Spacing="{StaticResource Spacing8}">
+          <TextBlock Classes="Caption" Foreground="{DynamicResource BrushTextSecondary}" Text="رمز عبور" />
+          <TextBox Text="{Binding Password, Mode=TwoWay}" PasswordChar="•" Watermark="••••••••" />
+        </StackPanel>
+
+        <TextBlock Classes="Caption"
+                   Foreground="{DynamicResource BrushAccentDangerStrong}"
+                   TextWrapping="Wrap"
+                   Text="{Binding ErrorMessage}"
+                   IsVisible="{Binding HasError}" />
+
+        <Button Classes="Primary"
+                HorizontalAlignment="Stretch"
+                Content="ورود"
+                Command="{Binding SignInCommand}"
+                IsEnabled="{Binding CanSignIn}" />
+      </StackPanel>
+    </Border>
+  </Grid>
+</UserControl>

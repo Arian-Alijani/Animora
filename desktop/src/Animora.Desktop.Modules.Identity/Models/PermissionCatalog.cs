@@ -48,6 +48,14 @@ public static class PermissionCatalog
         new PermissionClaim("subscription.manage", "Licensing", "مدیریت اشتراک"),
     ];
 
+    /// <summary>
+    /// The claim SEC-11 protects on the tenant's system-seeded owner-admin role. The RBAC-model prose
+    /// in 10-security-and-access-control.md names it <c>tenant.manage-staff</c>, but item 6's
+    /// grouped-table transcription above already fixed its key as <c>"staff.manage"</c> — the same
+    /// identifier <c>SaveRoleHandler</c>'s SEC-11 guard checks for.
+    /// </summary>
+    public const string OwnerAdminProtectedClaimKey = "staff.manage";
+
     // Ordinal: a claim key is an identifier, not user text (mirrors RoleValidator's duplicate-key
     // check), so lookups must not fold two differently-cased keys into one match.
     private static readonly HashSet<string> KeySet = new(All.Select(claim => claim.Key), StringComparer.Ordinal);
