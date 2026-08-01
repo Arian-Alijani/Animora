@@ -1,0 +1,95 @@
+<UserControl x:Class="Animora.Desktop.Modules.Identity.Views.RoleManagementView"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="using:Animora.Desktop.UI.Controls"
+             xmlns:converters="using:Animora.Desktop.UI.Converters"
+             xmlns:viewmodels="using:Animora.Desktop.Modules.Identity.ViewModels">
+  <!--
+    The role-management route (item 29, playbook steps 1/3/4): a role list beside a claim-assignment
+    form for whichever role is selected — one screen rather than a list/form pair, since a tenant's
+    role count never approaches DT-08's virtualization threshold. Nothing here sets FlowDirection:
+    RightToLeft is inherited from the shell root (DT-06, DESK-ARCH-06).
+  -->
+  <Grid ColumnDefinitions="280,*" ColumnSpacing="{StaticResource CardGap}">
+    <controls:SectionCard Grid.Column="0"
+                           Title="نقش‌ها"
+                           ActionText="افزودن نقش جدید"
+                           ActionCommand="{Binding CreateCommand}">
+      <controls:SectionCard.BodyContent>
+        <ListBox ItemsSource="{Binding Roles}" SelectedItem="{Binding SelectedRole, Mode=TwoWay}">
+          <ListBox.ItemTemplate>
+            <DataTemplate>
+              <StackPanel Spacing="{StaticResource Spacing2}">
+                <TextBlock Classes="BodyStrong"
+                           Foreground="{DynamicResource BrushTextPrimary}"
+                           Text="{Binding DisplayName}" />
+                <StackPanel Orientation="Horizontal" Spacing="{StaticResource Spacing4}">
+                  <TextBlock Classes="Caption"
+                             Foreground="{DynamicResource BrushTextSecondary}"
+                             Text="{Binding MemberCount, Converter={x:Static converters:PersianNumberConverter.Instance}}" />
+                  <TextBlock Classes="Caption"
+                             Foreground="{DynamicResource BrushTextSecondary}"
+                             Text="کارمند" />
+                </StackPanel>
+              </StackPanel>
+            </DataTemplate>
+          </ListBox.ItemTemplate>
+        </ListBox>
+      </controls:SectionCard.BodyContent>
+    </controls:SectionCard>
+
+    <ScrollViewer Grid.Column="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+      <controls:SectionCard Title="{Binding HeaderTitle}">
+        <controls:SectionCard.BodyContent>
+          <StackPanel Spacing="{StaticResource Spacing16}">
+            <StackPanel Spacing="{StaticResource Spacing8}">
+              <TextBlock Classes="Caption" Foreground="{DynamicResource BrushTextSecondary}" Text="نام نقش" />
+              <TextBox Text="{Binding DisplayName, Mode=TwoWay}" Watermark="مثلاً پذیرش" />
+            </StackPanel>
+
+            <StackPanel Spacing="{StaticResource Spacing12}">
+              <TextBlock Classes="Caption" Foreground="{DynamicResource BrushTextSecondary}" Text="دسترسی‌ها" />
+
+              <!--
+                Grouped by PermissionCatalog's module order (SEC-09): an outer ItemsControl over
+                RoleManagementViewModel.ClaimGroups, an inner one per group's claim checkboxes.
+              -->
+              <ItemsControl ItemsSource="{Binding ClaimGroups}">
+                <ItemsControl.ItemTemplate>
+                  <DataTemplate DataType="viewmodels:PermissionClaimGroupViewModel">
+                    <StackPanel Spacing="{StaticResource Spacing8}" Margin="0,0,0,12">
+                      <TextBlock Classes="Overline"
+                                 Foreground="{DynamicResource BrushTextMuted}"
+                                 Text="{Binding ModuleName}" />
+                      <ItemsControl ItemsSource="{Binding Claims}">
+                        <ItemsControl.ItemTemplate>
+                          <DataTemplate DataType="viewmodels:PermissionClaimOptionViewModel">
+                            <CheckBox Content="{Binding DisplayName}"
+                                      IsChecked="{Binding IsAssigned, Mode=TwoWay}"
+                                      IsEnabled="{Binding !IsLocked}" />
+                          </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                      </ItemsControl>
+                    </StackPanel>
+                  </DataTemplate>
+                </ItemsControl.ItemTemplate>
+              </ItemsControl>
+            </StackPanel>
+
+            <TextBlock Classes="Caption"
+                       Foreground="{DynamicResource BrushAccentDangerStrong}"
+                       TextWrapping="Wrap"
+                       Text="{Binding ErrorMessage}"
+                       IsVisible="{Binding HasError}" />
+
+            <Button Classes="Primary"
+                    HorizontalAlignment="Left"
+                    Content="{Binding SaveButtonText}"
+                    Command="{Binding SaveCommand}"
+                    IsEnabled="{Binding !IsSaving}" />
+          </StackPanel>
+        </controls:SectionCard.BodyContent>
+      </controls:SectionCard>
+    </ScrollViewer>
+  </Grid>
+</UserControl>

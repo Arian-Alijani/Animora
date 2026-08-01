@@ -19,6 +19,8 @@ public interface IRoleWriteStore
     /// The already-validated command itself (CONV-18, INV-02); catalog membership of its claim keys
     /// is the handler's check (SEC-09), not this seam's.
     /// </param>
+    /// <param name="cancellationToken">Propagated to the underlying storage call, no different from
+    /// every other seam method in this module.</param>
     /// <remarks>
     /// Claim keys are replaced wholesale rather than diffed by the caller: the role's claim set is
     /// what the screen edits, and the Stage C implementation writes the role, its claim rows and the

@@ -13,6 +13,8 @@ namespace Animora.Desktop.Modules.Identity.Handlers;
 /// <see langword="null"/> for a create, in which case the handler assigns a fresh <c>UUIDv7</c>
 /// (INV-03); the row being edited otherwise.
 /// </param>
+/// <param name="DisplayName">Mirrors <see cref="IRoleInput.DisplayName"/>.</param>
+/// <param name="PermissionClaimKeys">Mirrors <see cref="IRoleInput.PermissionClaimKeys"/>.</param>
 public sealed record SaveRoleCommand(
     Guid? RoleId,
     string DisplayName,

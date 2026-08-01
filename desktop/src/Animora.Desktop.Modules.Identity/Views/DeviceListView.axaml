@@ -1,0 +1,44 @@
+<UserControl x:Class="Animora.Desktop.Modules.Identity.Views.DeviceListView"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="using:Animora.Desktop.UI.Controls"
+             xmlns:converters="using:Animora.Desktop.UI.Converters"
+             xmlns:views="using:Animora.Desktop.Modules.Identity.Views">
+  <!--
+    The device-listing route (item 30, SEC-06): a read-only, unpaged DataGrid — no revoke action, no
+    seat/limit UI (both server-side, LIC-08/LIC-09, out of scope here). Nothing here sets
+    FlowDirection: RightToLeft is inherited from the shell root (DT-06, DESK-ARCH-06). Jalali
+    formatting happens only at this binding edge, over the UTC instants DeviceRegistration carries
+    (DESK-ARCH-14).
+  -->
+  <controls:SectionCard Title="دستگاه‌های ثبت‌شده">
+    <controls:SectionCard.BodyContent>
+      <DataGrid ItemsSource="{Binding Items}"
+                IsReadOnly="True"
+                CanUserReorderColumns="False"
+                CanUserSortColumns="False"
+                AutoGenerateColumns="False">
+        <DataGrid.Columns>
+          <DataGridTextColumn Header="دستگاه" Binding="{Binding DeviceName}" Width="2*" />
+          <DataGridTextColumn Header="شناسه سخت‌افزاری" Binding="{Binding FingerprintSuffix}" Width="*" />
+          <DataGridTextColumn Header="ثبت‌شده توسط" Binding="{Binding RegisteredByStaffName}" Width="*" />
+          <DataGridTextColumn Header="تاریخ ثبت"
+                               Width="*"
+                               Binding="{Binding RegisteredAtUtc, Converter={x:Static converters:JalaliDateConverter.Instance}, ConverterParameter=Date}" />
+          <DataGridTextColumn Header="آخرین فعالیت"
+                               Width="*"
+                               Binding="{Binding LastActiveAtUtc, Converter={x:Static converters:JalaliDateConverter.Instance}, ConverterParameter=DateTime}" />
+          <DataGridTemplateColumn Header="وضعیت" Width="Auto">
+            <DataGridTemplateColumn.CellTemplate>
+              <DataTemplate>
+                <controls:StatusChip
+                  Text="{Binding IsActive, Converter={x:Static views:DeviceStatusConverter.Instance}, ConverterParameter=Text}"
+                  Variant="{Binding IsActive, Converter={x:Static views:DeviceStatusConverter.Instance}, ConverterParameter=Variant}" />
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+          </DataGridTemplateColumn>
+        </DataGrid.Columns>
+      </DataGrid>
+    </controls:SectionCard.BodyContent>
+  </controls:SectionCard>
+</UserControl>

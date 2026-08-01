@@ -43,6 +43,8 @@ public interface IStaffReadStore
     /// and a non-unique sort key cannot be a keyset cursor on its own (CONV-16, DT-08).
     /// </param>
     /// <param name="limit">Maximum rows to return, so the virtualized grid never loads all (DT-08).</param>
+    /// <param name="cancellationToken">Propagated to the underlying storage call, no different from
+    /// every other seam method in this module.</param>
     Task<StaffPage> GetPageAsync(
         string? searchTerm,
         string? afterUsername,
