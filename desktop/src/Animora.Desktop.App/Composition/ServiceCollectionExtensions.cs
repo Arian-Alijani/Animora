@@ -1,6 +1,7 @@
 using Animora.Desktop.App.AppState;
 using Animora.Desktop.App.Navigation;
 using Animora.Desktop.App.Shell;
+using Animora.Desktop.Modules.Identity.Composition;
 using Animora.Desktop.Modules.Reporting.Composition;
 using Animora.Desktop.UI.AppState;
 using Animora.Desktop.UI.Navigation;
@@ -43,9 +44,15 @@ public static class ServiceCollectionExtensions
         services.TryAddSingleton<IRouteRegistry>(routes);
         services.TryAddSingleton<INavigationService, NavigationService>();
 
-        // Injected singletons rather than state on ViewModelBase (DESK-ARCH-03); both are phase-02
-        // placeholders carrying their own swap markers.
-        services.TryAddSingleton<ICurrentUserState, CurrentUserState>();
+        // CurrentUserState registered by its own concrete type first, not directly as
+        // TryAddSingleton<ICurrentUserState, CurrentUserState>(): AddMediator's generated
+        // registrations resolve a notification handler by its concrete type (e.g.
+        // GetRequiredService<CurrentUserState>()), never through the handler interface, so a second
+        // registration keyed on ICurrentUserState alone would construct a second, disconnected
+        // instance — the same one-instance-under-two-service-types shape Modules.Identity's
+        // InMemoryStaffStore already uses for its read/write seam split (DIR-03, DT-05).
+        services.TryAddSingleton<CurrentUserState>();
+        services.TryAddSingleton<ICurrentUserState>(static provider => provider.GetRequiredService<CurrentUserState>());
         services.TryAddSingleton<IAppStatusState, AppStatusState>();
 
         // The shell view model is a singleton because it *is* the window's state: the startup sequence
@@ -68,6 +75,10 @@ public static class ServiceCollectionExtensions
         // navigation code above name no screen, no view model and no read store — this line is what
         // makes the Home route exist. Later phases append one call each here (DT-09).
         services.AddReportingModule(routes);
+
+        // Phase 04's five routes (login, staff list/form, role management, device list) and their
+        // Stage A seams, the same one-call shape as AddReportingModule above.
+        services.AddIdentityModule(routes);
 
         return services;
     }
