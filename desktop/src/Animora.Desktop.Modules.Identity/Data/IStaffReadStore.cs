@@ -65,4 +65,16 @@ public interface IStaffReadStore
     /// in one round trip — the uniqueness check <c>StaffValidator</c> leaves to the handler (SH-05).
     /// </remarks>
     Task<Guid?> FindIdByUsernameAsync(string username, CancellationToken cancellationToken);
+
+    /// <summary>
+    /// Resolves the username of whichever staff member currently holds the tenant's system-seeded
+    /// owner-admin role (SEC-11), or <see langword="null"/> when no staff member does yet.
+    /// </summary>
+    /// <remarks>
+    /// This is the anchor <c>SaveStaffMemberCommand</c> checks a non-owner-admin username against
+    /// (SEC-17): every other account's username must start with this value followed by a hyphen.
+    /// Kept on this seam rather than <see cref="IRoleReadStore"/> because resolving it needs a
+    /// staff-by-role lookup, which is this interface's concern, not the role catalog's.
+    /// </remarks>
+    Task<string?> FindOwnerAdminUsernameAsync(CancellationToken cancellationToken);
 }

@@ -53,4 +53,12 @@ public static class IdentityErrors
     /// lock the tenant out of staff management (SEC-11).
     /// </summary>
     public const string SystemRoleClaimProtected = "ERR-IDENTITY-007";
+
+    /// <summary>
+    /// A staff create/edit for an account other than the tenant's owner-admin submitted a
+    /// <c>Username</c> that does not start with the owner-admin's username followed by a hyphen
+    /// (SEC-17) — the namespacing check <c>StaffValidator</c> deliberately leaves to the handler,
+    /// the same way it leaves <see cref="UsernameAlreadyTaken"/> and <see cref="RoleNotFound"/> to it.
+    /// </summary>
+    public const string SubordinateUsernamePrefixRequired = "ERR-IDENTITY-008";
 }

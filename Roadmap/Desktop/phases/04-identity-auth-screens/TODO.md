@@ -7,7 +7,7 @@ the permission-claim catalog table), `docs/architecture/04-module-catalog.md` (I
 entities and `IIdentityContract` shape), `desktop/AGENTS.md` (DT-01..DT-12), plus phase 02's data-seam
 reference files listed in `Roadmap/Desktop/README.md`.
 
-Five decisions this list encodes, so the implementing sessions do not re-litigate them:
+Six decisions this list encodes, so the implementing sessions do not re-litigate them:
 
 - **The login screen is a rail-visible route in Stage A.** No pre-shell authentication window exists
   (the shell is always shown, phase 02), and PHASE.md requires the login screen to be navigable from
@@ -27,6 +27,11 @@ Five decisions this list encodes, so the implementing sessions do not re-litigat
 - **Sign-in reaches `ICurrentUserState` through a Mediator notification**, handled in
   `App/AppState`. A module may not reference the composition root (AT-09), and cross-boundary work
   goes through `Mediator` (DT-01) — this is what finally resolves `CurrentUserState`'s `TODO(P1-04)`.
+- **Subordinate staff usernames are namespaced under the owner-admin's username** (SEC-17, added to
+  `10-security-and-access-control.md` once the product owner specified it): `{ownerUsername}-{suffix}`,
+  e.g. `petshop` / `petshop-drahmadi`. `StaffValidator`'s format rule already permits the hyphen, so
+  only the lookup-dependent part is new — one read method (item 11) and one handler check (item 22),
+  the same split SEC-09's catalog-membership check already uses.
 
 - [x] 1. Add `shared/dotnet/Animora.SharedKernel/Validation/Identity/IStaffInput` + `StaffValidator`: the property surface a staff create/edit command implements and its I/O-free rules (CONV-18, INV-02, SH-01, SH-05, DT-03)
 - [x] 2. Add `Validation/Identity/IRoleInput` + `RoleValidator`: role display name and assigned claim keys, with catalog membership left to the module that owns the catalog (CONV-18, SH-05, SEC-09)
@@ -38,24 +43,24 @@ Five decisions this list encodes, so the implementing sessions do not re-litigat
 - [x] 8. Add `Modules.Identity/Models/Role`: display name, assigned claim keys, member count and the system-role flag SEC-11 needs (SEC-09, SEC-11)
 - [x] 9. Add `Modules.Identity/Models/DeviceRegistration`: the read-only device row for the listing screen (SEC-06; seat enforcement is server-side, LIC-08)
 - [x] 10. Add `Modules.Identity/Models/SignedInStaff`: what a successful sign-in yields for the session projection — no token, no refresh material (DT-12, SEC-07)
-- [x] 11. Add `Modules.Identity/Data/IStaffReadStore` + `IStaffWriteStore`: the module-owned staff seams, split read/write (DIR-03, DT-02, DT-05)
+- [x] 11. Add `Modules.Identity/Data/IStaffReadStore` + `IStaffWriteStore`: the module-owned staff seams, split read/write (DIR-03, DT-02, DT-05). Amended: `IStaffReadStore` also carries `FindOwnerAdminUsernameAsync`, the SEC-17 anchor lookup item 22's handler needs.
 - [x] 12. Add `Modules.Identity/Data/IRoleReadStore` + `IRoleWriteStore` (DIR-03, DT-05)
-- [ ] 13. Add `Modules.Identity/Data/IDeviceReadStore` (DIR-03, DT-05)
-- [ ] 14. Add `Modules.Identity/Data/IStaffCredentialReadStore`: the local credential-lookup seam carrying the `TODO(P2)` marker where the server auth call lands (DT-12, CM-06, SEC-03)
-- [ ] 15. Add `Modules.Identity/Data/IdentitySampleData`: the one seeded Persian demo dataset (staff, roles, devices) every Stage A fake in items 16-18 reads, marked `TODO(P1-15)` (DT-12)
+- [x] 13. Add `Modules.Identity/Data/IDeviceReadStore` (DIR-03, DT-05)
+- [x] 14. Add `Modules.Identity/Data/IStaffCredentialReadStore`: the local credential-lookup seam carrying the `TODO(P2)` marker where the server auth call lands (DT-12, CM-06, SEC-03)
+- [ ] 15. Add `Modules.Identity/Data/IdentitySampleData`: the one seeded Persian demo dataset (staff, roles, devices) every Stage A fake in items 16-18 reads, marked `TODO(P1-15)` (DT-12). The seeded staff usernames must themselves follow SEC-17 (one bare owner-admin username, every other seeded staff prefixed with it).
 - [ ] 16. Add `Modules.Identity/Data/InMemoryStaffStore` over item 15, satisfying both item 11 seams so a create shows up in the list (DIR-03, DT-12)
 - [ ] 17. Add `Modules.Identity/Data/InMemoryRoleStore` over item 15, satisfying both item 12 seams (DIR-03, DT-12)
 - [ ] 18. Add `Modules.Identity/Data/InMemoryDeviceReadStore` + `InMemoryStaffCredentialReadStore` over item 15 (DIR-03, DT-12)
 - [ ] 19. Add `Handlers/SignInQuery` + `SignInHandler`: runs `CredentialValidator`, resolves the staff through item 14, returns `Result<SignedInStaff>` with item 4's codes, and marks the server-auth seam `TODO(P2)` (DT-03, DT-12, playbook step 3)
 - [ ] 20. Add `Handlers/GetStaffListQuery` + handler: search term plus a keyset page over item 11's read store (DT-08, CONV-16)
 - [ ] 21. Add `Handlers/GetStaffMemberQuery` + handler: the single-staff read the edit form loads with (DT-02)
-- [ ] 22. Add `Handlers/SaveStaffMemberCommand` + handler: `StaffValidator` runs here, not in the ViewModel, and a create generates its own `UUIDv7` (DT-03, CONV-01/02, INV-03)
+- [ ] 22. Add `Handlers/SaveStaffMemberCommand` + handler: `StaffValidator` runs here, not in the ViewModel, and a create generates its own `UUIDv7` (DT-03, CONV-01/02, INV-03). Also enforces SEC-17: resolve the owner-admin username via item 11's `FindOwnerAdminUsernameAsync`, skip the check when the input's `RoleId` is the system role itself, otherwise require the submitted `Username` to start with `{anchor}-` or return `IdentityErrors.SubordinateUsernamePrefixRequired`
 - [ ] 23. Add `Handlers/GetRolesQuery` + handler: the tenant's roles plus item 6's catalog the role screen renders (SEC-09)
 - [ ] 24. Add `Handlers/SaveRoleCommand` + handler: `RoleValidator` runs here, claim keys are checked against item 6's catalog, and the owner-admin role keeps `tenant.manage-staff` (SEC-09, SEC-11)
 - [ ] 25. Add `Handlers/GetDevicesQuery` + handler: the read-only device listing (SEC-06)
 - [ ] 26. Add `ViewModels/LoginViewModel` + `Views/LoginView`: credential form dispatching item 19, Persian error text resolved from the returned code, no network call (playbook steps 1/3/4, DT-06, DT-12, CONV-12)
 - [ ] 27. Add `ViewModels/StaffListViewModel` + `Views/StaffListView`: virtualized `DataGrid`, search box, and the command that navigates to the form route with the row id (DT-08, DT-06, DESK-ARCH-05/14)
-- [ ] 28. Add `ViewModels/StaffFormViewModel` + `Views/StaffFormView`: create/edit selected by the navigation parameter, dispatching items 21-22 and surfacing the handler's failure code (DT-03, DESK-ARCH-05, playbook steps 1/3/4)
+- [ ] 28. Add `ViewModels/StaffFormViewModel` + `Views/StaffFormView`: create/edit selected by the navigation parameter, dispatching items 21-22 and surfacing the handler's failure code (DT-03, DESK-ARCH-05, playbook steps 1/3/4). For a create where the selected role is not the system role, show the SEC-17 anchor as a non-editable prefix beside a suffix-only username field, rather than one freeform field
 - [ ] 29. Add `ViewModels/RoleManagementViewModel` + `Views/RoleManagementView`: role list plus claim assignment grouped by module, dispatching items 23-24 (SEC-09, DT-06)
 - [ ] 30. Add `ViewModels/DeviceListViewModel` + `Views/DeviceListView`: read-only listing with Jalali stamps at the binding edge and no revoke action in P1 (DESK-ARCH-14, LIC-08, DT-12)
 - [ ] 31. Add `Modules.Identity/Composition/ServiceCollectionExtensions.AddIdentityModule()`: the five routes, their view models and the Stage A seam bindings in one call, so phase 15 rebinds one line each (DT-09, DIR-03, playbook step 2)
@@ -63,7 +68,7 @@ Five decisions this list encodes, so the implementing sessions do not re-litigat
 - [ ] 33. Add the sign-in projection: the notification item 19 publishes plus its `App/AppState` handler filling `CurrentUserState`, resolving that file's `TODO(P1-04)` (DT-01, DESK-ARCH-03, CM-06)
 - [ ] 34. Reference `Animora.Desktop.Modules.Identity` from `Animora.Desktop.UnitTests` and `Animora.Desktop.UiTests`, keeping each csproj's comment index of assemblies-under-test accurate (AG-13)
 - [ ] 35. Add `UnitTests/Modules/Identity/SignInHandlerTests` over a substituted credential seam: success, unknown user, inactive user, malformed input (DT-03, CONV-22)
-- [ ] 36. Add `UnitTests/Modules/Identity/SaveStaffMemberHandlerTests`: a validation failure returns the code and writes nothing; a create assigns a `UUIDv7` (DT-03, INV-03, CONV-22)
+- [ ] 36. Add `UnitTests/Modules/Identity/SaveStaffMemberHandlerTests`: a validation failure returns the code and writes nothing; a create assigns a `UUIDv7`; a non-owner-admin create with a username missing the SEC-17 prefix returns `SubordinateUsernamePrefixRequired` and writes nothing; a system-role create is exempt from the prefix check (DT-03, INV-03, SEC-17, CONV-22)
 - [ ] 37. Add `UnitTests/Modules/Identity/SaveRoleHandlerTests`: unknown claim key rejected, SEC-11 guard enforced (SEC-09, SEC-11, CONV-22)
 - [ ] 38. Add `UnitTests/SharedKernel/StaffValidatorTests`, `RoleValidatorTests` and `CredentialValidatorTests` (SH-05, CONV-22)
 - [ ] 39. Add `UiTests/Identity/IdentityScreenSmokeTests`: one headless RTL fact per route, driven through the real composition root like phase 02's shell test (playbook step 5, PHASE criterion 2, DT-06)
