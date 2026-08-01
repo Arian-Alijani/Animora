@@ -52,6 +52,13 @@ dotnet_naming_style.underscore_camel_style.capitalization = camel_case
 # underscore-separated Given_When_Then names are the readable convention here (CONV-22).
 dotnet_diagnostic.CA1707.severity = none
 
+[shared/dotnet/Animora.SharedKernel/Primitives/Error.cs]
+# CA1716 guards type names against keywords of *other* CLR languages (`Error` is one in VB); the
+# only consumers of this assembly are C# and, through the wire contract, TypeScript. The name is
+# the one the Result companion is specified under, so the rule is disabled for this file rather
+# than renaming a primitive every failure path and doc reference already spells `Error`.
+dotnet_diagnostic.CA1716.severity = none
+
 [*.axaml]
 indent_size = 2
 

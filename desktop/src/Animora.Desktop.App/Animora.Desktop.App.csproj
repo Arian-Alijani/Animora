@@ -4,6 +4,12 @@
     <OutputType>WinExe</OutputType>
     <!-- Windows is the only P1 target (TECH_STACK §1); publish-time settings are phase 31's. -->
     <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
+    <!-- AVLN3001 reports views this assembly's XAML compiler cannot expose to the runtime loader
+         because they have no public parameterless constructor. App and ShellWindow are constructed
+         only by Program's AppBuilder and by the container respectively (DESK-ARCH-05/16), never
+         from an avares:// URI, so adding such a constructor would create the very hand-built,
+         dependency-less shell those rules exclude. -->
+    <NoWarn>$(NoWarn);AVLN3001</NoWarn>
   </PropertyGroup>
 
   <!-- Composition root: the only desktop project allowed to reference every other one
