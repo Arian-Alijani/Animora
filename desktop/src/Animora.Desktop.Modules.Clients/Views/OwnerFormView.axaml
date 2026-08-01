@@ -1,0 +1,75 @@
+<UserControl x:Class="Animora.Desktop.Modules.Clients.Views.OwnerFormView"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="using:Animora.Desktop.UI.Controls">
+  <!--
+    The owner create/edit route (item 28, playbook steps 1/3/4). Nothing here sets FlowDirection:
+    RightToLeft is inherited from the shell root (DT-06, DESK-ARCH-06). IntakeDate is a DatePicker
+    (DateTimeOffset) rather than a Jalali-formatted TextBox: JalaliDateConverter is display-only
+    (CONV-05), so two-way date editing goes through OwnerFormViewModel.IntakeDate's own wrapper
+    instead. Mirrors Modules.Identity's StaffFormView.
+  -->
+  <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+    <StackPanel Spacing="{StaticResource SectionGap}" MaxWidth="640">
+      <controls:SectionCard Title="{Binding HeaderTitle}">
+        <controls:SectionCard.BodyContent>
+          <StackPanel Spacing="{StaticResource Spacing16}">
+            <StackPanel Spacing="{StaticResource Spacing8}">
+              <TextBlock Classes="Caption" Foreground="{DynamicResource BrushTextSecondary}" Text="نام و نام خانوادگی" />
+              <TextBox Text="{Binding FullName, Mode=TwoWay}" Watermark="مثلاً خانم احمدی" />
+            </StackPanel>
+
+            <StackPanel Spacing="{StaticResource Spacing8}">
+              <TextBlock Classes="Caption" Foreground="{DynamicResource BrushTextSecondary}" Text="شماره موبایل" />
+              <TextBox Text="{Binding MobileNumber, Mode=TwoWay}" Watermark="0912xxxxxxx" />
+            </StackPanel>
+
+            <StackPanel Spacing="{StaticResource Spacing8}">
+              <TextBlock Classes="Caption" Foreground="{DynamicResource BrushTextSecondary}" Text="شماره ثابت (اختیاری)" />
+              <TextBox Text="{Binding LandlineNumber, Mode=TwoWay}" Watermark="021xxxxxxxx" />
+            </StackPanel>
+
+            <StackPanel Spacing="{StaticResource Spacing8}">
+              <TextBlock Classes="Caption" Foreground="{DynamicResource BrushTextSecondary}" Text="کد ملی (اختیاری)" />
+              <TextBox Text="{Binding NationalId, Mode=TwoWay}" Watermark="۱۰ رقم" />
+            </StackPanel>
+
+            <StackPanel Spacing="{StaticResource Spacing8}">
+              <TextBlock Classes="Caption" Foreground="{DynamicResource BrushTextSecondary}" Text="آدرس (اختیاری)" />
+              <TextBox Text="{Binding Address, Mode=TwoWay}" AcceptsReturn="True" TextWrapping="Wrap" Height="72" />
+            </StackPanel>
+
+            <StackPanel Spacing="{StaticResource Spacing8}">
+              <TextBlock Classes="Caption" Foreground="{DynamicResource BrushTextSecondary}" Text="شهر (اختیاری)" />
+              <TextBox Text="{Binding City, Mode=TwoWay}" />
+            </StackPanel>
+
+            <StackPanel Spacing="{StaticResource Spacing8}">
+              <TextBlock Classes="Caption" Foreground="{DynamicResource BrushTextSecondary}" Text="تاریخ ایجاد پرونده" />
+              <DatePicker SelectedDate="{Binding IntakeDate, Mode=TwoWay}" HorizontalAlignment="Left" />
+            </StackPanel>
+
+            <StackPanel Spacing="{StaticResource Spacing8}">
+              <TextBlock Classes="Caption" Foreground="{DynamicResource BrushTextSecondary}" Text="یادداشت داخلی کلینیک (اختیاری)" />
+              <TextBox Text="{Binding Notes, Mode=TwoWay}" AcceptsReturn="True" TextWrapping="Wrap" Height="96" />
+            </StackPanel>
+
+            <TextBlock Classes="Caption"
+                       Foreground="{DynamicResource BrushAccentDangerStrong}"
+                       TextWrapping="Wrap"
+                       Text="{Binding ErrorMessage}"
+                       IsVisible="{Binding HasError}" />
+
+            <StackPanel Orientation="Horizontal" Spacing="{StaticResource CardGap}">
+              <Button Classes="Primary"
+                      Content="{Binding SaveButtonText}"
+                      Command="{Binding SaveCommand}"
+                      IsEnabled="{Binding !IsSaving}" />
+              <Button Classes="Secondary" Content="انصراف" Command="{Binding CancelCommand}" />
+            </StackPanel>
+          </StackPanel>
+        </controls:SectionCard.BodyContent>
+      </controls:SectionCard>
+    </StackPanel>
+  </ScrollViewer>
+</UserControl>

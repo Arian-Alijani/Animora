@@ -1,0 +1,181 @@
+<UserControl x:Class="Animora.Desktop.Modules.Clients.Views.PatientFormView"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="using:Animora.Desktop.UI.Controls">
+  <!--
+    The patient create/edit route (item 28, playbook steps 1/3/4). Nothing here sets FlowDirection:
+    RightToLeft is inherited from the shell root (DT-06, DESK-ARCH-06). Two date fields use
+    DatePicker (DateTimeOffset) rather than a Jalali-formatted TextBox, the same reasoning
+    OwnerFormView's IntakeDate field documents. The birth-date RadioButton pair is mutually
+    exclusive through PatientFormViewModel.IsBirthDateKnown/IsBirthDateEstimatedInput's paired
+    properties, never a converter. Mirrors Modules.Identity's StaffFormView otherwise.
+  -->
+  <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+    <StackPanel Spacing="{StaticResource SectionGap}" MaxWidth="720">
+      <controls:SectionCard Title="{Binding HeaderTitle}">
+        <controls:SectionCard.BodyContent>
+          <StackPanel Spacing="{StaticResource Spacing16}">
+
+            <!-- Owner picker: locked (pre-filled from navigation) or a search-and-pick flow. -->
+            <StackPanel Spacing="{StaticResource Spacing8}">
+              <TextBlock Classes="Caption" Foreground="{DynamicResource BrushTextSecondary}" Text="صاحب حیوان" />
+
+              <Grid ColumnDefinitions="*,Auto" IsVisible="{Binding IsOwnerLocked}">
+                <TextBlock Grid.Column="0" VerticalAlignment="Center" Text="{Binding SelectedOwner.FullName}" />
+                <Button Grid.Column="1" Classes="Subtle Small" Content="تغییر" Command="{Binding UnlockOwnerCommand}" />
+              </Grid>
+
+              <StackPanel Spacing="{StaticResource Spacing8}" IsVisible="{Binding !IsOwnerLocked}">
+                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="{StaticResource CardGap}">
+                  <TextBox Grid.Column="0"
+                           Classes="Search"
+                           Watermark="جستجوی نام، شماره موبایل یا کد ملی"
+                           Text="{Binding OwnerSearchTerm, Mode=TwoWay}">
+                    <TextBox.KeyBindings>
+                      <KeyBinding Gesture="Enter" Command="{Binding SearchOwnersCommand}" />
+                    </TextBox.KeyBindings>
+                  </TextBox>
+                  <Button Grid.Column="1" Classes="Secondary" Content="جستجو" Command="{Binding SearchOwnersCommand}" />
+                </Grid>
+
+                <!-- Empty until SearchOwnersCommand runs; no separate empty-state text needed since
+                     an empty ListBox already reads as "no results yet" beside the search box. -->
+                <ListBox ItemsSource="{Binding OwnerSearchResults}"
+                         SelectedItem="{Binding SelectedOwner, Mode=TwoWay}"
+                         MaxHeight="160">
+                  <ListBox.ItemTemplate>
+                    <DataTemplate>
+                      <TextBlock Text="{Binding FullName}" />
+                    </DataTemplate>
+                  </ListBox.ItemTemplate>
+                </ListBox>
+
+                <TextBlock Classes="Caption"
+                           Foreground="{DynamicResource BrushTextSecondary}"
+                           Text="{Binding SelectedOwner.FullName, StringFormat='انتخاب‌شده: {0}'}"
+                           IsVisible="{Binding HasSelectedOwner}" />
+              </StackPanel>
+            </StackPanel>
+
+            <StackPanel Spacing="{StaticResource Spacing8}">
+              <TextBlock Classes="Caption" Foreground="{DynamicResource BrushTextSecondary}" Text="نام بیمار" />
+              <TextBox Text="{Binding Name, Mode=TwoWay}" Watermark="مثلاً لوسی" />
+            </StackPanel>
+
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="{StaticResource CardGap}">
+              <StackPanel Grid.Column="0" Spacing="{StaticResource Spacing8}">
+                <TextBlock Classes="Caption" Foreground="{DynamicResource BrushTextSecondary}" Text="گونه" />
+                <ComboBox HorizontalAlignment="Stretch"
+                          ItemsSource="{Binding AllowedSpecies}"
+                          SelectedItem="{Binding Species, Mode=TwoWay}" />
+              </StackPanel>
+              <StackPanel Grid.Column="1" Spacing="{StaticResource Spacing8}">
+                <TextBlock Classes="Caption" Foreground="{DynamicResource BrushTextSecondary}" Text="جنسیت" />
+                <ComboBox HorizontalAlignment="Stretch"
+                          ItemsSource="{Binding AllowedSexes}"
+                          SelectedItem="{Binding Sex, Mode=TwoWay}" />
+              </StackPanel>
+            </Grid>
+
+            <StackPanel Spacing="{StaticResource Spacing8}">
+              <TextBlock Classes="Caption" Foreground="{DynamicResource BrushTextSecondary}" Text="نژاد (اختیاری)" />
+              <TextBox Text="{Binding Breed, Mode=TwoWay}" />
+            </StackPanel>
+
+            <!-- Birth date: exact date or approximate age, never both (IPatientInput.BirthDateUtc). -->
+            <StackPanel Spacing="{StaticResource Spacing8}">
+              <TextBlock Classes="Caption" Foreground="{DynamicResource BrushTextSecondary}" Text="تاریخ تولد" />
+              <StackPanel Orientation="Horizontal" Spacing="{StaticResource CardGap}">
+                <RadioButton GroupName="BirthDateMode"
+                             Content="تاریخ دقیق"
+                             IsChecked="{Binding IsBirthDateKnown, Mode=TwoWay}" />
+                <RadioButton GroupName="BirthDateMode"
+                             Content="سن تقریبی"
+                             IsChecked="{Binding IsBirthDateEstimatedInput, Mode=TwoWay}" />
+              </StackPanel>
+              <DatePicker SelectedDate="{Binding BirthDate, Mode=TwoWay}"
+                          HorizontalAlignment="Left"
+                          IsVisible="{Binding IsBirthDateKnown}" />
+              <Grid ColumnDefinitions="Auto,Auto" ColumnSpacing="{StaticResource Spacing8}"
+                    IsVisible="{Binding IsBirthDateEstimatedInput}">
+                <NumericUpDown Grid.Column="0"
+                               Value="{Binding EstimatedAgeYears, Mode=TwoWay}"
+                               Minimum="0"
+                               Increment="0.5"
+                               FormatString="0.#" />
+                <TextBlock Grid.Column="1" VerticalAlignment="Center" Text="سال" />
+              </Grid>
+            </StackPanel>
+
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="{StaticResource CardGap}">
+              <StackPanel Grid.Column="0" Spacing="{StaticResource Spacing8}">
+                <TextBlock Classes="Caption" Foreground="{DynamicResource BrushTextSecondary}" Text="وزن (کیلوگرم، اختیاری)" />
+                <NumericUpDown Value="{Binding WeightKg, Mode=TwoWay}" Minimum="0" Increment="0.1" FormatString="0.##" />
+              </StackPanel>
+              <StackPanel Grid.Column="1" VerticalAlignment="Bottom">
+                <CheckBox Content="عقیم‌شده" IsChecked="{Binding IsSterilized, Mode=TwoWay}" />
+              </StackPanel>
+            </Grid>
+
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="{StaticResource CardGap}">
+              <StackPanel Grid.Column="0" Spacing="{StaticResource Spacing8}">
+                <TextBlock Classes="Caption" Foreground="{DynamicResource BrushTextSecondary}" Text="شناسه میکروچیپ (اختیاری)" />
+                <TextBox Text="{Binding MicrochipId, Mode=TwoWay}" />
+              </StackPanel>
+              <StackPanel Grid.Column="1" Spacing="{StaticResource Spacing8}">
+                <TextBlock Classes="Caption" Foreground="{DynamicResource BrushTextSecondary}" Text="تاریخ کاشت میکروچیپ (اختیاری)" />
+                <DatePicker SelectedDate="{Binding MicrochipImplantedAt, Mode=TwoWay}" HorizontalAlignment="Left" />
+              </StackPanel>
+            </Grid>
+
+            <StackPanel Spacing="{StaticResource Spacing8}">
+              <TextBlock Classes="Caption" Foreground="{DynamicResource BrushTextSecondary}" Text="رنگ (اختیاری)" />
+              <TextBox Text="{Binding Color, Mode=TwoWay}" />
+            </StackPanel>
+
+            <StackPanel Spacing="{StaticResource Spacing8}">
+              <TextBlock Classes="Caption" Foreground="{DynamicResource BrushTextSecondary}" Text="رفتار (اختیاری)" />
+              <TextBox Text="{Binding Temperament, Mode=TwoWay}" AcceptsReturn="True" TextWrapping="Wrap" Height="72" />
+            </StackPanel>
+
+            <StackPanel Spacing="{StaticResource Spacing8}">
+              <TextBlock Classes="Caption" Foreground="{DynamicResource BrushTextSecondary}" Text="محل زندگی (اختیاری)" />
+              <ComboBox HorizontalAlignment="Stretch"
+                        ItemsSource="{Binding AllowedHousingTypes}"
+                        SelectedItem="{Binding HousingType, Mode=TwoWay}" />
+            </StackPanel>
+
+            <StackPanel Spacing="{StaticResource Spacing8}">
+              <TextBlock Classes="Caption" Foreground="{DynamicResource BrushTextSecondary}" Text="جیره غذایی (اختیاری)" />
+              <TextBox Text="{Binding Diet, Mode=TwoWay}" AcceptsReturn="True" TextWrapping="Wrap" Height="72" />
+            </StackPanel>
+
+            <StackPanel Spacing="{StaticResource Spacing8}">
+              <TextBlock Classes="Caption" Foreground="{DynamicResource BrushTextSecondary}" Text="بارکد (اختیاری)" />
+              <TextBox Text="{Binding BarcodeValue, Mode=TwoWay}" />
+            </StackPanel>
+
+            <StackPanel Spacing="{StaticResource Spacing8}">
+              <TextBlock Classes="Caption" Foreground="{DynamicResource BrushTextSecondary}" Text="سابقه جراحی (اختیاری)" />
+              <TextBox Text="{Binding SurgicalHistory, Mode=TwoWay}" AcceptsReturn="True" TextWrapping="Wrap" Height="96" />
+            </StackPanel>
+
+            <TextBlock Classes="Caption"
+                       Foreground="{DynamicResource BrushAccentDangerStrong}"
+                       TextWrapping="Wrap"
+                       Text="{Binding ErrorMessage}"
+                       IsVisible="{Binding HasError}" />
+
+            <StackPanel Orientation="Horizontal" Spacing="{StaticResource CardGap}">
+              <Button Classes="Primary"
+                      Content="{Binding SaveButtonText}"
+                      Command="{Binding SaveCommand}"
+                      IsEnabled="{Binding !IsSaving}" />
+              <Button Classes="Secondary" Content="انصراف" Command="{Binding CancelCommand}" />
+            </StackPanel>
+          </StackPanel>
+        </controls:SectionCard.BodyContent>
+      </controls:SectionCard>
+    </StackPanel>
+  </ScrollViewer>
+</UserControl>

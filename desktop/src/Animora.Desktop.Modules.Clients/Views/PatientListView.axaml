@@ -1,0 +1,74 @@
+<UserControl x:Class="Animora.Desktop.Modules.Clients.Views.PatientListView"
+             x:Name="Root"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="using:Animora.Desktop.UI.Controls">
+  <!--
+    The patient list route (DT-08): one screen for both the global and owner-scoped modes (item 25's
+    header decision, AG-14, DESK-ARCH-05). The scope Border only appears when
+    PatientListViewModel.IsScoped is true, showing the scoped owner's name beside a clear button that
+    drops back to the global mode in place, without a second navigation. Nothing here sets
+    FlowDirection: RightToLeft is inherited from the shell root (DT-06, DESK-ARCH-06). Mirrors
+    Modules.Identity's StaffListView otherwise.
+  -->
+  <StackPanel Spacing="{StaticResource SectionGap}">
+    <Border Classes="Card"
+            Padding="12,8"
+            IsVisible="{Binding IsScoped}">
+      <Grid ColumnDefinitions="*,Auto">
+        <TextBlock Grid.Column="0"
+                   VerticalAlignment="Center"
+                   Classes="BodyStrong"
+                   Text="{Binding ScopeOwnerName, StringFormat='بیماران {0}'}" />
+        <Button Grid.Column="1"
+                Classes="Subtle Small"
+                Content="حذف فیلتر"
+                Command="{Binding ClearScopeCommand}" />
+      </Grid>
+    </Border>
+
+    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="{StaticResource CardGap}">
+      <TextBox Grid.Column="0"
+               Classes="Search"
+               Watermark="جستجوی نام، نژاد، میکروچیپ یا بارکد"
+               Text="{Binding SearchTerm, Mode=TwoWay}">
+        <TextBox.KeyBindings>
+          <KeyBinding Gesture="Enter" Command="{Binding SearchCommand}" />
+        </TextBox.KeyBindings>
+      </TextBox>
+      <Button Grid.Column="1"
+              Classes="Primary"
+              Content="افزودن بیمار"
+              Command="{Binding CreateCommand}" />
+    </Grid>
+
+    <DataGrid ItemsSource="{Binding Items}"
+              IsReadOnly="True"
+              CanUserReorderColumns="False"
+              CanUserSortColumns="False"
+              AutoGenerateColumns="False">
+      <DataGrid.Columns>
+        <DataGridTextColumn Header="نام بیمار" Binding="{Binding Name}" Width="2*" />
+        <DataGridTextColumn Header="صاحب حیوان" Binding="{Binding OwnerDisplayName}" Width="*" />
+        <DataGridTextColumn Header="گونه" Binding="{Binding Species}" Width="*" />
+        <DataGridTextColumn Header="نژاد" Binding="{Binding Breed}" Width="*" />
+        <DataGridTemplateColumn Header="" Width="Auto">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <Button Classes="Subtle Small"
+                      Content="ویرایش"
+                      Command="{Binding DataContext.EditCommand, ElementName=Root}"
+                      CommandParameter="{Binding}" />
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+      </DataGrid.Columns>
+    </DataGrid>
+
+    <Button Classes="Secondary"
+            HorizontalAlignment="Center"
+            Content="بارگذاری بیشتر"
+            IsVisible="{Binding HasMore}"
+            Command="{Binding LoadMoreCommand}" />
+  </StackPanel>
+</UserControl>

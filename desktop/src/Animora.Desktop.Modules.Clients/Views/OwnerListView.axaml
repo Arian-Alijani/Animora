@@ -1,0 +1,67 @@
+<UserControl x:Class="Animora.Desktop.Modules.Clients.Views.OwnerListView"
+             x:Name="Root"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="using:Animora.Desktop.UI.Controls"
+             xmlns:converters="using:Animora.Desktop.UI.Converters">
+  <!--
+    The owner list route (DT-08): search + create above a virtualized, keyset-paged DataGrid, plus
+    a per-row action that opens PatientListViewModel scoped to that owner (item 25's owner-scoped
+    list mode). Nothing here sets FlowDirection: RightToLeft is inherited from the shell root (DT-06,
+    DESK-ARCH-06). DataGrid row virtualization is Avalonia.Controls.DataGrid's own default and is
+    never turned off here. Mirrors Modules.Identity's StaffListView.
+  -->
+  <StackPanel Spacing="{StaticResource SectionGap}">
+    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="{StaticResource CardGap}">
+      <TextBox Grid.Column="0"
+               Classes="Search"
+               Watermark="جستجوی نام، شماره موبایل یا کد ملی"
+               Text="{Binding SearchTerm, Mode=TwoWay}">
+        <TextBox.KeyBindings>
+          <KeyBinding Gesture="Enter" Command="{Binding SearchCommand}" />
+        </TextBox.KeyBindings>
+      </TextBox>
+      <Button Grid.Column="1"
+              Classes="Primary"
+              Content="افزودن صاحب حیوان"
+              Command="{Binding CreateCommand}" />
+    </Grid>
+
+    <DataGrid ItemsSource="{Binding Items}"
+              IsReadOnly="True"
+              CanUserReorderColumns="False"
+              CanUserSortColumns="False"
+              AutoGenerateColumns="False">
+      <DataGrid.Columns>
+        <DataGridTextColumn Header="نام و نام خانوادگی" Binding="{Binding FullName}" Width="2*" />
+        <DataGridTextColumn Header="شماره موبایل" Binding="{Binding MobileNumber}" Width="*" />
+        <DataGridTextColumn Header="شهر" Binding="{Binding City}" Width="*" />
+        <DataGridTextColumn Header="تاریخ ایجاد پرونده"
+                             Width="*"
+                             Binding="{Binding IntakeDateUtc, Converter={x:Static converters:JalaliDateConverter.Instance}, ConverterParameter=Date}" />
+        <DataGridTemplateColumn Header="" Width="Auto">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <StackPanel Orientation="Horizontal" Spacing="{StaticResource Spacing8}">
+                <Button Classes="Subtle Small"
+                        Content="بیماران"
+                        Command="{Binding DataContext.OpenPatientsCommand, ElementName=Root}"
+                        CommandParameter="{Binding}" />
+                <Button Classes="Subtle Small"
+                        Content="ویرایش"
+                        Command="{Binding DataContext.EditCommand, ElementName=Root}"
+                        CommandParameter="{Binding}" />
+              </StackPanel>
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+      </DataGrid.Columns>
+    </DataGrid>
+
+    <Button Classes="Secondary"
+            HorizontalAlignment="Center"
+            Content="بارگذاری بیشتر"
+            IsVisible="{Binding HasMore}"
+            Command="{Binding LoadMoreCommand}" />
+  </StackPanel>
+</UserControl>
