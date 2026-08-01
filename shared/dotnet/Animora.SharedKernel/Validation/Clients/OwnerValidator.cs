@@ -16,11 +16,14 @@ public sealed class OwnerValidator : AbstractValidator<IOwnerInput>
 {
     // 11-digit Iranian mobile number, e.g. "09121234567". Operator prefixes vary and change over
     // time; the "09" lead plus fixed length is the only stable structural invariant.
-    private static readonly Regex MobilePattern = new("^09\\d{9}$", RegexOptions.Compiled);
+    // [0-9] rather than \d on purpose: .NET's \d also matches Persian-Indic digits, so "09۱۲۱۲۳۴۵۶۷"
+    // would pass and reach storage un-normalized. Persian digits are converted at the UI edge
+    // (CONV-05); what arrives here must already be ASCII.
+    private static readonly Regex MobilePattern = new("^09[0-9]{9}$", RegexOptions.Compiled);
 
     // Iranian landline including area code, digits only, e.g. "02112345678" or "05112345678":
     // 10-11 digits starting with "0".
-    private static readonly Regex LandlinePattern = new("^0\\d{9,10}$", RegexOptions.Compiled);
+    private static readonly Regex LandlinePattern = new("^0[0-9]{9,10}$", RegexOptions.Compiled);
 
     public OwnerValidator()
     {
