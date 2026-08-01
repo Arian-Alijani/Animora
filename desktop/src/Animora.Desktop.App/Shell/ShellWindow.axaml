@@ -1,9 +1,200 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:i="https://github.com/projektanker/icons.avalonia"
+        xmlns:controls="using:Animora.Desktop.UI.Controls"
+        xmlns:shell="using:Animora.Desktop.App.Shell"
         x:Class="Animora.Desktop.App.Shell.ShellWindow"
         Title="Animora"
-        Width="1024"
-        Height="768">
-  <!-- Intentionally empty: navigation host, sidebar, and status bar belong to phase 02
-       (DESK-ARCH-05/06). -->
+        Width="1360"
+        Height="860"
+        MinWidth="1120"
+        MinHeight="720"
+        Background="{DynamicResource BrushPageBackground}">
+  <!--
+    The app's one window and one content region (DESK-ARCH-05): rail, top bar and content host. Every
+    length, color and type step below is a Theme/Tokens/ lookup (DT-06). No element names a physical
+    side and nothing sets FlowDirection: the rail is column 0, which the root style's inherited
+    RightToLeft places on the right edge (DESK-ARCH-06, design-reference §4.1/§7). The content region
+    holds whatever view the navigation service built, so this file names no module type (DT-09).
+  -->
+
+  <Window.Styles>
+    <!--
+      The rail pill (design-reference §6). It lives with the shell rather than in the design-system
+      project because the rail is the shell's own chrome and no module renders one; the values it sets
+      are still tokens only. Icon/label colors are set through descendant selectors, mirroring
+      Theme/Styles/Chips.axaml, and the label is class-scoped so the pill's count badge keeps the
+      on-brand foreground its own style gives it.
+    -->
+    <Style Selector="Button.NavItem">
+      <Setter Property="Height" Value="{StaticResource NavItemHeight}" />
+      <Setter Property="Padding" Value="{StaticResource ButtonPaddingX}" />
+      <Setter Property="CornerRadius" Value="{StaticResource RadiusBlock}" />
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="BorderThickness" Value="0" />
+      <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+      <Setter Property="VerticalContentAlignment" Value="Center" />
+      <Setter Property="Cursor" Value="Hand" />
+    </Style>
+    <Style Selector="Button.NavItem TextBlock.NavLabel">
+      <Setter Property="Foreground" Value="{DynamicResource BrushRailTextInactive}" />
+    </Style>
+    <Style Selector="Button.NavItem i|Icon">
+      <Setter Property="FontSize" Value="{StaticResource IconSize}" />
+      <Setter Property="Foreground" Value="{DynamicResource BrushRailTextInactive}" />
+    </Style>
+    <Style Selector="Button.NavItem:pointerover">
+      <Setter Property="Background" Value="{DynamicResource BrushRailItemHover}" />
+    </Style>
+    <Style Selector="Button.NavItem.Active">
+      <Setter Property="Background" Value="{DynamicResource BrushRailItemActive}" />
+    </Style>
+    <Style Selector="Button.NavItem.Active TextBlock.NavLabel">
+      <Setter Property="Foreground" Value="{DynamicResource BrushRailTextActive}" />
+    </Style>
+    <Style Selector="Button.NavItem.Active i|Icon">
+      <Setter Property="Foreground" Value="{DynamicResource BrushRailTextActive}" />
+    </Style>
+  </Window.Styles>
+
+  <Grid ColumnDefinitions="Auto,*">
+    <Border x:Name="NavigationRail"
+            Grid.Column="0"
+            Classes="Rail"
+            Width="{StaticResource RailWidth}"
+            Padding="{StaticResource RailPadding}">
+      <!-- One scroller over brand block + groups: the rail grows with every module phase, and a
+           fixed brand header would need a bottom-inset token that §4.4's scale does not carry. -->
+      <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+        <StackPanel Spacing="{StaticResource Spacing24}">
+          <StackPanel Orientation="Horizontal"
+                      Spacing="{StaticResource Spacing12}"
+                      Margin="{StaticResource ButtonPaddingX}">
+            <Border Width="{StaticResource IconTileSize}"
+                    Height="{StaticResource IconTileSize}"
+                    CornerRadius="{StaticResource RadiusBlock}"
+                    Background="{DynamicResource BrushPrimary}">
+              <i:Icon Value="mdi-paw"
+                      FontSize="{StaticResource IconSizeLarge}"
+                      Foreground="{DynamicResource BrushTextOnBrand}"
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Center" />
+            </Border>
+            <StackPanel VerticalAlignment="Center" Spacing="{StaticResource Spacing2}">
+              <TextBlock Classes="BodyStrong"
+                         Foreground="{DynamicResource BrushRailTextActive}"
+                         Text="{x:Static shell:ShellText.ProductName}" />
+              <TextBlock Classes="Caption"
+                         Foreground="{DynamicResource BrushRailSectionLabel}"
+                         TextWrapping="Wrap"
+                         Text="{Binding CurrentUser.TenantDisplayName}" />
+            </StackPanel>
+          </StackPanel>
+
+          <ItemsControl x:Name="RailGroupItems" ItemsSource="{Binding RailGroups}">
+            <ItemsControl.ItemsPanel>
+              <ItemsPanelTemplate>
+                <StackPanel Spacing="{StaticResource Spacing20}" />
+              </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+              <DataTemplate>
+                <StackPanel Spacing="{StaticResource Spacing8}">
+                  <TextBlock Classes="Overline"
+                             Margin="{StaticResource ButtonPaddingX}"
+                             Foreground="{DynamicResource BrushRailSectionLabel}"
+                             Text="{Binding Title}" />
+                  <ItemsControl ItemsSource="{Binding Items}">
+                    <ItemsControl.ItemsPanel>
+                      <ItemsPanelTemplate>
+                        <StackPanel Spacing="{StaticResource Spacing4}" />
+                      </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                      <DataTemplate>
+                        <Button Classes="NavItem"
+                                Classes.Active="{Binding IsActive}"
+                                Command="{Binding NavigateCommand}"
+                                CommandParameter="{Binding RouteKey}">
+                          <Grid ColumnDefinitions="*,Auto">
+                            <StackPanel Grid.Column="0"
+                                        Orientation="Horizontal"
+                                        Spacing="{StaticResource Spacing12}">
+                              <i:Icon Value="{Binding IconGlyph}" VerticalAlignment="Center" />
+                              <TextBlock Classes="BodyStrong NavLabel"
+                                         VerticalAlignment="Center"
+                                         Text="{Binding Title}" />
+                            </StackPanel>
+                            <controls:CountBadge Grid.Column="1"
+                                                 VerticalAlignment="Center"
+                                                 Text="{Binding BadgeText}"
+                                                 IsVisible="{Binding HasBadge}" />
+                          </Grid>
+                        </Button>
+                      </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                  </ItemsControl>
+                </StackPanel>
+              </DataTemplate>
+            </ItemsControl.ItemTemplate>
+          </ItemsControl>
+        </StackPanel>
+      </ScrollViewer>
+    </Border>
+
+    <Grid Grid.Column="1" RowDefinitions="Auto,*">
+      <!-- Top bar and content canvas are one surface (design-reference §1.2), so the bar carries no
+           fill of its own; its fixed height absorbs the vertical half of ContentPadding. -->
+      <Border x:Name="TopBar"
+              Grid.Row="0"
+              Height="{StaticResource TopBarHeight}"
+              Padding="{StaticResource ContentPadding}">
+        <Grid ColumnDefinitions="*,Auto">
+          <StackPanel Grid.Column="0" VerticalAlignment="Center" Spacing="{StaticResource Spacing4}">
+            <TextBlock x:Name="BreadcrumbText"
+                       Classes="Caption"
+                       Foreground="{DynamicResource BrushTextMuted}"
+                       Text="{Binding Breadcrumb}" />
+            <TextBlock x:Name="PageTitleText"
+                       Classes="PageTitle"
+                       Foreground="{DynamicResource BrushTextPrimary}"
+                       Text="{Binding PageTitle}" />
+          </StackPanel>
+          <StackPanel Grid.Column="1"
+                      Orientation="Horizontal"
+                      VerticalAlignment="Center"
+                      Spacing="{StaticResource Spacing16}">
+            <shell:StatusIndicator x:Name="ShellStatusIndicator" DataContext="{Binding Status}" />
+            <StackPanel Orientation="Horizontal"
+                        Spacing="{StaticResource Spacing12}"
+                        DataContext="{Binding CurrentUser}">
+              <Border Width="{StaticResource AvatarSize}"
+                      Height="{StaticResource AvatarSize}"
+                      CornerRadius="{StaticResource RadiusPill}"
+                      Background="{DynamicResource BrushPrimary}">
+                <TextBlock Classes="BodyStrong"
+                           Foreground="{DynamicResource BrushTextOnBrand}"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           Text="{Binding Initial}" />
+              </Border>
+              <StackPanel VerticalAlignment="Center" Spacing="{StaticResource Spacing2}">
+                <TextBlock Classes="BodyStrong"
+                           Foreground="{DynamicResource BrushTextPrimary}"
+                           Text="{Binding DisplayName}" />
+                <TextBlock Classes="Caption"
+                           Foreground="{DynamicResource BrushTextMuted}"
+                           Text="{Binding RoleDisplayName}" />
+              </StackPanel>
+            </StackPanel>
+          </StackPanel>
+        </Grid>
+      </Border>
+
+      <ContentControl x:Name="ContentRegion"
+                      Grid.Row="1"
+                      Margin="{StaticResource ContentPadding}"
+                      Content="{Binding CurrentContent}" />
+    </Grid>
+  </Grid>
 </Window>

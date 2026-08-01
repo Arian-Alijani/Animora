@@ -1,0 +1,24 @@
+<UserControl x:Class="Animora.Desktop.App.Shell.StatusIndicator"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="using:Animora.Desktop.UI.Controls"
+             xmlns:shell="using:Animora.Desktop.App.Shell">
+  <!--
+    The shell's persistent connectivity/sync/licensing surface (DESK-ARCH-07/08): two phase-01
+    StatusChips rather than a control of its own, since the only thing missing from StatusChip was the
+    licensing chip beside it. It carries no command and no dismiss affordance — the state is
+    observable and nothing here can block input (INV-15). DataContext is the ShellViewModel's
+    ShellStatusViewModel, set where this control is placed in ShellWindow.axaml.
+  -->
+  <StackPanel Orientation="Horizontal"
+              Spacing="{StaticResource Spacing8}"
+              VerticalAlignment="Center">
+    <controls:StatusChip x:Name="ConnectivityChip"
+                         Text="{Binding ConnectivityText}"
+                         Variant="{Binding ConnectivityVariant}" />
+    <controls:StatusChip x:Name="ReadOnlyChip"
+                         Text="{x:Static shell:ShellText.StatusReadOnly}"
+                         Variant="Danger"
+                         IsVisible="{Binding IsReadOnlyDegraded}" />
+  </StackPanel>
+</UserControl>
