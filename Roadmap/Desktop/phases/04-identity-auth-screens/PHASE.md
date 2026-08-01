@@ -21,6 +21,9 @@ data-seam interface (fake now, real in phase 15).
 - Role management screen: create/edit a role, assign permission claims from the catalog
   ([10-security-and-access-control.md](../../../../docs/architecture/10-security-and-access-control.md)
   permission table).
+- Staff create/edit enforces the owner-admin username namespacing rule for every other account
+  (SEC-17 in the same doc): a subordinate account's username is checked against, never invented by,
+  the staff save handler.
 - Device list (read-only view of the current tenant's registered devices — real seat/limit
   enforcement is server-side per LIC-08 and out of scope here; this is the Identity-side listing
   screen only).

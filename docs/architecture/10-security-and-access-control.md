@@ -76,6 +76,19 @@ compromise of a desktop device exposes only that device's tenant data, never oth
   edge cases (e.g., a doctor temporarily granted a finance view) — SEC-10.
 - The `owner-admin` role is system-seeded per tenant at signup and cannot be deleted or stripped of
   the `tenant.manage-staff` claim (prevents tenant lockout) — SEC-11.
+- SEC-17: every staff username is namespaced under the tenant's owner-admin username. The
+  owner-admin keeps the bare username chosen at signup (e.g. `petshop`); every other account's
+  username is that value, a literal hyphen, and a suffix the owner-admin (or any staff holding
+  `staff.manage`) assigns when creating the account (e.g. `petshop-drahmadi`). An account currently
+  holding the owner-admin role is exempt from the prefix check on itself — it is the anchor other
+  usernames are checked against, not a value checked against another anchor. Renaming the
+  owner-admin's username does not cascade to already-created subordinate usernames; this is a known
+  limitation, not a silent gap. Enforced where the account is written (`SaveStaffMemberCommand`,
+  `ERR-IDENTITY-008`), not in the shared validator, because it needs a lookup (SH-05) — the same
+  reason SEC-09's catalog-membership check is a handler concern. The rule's payoff is name-based
+  sign-in resolving to exactly one tenant without a separate tenant selector, and every tenant's
+  staff usernames staying in their own namespace without central coordination, once usernames are
+  unique platform-wide (P2).
 
 ## Permission claim catalog (grouped by module)
 
