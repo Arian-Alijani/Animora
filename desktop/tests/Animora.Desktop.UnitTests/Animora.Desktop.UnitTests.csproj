@@ -18,9 +18,18 @@
 
   <!-- Localization/JalaliDateFormatter, Localization/PersianNumberFormatter,
        Localization/MoneyFormatter and their Converters/ wrappers (phase 01, items 25-28) are this
-       project's first testable types. -->
+       project's first testable types.
+
+       Phase 02 adds two more assemblies under test, referenced explicitly rather than left to flow
+       transitively so this list stays the readable index of what this project covers:
+       Animora.Desktop.App for Navigation/RouteRegistry + Navigation/NavigationService (item 24), and
+       Animora.Desktop.Modules.Reporting for Handlers/GetHomeSummaryHandler (item 25). Referencing the
+       composition root also brings Microsoft.Extensions.DependencyInjection along, which the
+       navigation tests need to prove a route's view model comes out of the real container. -->
   <ItemGroup>
     <ProjectReference Include="../../src/Animora.Desktop.UI/Animora.Desktop.UI.csproj" />
+    <ProjectReference Include="../../src/Animora.Desktop.App/Animora.Desktop.App.csproj" />
+    <ProjectReference Include="../../src/Animora.Desktop.Modules.Reporting/Animora.Desktop.Modules.Reporting.csproj" />
   </ItemGroup>
 
 </Project>

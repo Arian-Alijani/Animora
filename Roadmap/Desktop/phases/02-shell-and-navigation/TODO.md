@@ -37,9 +37,9 @@ than in the shell project.
 - [x] 21. Add `Modules.Reporting/Composition/ServiceCollectionExtensions.AddReportingModule()`: registers the route + rail entry, the handler's dependencies and the Stage A fake in one place, so phase 21 rebinds a single line (playbook step 2, DT-09, DIR-03)
 - [x] 22. Call `AddReportingModule()` from item 14's composition root as the module's only appearance in `Animora.Desktop.App`, proving the shell has zero compile-time knowledge of the screen (DESK-ARCH-05, DT-09)
 - [x] 23. Add an `ArchTests` rule that types in `Animora.Desktop.App.Shell` and `Animora.Desktop.App.Navigation` depend on no `Animora.Desktop.Modules.*` namespace (only `Composition` may) (DESK-ARCH-05, DT-09, AT-09 companion)
-- [ ] 24. Add `UnitTests/Navigation` tests: registry duplicate/unknown-key behaviour and rail ordering, navigation service resolving the view model from DI and raising route-changed (DESK-ARCH-05)
-- [ ] 25. Add a `UnitTests` test for `GetHomeSummaryHandler` against a substituted `IHomeSummaryReadStore`, proving the seam swaps without touching the handler (DIR-03, DT-03)
-- [ ] 26. Add the `UiTests` headless RTL smoke test for the shell: root `FlowDirection` is `RightToLeft`, the rail lists the registered route, the status indicator is present, and navigating renders `HomeView` in the content region (playbook step 5, PHASE.md criteria 1-3)
-- [ ] 27. Point `Roadmap/Desktop/README.md`'s Stage A/C data-seam section at this phase's reference files (paths only, no rule restatement) so phases 04+ copy a working pattern (INV-18, PHASE.md criterion 4)
+- [x] 24. Add `UnitTests/Navigation` tests: registry duplicate/unknown-key behaviour and rail ordering, navigation service resolving the view model from DI and raising route-changed (DESK-ARCH-05)
+- [x] 25. Add a `UnitTests` test for `GetHomeSummaryHandler` against a substituted `IHomeSummaryReadStore`, proving the seam swaps without touching the handler (DIR-03, DT-03)
+- [x] 26. Add the `UiTests` headless RTL smoke test for the shell: root `FlowDirection` is `RightToLeft`, the rail lists the registered route, the status indicator is present, and navigating renders `HomeView` in the content region (playbook step 5, PHASE.md criteria 1-3)
+- [x] 27. Point `Roadmap/Desktop/README.md`'s Stage A/C data-seam section at this phase's reference files (paths only, no rule restatement) so phases 04+ copy a working pattern (INV-18, PHASE.md criterion 4)
 - [ ] 28. User-run on Windows: the shell launches RTL with rail, top bar, status indicator and the Home route rendered, without waiting on background init (`dotnet run --project desktop/src/Animora.Desktop.App`)
 - [ ] 29. Verify phase Completion Criteria (see PHASE.md) and update PROGRESS.md to `complete`

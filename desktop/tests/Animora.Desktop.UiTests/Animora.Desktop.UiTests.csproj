@@ -19,9 +19,17 @@
   </ItemGroup>
 
   <!-- AnimoraTheme's headless smoke test (phase 01 item 33) is this project's first test; every
-       per-screen RTL smoke test (desktop screen DoD) references the same UI project going forward. -->
+       per-screen RTL smoke test (desktop screen DoD) references the same UI project going forward.
+
+       Phase 02's shell smoke test (item 26) drives the real chrome, so it needs the composition root
+       (Shell/ShellWindow + Composition/AddDesktopApp) and, to name the screen it expects in the
+       content region, the module that registered it. Naming the module here is a test-only reference
+       and no weakening of DESK-ARCH-05: the assertion is precisely that the *shell* project does not
+       name it. -->
   <ItemGroup>
     <ProjectReference Include="../../src/Animora.Desktop.UI/Animora.Desktop.UI.csproj" />
+    <ProjectReference Include="../../src/Animora.Desktop.App/Animora.Desktop.App.csproj" />
+    <ProjectReference Include="../../src/Animora.Desktop.Modules.Reporting/Animora.Desktop.Modules.Reporting.csproj" />
   </ItemGroup>
 
 </Project>

@@ -73,6 +73,22 @@ stages — this is what makes Stage C "add business logic," not "restructure the
 `02-shell-and-navigation` establishes this pattern once; every module UI phase and its paired local
 data phase reference it instead of re-describing it (INV-18).
 
+Phase 02's working reference, in the order a module phase writes it — copy these files, do not
+re-derive the pattern:
+
+| Step | Reference file |
+|---|---|
+| Module-owned read interface | `desktop/src/Animora.Desktop.Modules.Reporting/Data/IHomeSummaryReadStore.cs` |
+| Read model | `desktop/src/Animora.Desktop.Modules.Reporting/Models/HomeSummary.cs` |
+| Stage A fake | `desktop/src/Animora.Desktop.Modules.Reporting/Data/InMemoryHomeSummaryReadStore.cs` |
+| Request + handler | `desktop/src/Animora.Desktop.Modules.Reporting/Handlers/GetHomeSummaryQuery.cs`, `.../Handlers/GetHomeSummaryHandler.cs` |
+| ViewModel + View | `desktop/src/Animora.Desktop.Modules.Reporting/ViewModels/HomeViewModel.cs`, `.../Views/HomeView.axaml` |
+| Module registration (route + screen + seam) | `desktop/src/Animora.Desktop.Modules.Reporting/Composition/ServiceCollectionExtensions.cs` |
+| Composition-root call site | `desktop/src/Animora.Desktop.App/Composition/ServiceCollectionExtensions.cs` |
+| Handler test over the substituted seam | `desktop/tests/Animora.Desktop.UnitTests/Modules/Reporting/GetHomeSummaryHandlerTests.cs` |
+| Headless RTL smoke test | `desktop/tests/Animora.Desktop.UiTests/Shell/ShellWindowSmokeTests.cs` |
+| Boundary guard | `desktop/tests/Animora.Desktop.ArchTests/ShellDecouplingRules.cs` |
+
 ## Working through a phase (every session)
 
 1. Open [`PROGRESS.md`](PROGRESS.md). Find the first phase whose status is not `complete`.
