@@ -19,9 +19,9 @@ decide internal entity design (see [05](05-domain-model.md)) or endpoint shapes 
 |---|---|---|---|---|---|---|
 | Identity | Users, roles, permission claims, auth sessions | User, Role, PermissionClaim, RefreshToken, Device | `IIdentityContract` (AuthenticateUser, GetPermissions, RegisterDevice) | — | No (server authoritative) | No |
 | Clients | Owner (client) and patient (animal) records, medical file | Owner, Patient, MedicalFile | `IClientsContract` (GetPatient, GetOwner, GetMedicalFileSummary) | Identity (permission check) | Yes | No |
-| Visits | Visit records, biometrics, lab/test results, visit outcomes | Visit, BiometricReading, LabResult, VisitOutcome | `IVisitsContract` (GetVisitHistory, GetBiometricSeries) | Clients, Files | Yes | No (core clinical) |
+| Visits | Visit records, biometrics, lab/test results, visit outcomes, vaccination definitions and patient vaccination records | Visit, BiometricReading, LabResult, VisitOutcome, VaccineDefinition, VaccinationRecord | `IVisitsContract` (GetVisitHistory, GetBiometricSeries) | Clients, Files | Yes | No (core clinical) |
 | Scheduling | Appointments, resources (doctors/groomers/rooms), calendar, due-reminder computation | Appointment, Resource, ServiceType, GroomingType, ReminderRule | `ISchedulingContract` (GetAvailability, GetUpcomingReminders) | Clients, Identity | Yes | Partial (resource count limits) |
-| Finance | Ledger, invoices, cheques, cash sessions, expenses/income | LedgerEntry, Invoice, InvoiceTemplate, Cheque, CashSession, Expense, Income | `IFinanceContract` (GetInvoicePreview, PostLedgerEntry, GetCashSessionState) | Clients, Visits (for line items) | Yes (ledger append-only, see [15](15-finance-and-ledger.md)) | Partial (template count, advanced reports) |
+| Finance | Ledger, invoices, point-of-sale, cheques, cash sessions, expenses/income, product catalog, inventory, suppliers and procurement | LedgerEntry, Invoice, InvoiceTemplate, Cheque, CashSession, Expense, Income, Product, InventoryItem, Supplier, PurchaseOrder, GoodsReceipt | `IFinanceContract` (GetInvoicePreview, PostLedgerEntry, GetCashSessionState) | Clients, Visits (for line items) | Yes (ledger append-only, see [15](15-finance-and-ledger.md)) | Partial (template count, advanced reports) |
 | Reporting | Read models, KPI queries, visitor/traffic stats, exports | ReportView (virtual), KpiSnapshot (materialized) | `IReportingContract` (GetKpi, GetBestSelling, ExportReport) | Finance, Visits, Scheduling | No (derived) | Partial (advanced reports) |
 | Notifications | Notification engine, channel delivery, preferences, delivery log | NotificationRule, NotificationPreference, DeliveryLog | `INotificationsContract` (Enqueue, GetPreferences) | Scheduling, Finance, Visits (event sources) | Partial (preferences sync, log server-only) | No |
 | Licensing | Plans, entitlements, license tokens, payments, subscriptions | Plan, Entitlement, Subscription, LicenseToken, PaymentTransaction | `ILicensingContract` (GetEntitlements, IssueLicenseToken, VerifyPayment) | Identity (tenant), PlatformAdmin | No (server authoritative; token cached client-side) | n/a (this module defines gating) |
@@ -47,6 +47,10 @@ decide internal entity design (see [05](05-domain-model.md)) or endpoint shapes 
 | 12 | Multiple staff accounts, roles/permission sets | Identity | `/api/v1/staff`, `/api/v1/roles` |
 | 13 | Multiple doctors, service/grooming appointment types with resources | Scheduling | `/api/v1/resources`, `/api/v1/service-types`, `/api/v1/grooming-types` |
 | 14 | Appointment booking, vaccination reminders, rescheduling, calendar | Scheduling, Notifications | `/api/v1/appointments`, `/api/v1/calendar`, `/api/v1/reminders` |
+| 15 | Vaccination definitions, patient plans, administration history | Visits, Notifications | `/api/v1/vaccines`, `/api/v1/patients/{id}/vaccinations`, `/api/v1/reminders` |
+| 16 | Point-of-sale product/service invoicing and cash-register settlement | Finance | `/api/v1/invoices`, `/api/v1/cash-sessions` |
+| 17 | Product catalog, inventory visibility and stock operations | Finance | `/api/v1/products`, `/api/v1/inventory` |
+| 18 | Supplier, purchase, receiving and purchase-expense management | Finance | `/api/v1/suppliers`, `/api/v1/purchases`, `/api/v1/expenses` |
 
 ## Technical scope (§3) -> Module map
 

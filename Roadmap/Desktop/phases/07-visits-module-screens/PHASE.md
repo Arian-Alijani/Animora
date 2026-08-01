@@ -3,14 +3,15 @@
 ## Goal
 
 Build every screen the Visits module owns: visit recording, biometric tracking with growth charts,
-lab/test results and visit outcomes (with attachment references), fully click-through against the
-Stage A data seam, inside `Animora.Desktop.Modules.Visits`.
+lab/test results, visit outcomes (with attachment references), and vaccination management, fully
+click-through against the Stage A data seam, inside `Animora.Desktop.Modules.Visits`.
 
 ## Expected Outcome
 
 A staff member can record a visit for a patient, enter biometric readings and see a growth chart,
-record lab results and visit outcomes, and reference attachments by id — all through real
-`Mediator` handlers bound to `Modules.Visits`'s data-seam interface (fake now, real in phase 18).
+record lab results and visit outcomes, manage vaccination definitions and patient vaccination
+history, and reference attachments by id — all through real `Mediator` handlers bound to
+`Modules.Visits`'s data-seam interface (fake now, real in phase 18).
 
 ## Scope
 
@@ -21,6 +22,9 @@ record lab results and visit outcomes, and reference attachments by id — all t
 - Lab result entry + visit outcome recording, with an attachment picker that references attachments
   by id (actual upload/thumbnail flow is phase 08's screens; this phase only wires the reference
   UI).
+- Vaccination management: vaccine-definition catalog, patient vaccination plan/history, and
+  administration recording. Due-reminder execution belongs to phase 26; this phase exposes the due
+  data through the Visits seam without creating a second reminder workflow.
 - Out of scope: local SQLite persistence (phase 18), actual attachment upload/storage (phase 08/P2
   S3), report materialization (phase 21's Reporting parity for growth charts stays a stub in this
   phase — REP-06 desktop-local parity work belongs to phase 18/21).
@@ -43,7 +47,8 @@ reuse the chart contract).
 
 ## Completion Criteria
 
-- [ ] Visit recording, biometric entry + growth chart, lab result, and visit outcome screens exist.
+- [ ] Visit recording, biometric entry + growth chart, lab result, visit outcome, and vaccination
+      management screens exist.
 - [ ] Growth chart consumes the fixed `{ series, meta }` contract shape (REP-11).
 - [ ] Biometric correction flow creates a new reading with a `supersedes` link, never edits in place
       (DOM-09).

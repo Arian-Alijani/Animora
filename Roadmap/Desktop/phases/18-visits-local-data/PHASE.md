@@ -3,21 +3,23 @@
 ## Goal
 
 Swap phase 07's Visits Stage A fake data-seam implementation for real local persistence: EF Core
-entities/configurations/migration for Visit, VisitOutcome, BiometricReading, LabResult, wired
-behind `Modules.Visits`'s own interface, with the growth chart reading real biometric data and the
-`supersedes`-link correction flow enforced at the data layer.
+entities/configurations/migration for Visit, VisitOutcome, BiometricReading, LabResult,
+VaccineDefinition, and VaccinationRecord, wired behind `Modules.Visits`'s own interface, with the
+growth chart reading real biometric data and the `supersedes`-link correction flow enforced at the
+data layer.
 
 ## Expected Outcome
 
-Visit recording, biometric entry with growth chart, lab result entry, and visit outcome screens
-from phase 07 now read/write real local SQLite rows; biometric corrections insert a new row with a
-`supersedes` link rather than updating the original (DOM-09), enforced structurally (no update path
-exists for a persisted `BiometricReading`).
+Visit recording, biometric entry with growth chart, lab result entry, visit outcome, and vaccination
+management screens from phase 07 now read/write real local SQLite rows; biometric corrections insert
+a new row with a `supersedes` link rather than updating the original (DOM-09), enforced structurally
+(no update path exists for a persisted `BiometricReading`).
 
 ## Scope
 
 - EF Core entity configurations for `Visit`, `VisitOutcome` (`MutableLWW`), `BiometricReading`,
-  `LabResult` (`AppendOnly` per sync class table) with `UUIDv7` PKs and appropriate sync metadata.
+  `LabResult` (`AppendOnly` per sync class table), `VaccineDefinition`, and `VaccinationRecord` with
+  `UUIDv7` PKs and appropriate sync metadata.
 - EF Core migration adding these tables (DT-11).
 - `BiometricReading` configured so no update path exists in `Data/Writes` for an existing row
   (DOM-09 enforced structurally, not just by convention) — a correction is always a new insert with
@@ -52,8 +54,9 @@ binaries).
 
 ## Completion Criteria
 
-- [ ] `Visit`, `VisitOutcome`, `BiometricReading`, `LabResult` EF Core entities/configurations/
-      migration exist with correct sync-class semantics.
+- [ ] `Visit`, `VisitOutcome`, `BiometricReading`, `LabResult`, `VaccineDefinition`, and
+      `VaccinationRecord` EF Core entities/configurations/migration exist with correct sync-class
+      semantics.
 - [ ] No code path can update a persisted `BiometricReading`; a correction test proves a new row
       with a `supersedesId` is created instead.
 - [ ] Growth chart renders real data in the fixed `{ series, meta }` shape.
