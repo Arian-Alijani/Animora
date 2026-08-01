@@ -50,6 +50,7 @@ public sealed class PatientListViewModel : ViewModelBase, INavigationAware
         LoadMoreCommand = new AsyncRelayCommand(LoadMoreAsync);
         CreateCommand = new RelayCommand(OpenForCreate);
         EditCommand = new RelayCommand<Patient>(OpenForEdit);
+        OpenMedicalFileCommand = new RelayCommand<Patient>(OpenMedicalFile);
         ClearScopeCommand = new AsyncRelayCommand(ClearScopeAsync);
     }
 
@@ -100,6 +101,13 @@ public sealed class PatientListViewModel : ViewModelBase, INavigationAware
     public IRelayCommand CreateCommand { get; }
 
     public IRelayCommand<Patient> EditCommand { get; }
+
+    /// <summary>
+    /// Opens item 27's <see cref="MedicalFileSummaryViewModel"/> for the row's patient id — this
+    /// screen's own entry point into that route, added by item 27 the same way item 23 added
+    /// <see cref="OwnerListViewModel.OpenPatientsCommand"/> ahead of this screen existing.
+    /// </summary>
+    public IRelayCommand<Patient> OpenMedicalFileCommand { get; }
 
     /// <summary>Drops the owner scope and reloads as the global list, without a second navigation
     /// (the phase 05 TODO's "clearable scope header" wording for this item).</summary>
@@ -211,6 +219,14 @@ public sealed class PatientListViewModel : ViewModelBase, INavigationAware
             _navigation.NavigateTo(
                 PatientFormViewModel.RouteKey,
                 new PatientFormNavigationParameter(patient.Id, null));
+        }
+    }
+
+    private void OpenMedicalFile(Patient? patient)
+    {
+        if (patient is not null)
+        {
+            _navigation.NavigateTo(MedicalFileSummaryViewModel.RouteKey, patient.Id);
         }
     }
 }

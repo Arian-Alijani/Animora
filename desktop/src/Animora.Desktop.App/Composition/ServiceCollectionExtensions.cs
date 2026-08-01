@@ -1,6 +1,7 @@
 using Animora.Desktop.App.AppState;
 using Animora.Desktop.App.Navigation;
 using Animora.Desktop.App.Shell;
+using Animora.Desktop.Modules.Clients.Composition;
 using Animora.Desktop.Modules.Identity.Composition;
 using Animora.Desktop.Modules.Reporting.Composition;
 using Animora.Desktop.UI.AppState;
@@ -79,6 +80,11 @@ public static class ServiceCollectionExtensions
         // Phase 04's five routes (login, staff list/form, role management, device list) and their
         // Stage A seams, the same one-call shape as AddReportingModule above.
         services.AddIdentityModule(routes);
+
+        // Phase 05's five routes (owner list/form, patient list/form, medical-file summary) and
+        // their Stage A seams (item 29), the same one-call shape as AddIdentityModule above — this
+        // module's only appearance in this project.
+        services.AddClientsModule(routes);
 
         return services;
     }

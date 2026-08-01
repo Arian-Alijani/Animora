@@ -35,12 +35,17 @@
 
        Phase 04 adds Animora.Desktop.Modules.Identity for Handlers/SignInHandler,
        SaveStaffMemberHandler, SaveRoleHandler (items 35-37) and SharedKernel's Staff/Role/Credential
-       validators (item 38). -->
+       validators (item 38).
+
+       Phase 05 adds Animora.Desktop.Modules.Clients for Handlers/SaveOwnerHandler,
+       SavePatientHandler, GetPatientListHandler (items 32-34) and SharedKernel's
+       Owner/PatientValidator (item 35). -->
   <ItemGroup>
     <ProjectReference Include="../../src/Animora.Desktop.UI/Animora.Desktop.UI.csproj" />
     <ProjectReference Include="../../src/Animora.Desktop.App/Animora.Desktop.App.csproj" />
     <ProjectReference Include="../../src/Animora.Desktop.Modules.Reporting/Animora.Desktop.Modules.Reporting.csproj" />
     <ProjectReference Include="../../src/Animora.Desktop.Modules.Identity/Animora.Desktop.Modules.Identity.csproj" />
+    <ProjectReference Include="../../src/Animora.Desktop.Modules.Clients/Animora.Desktop.Modules.Clients.csproj" />
     <ProjectReference Include="../../../shared/dotnet/Animora.SharedKernel/Animora.SharedKernel.csproj" />
     <ProjectReference Include="../../../shared/dotnet/Animora.Contracts/Animora.Contracts.csproj" />
   </ItemGroup>

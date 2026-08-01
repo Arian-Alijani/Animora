@@ -1,0 +1,134 @@
+<UserControl x:Class="Animora.Desktop.Modules.Clients.Views.MedicalFileSummaryView"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="using:Animora.Desktop.UI.Controls"
+             xmlns:converters="using:Animora.Desktop.UI.Converters"
+             xmlns:views="using:Animora.Desktop.Modules.Clients.Views">
+  <!--
+    The medical-file summary route (item 27, playbook step 1): a read-only header over item 22's
+    GetMedicalFileSummaryQuery, Jalali-stamped at this binding edge (DESK-ARCH-14). The
+    visit-history/attachment links below the header stay disabled — TODO(P1-07)/TODO(P1-08) on
+    MedicalFileSummaryViewModel — rather than a cross-module call, the phase 05 TODO header's "the
+    medical file's links out stay markers" decision (DT-01, CM-06); their real navigation lands
+    with Visits (phase 07) and Files (phase 08). Nothing here sets FlowDirection: RightToLeft is
+    inherited from the shell root (DT-06, DESK-ARCH-06).
+  -->
+  <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+    <StackPanel Spacing="{StaticResource SectionGap}" MaxWidth="720">
+      <TextBlock Classes="Body"
+                 Foreground="{DynamicResource BrushTextSecondary}"
+                 Text="بیمار مورد نظر یافت نشد."
+                 IsVisible="{Binding IsNotFound}" />
+
+      <StackPanel Spacing="{StaticResource SectionGap}" IsVisible="{Binding !IsNotFound}">
+        <controls:SectionCard Eyebrow="پرونده پزشکی"
+                               Title="{Binding PatientName}"
+                               ActionText="ویرایش اطلاعات بیمار"
+                               ActionCommand="{Binding EditPatientCommand}">
+          <controls:SectionCard.BodyContent>
+            <StackPanel Spacing="{StaticResource Spacing16}">
+              <TextBlock Classes="Body"
+                         Foreground="{DynamicResource BrushTextSecondary}"
+                         Text="{Binding OwnerDisplayName, StringFormat='صاحب حیوان: {0}'}" />
+
+              <WrapPanel Orientation="Horizontal">
+                <StackPanel Spacing="{StaticResource Spacing4}" Width="200" Margin="0,0,16,12">
+                  <TextBlock Classes="Caption" Foreground="{DynamicResource BrushTextMuted}" Text="گونه" />
+                  <TextBlock Classes="BodyStrong" Text="{Binding Species}" />
+                </StackPanel>
+                <StackPanel Spacing="{StaticResource Spacing4}" Width="200" Margin="0,0,16,12">
+                  <TextBlock Classes="Caption" Foreground="{DynamicResource BrushTextMuted}" Text="جنسیت" />
+                  <TextBlock Classes="BodyStrong" Text="{Binding Sex}" />
+                </StackPanel>
+                <StackPanel Spacing="{StaticResource Spacing4}" Width="200" Margin="0,0,16,12">
+                  <TextBlock Classes="Caption" Foreground="{DynamicResource BrushTextMuted}" Text="نژاد" />
+                  <TextBlock Classes="BodyStrong" Text="{Binding Breed}" />
+                </StackPanel>
+                <StackPanel Spacing="{StaticResource Spacing4}" Width="200" Margin="0,0,16,12">
+                  <TextBlock Classes="Caption" Foreground="{DynamicResource BrushTextMuted}" Text="رنگ" />
+                  <TextBlock Classes="BodyStrong" Text="{Binding Color}" />
+                </StackPanel>
+
+                <StackPanel Spacing="{StaticResource Spacing4}" Width="200" Margin="0,0,16,12">
+                  <TextBlock Classes="Caption" Foreground="{DynamicResource BrushTextMuted}" Text="تاریخ تولد" />
+                  <TextBlock Classes="BodyStrong"
+                             Text="{Binding BirthDateUtc, Converter={x:Static converters:JalaliDateConverter.Instance}, ConverterParameter=Date}" />
+                </StackPanel>
+                <StackPanel Spacing="{StaticResource Spacing4}" Width="200" Margin="0,0,16,12">
+                  <TextBlock Classes="Caption" Foreground="{DynamicResource BrushTextMuted}" Text="سن" />
+                  <TextBlock Classes="BodyStrong" Text="{Binding AgeDisplay}" />
+                </StackPanel>
+                <!-- The weight-over-time chart is Visits' own BiometricReading series; only the one
+                     current value is shown here — TODO(P1-07) (MedicalFileSummaryViewModel.WeightKg's
+                     own doc comment). -->
+                <StackPanel Spacing="{StaticResource Spacing4}" Width="200" Margin="0,0,16,12">
+                  <TextBlock Classes="Caption" Foreground="{DynamicResource BrushTextMuted}" Text="وزن فعلی (کیلوگرم)" />
+                  <TextBlock Classes="BodyStrong"
+                             Text="{Binding WeightKg, Converter={x:Static converters:PersianNumberConverter.Instance}, ConverterParameter=Digits}" />
+                </StackPanel>
+                <StackPanel Spacing="{StaticResource Spacing4}" Width="200" Margin="0,0,16,12">
+                  <TextBlock Classes="Caption" Foreground="{DynamicResource BrushTextMuted}" Text="وضعیت عقیم‌سازی" />
+                  <controls:StatusChip
+                    HorizontalAlignment="Left"
+                    Text="{Binding IsSterilized, Converter={x:Static views:SterilizationStatusConverter.Instance}, ConverterParameter=Text}"
+                    Variant="{Binding IsSterilized, Converter={x:Static views:SterilizationStatusConverter.Instance}, ConverterParameter=Variant}" />
+                </StackPanel>
+
+                <StackPanel Spacing="{StaticResource Spacing4}" Width="200" Margin="0,0,16,12">
+                  <TextBlock Classes="Caption" Foreground="{DynamicResource BrushTextMuted}" Text="شماره میکروچیپ" />
+                  <TextBlock Classes="BodyStrong" Text="{Binding MicrochipId}" />
+                </StackPanel>
+                <StackPanel Spacing="{StaticResource Spacing4}" Width="200" Margin="0,0,16,12">
+                  <TextBlock Classes="Caption" Foreground="{DynamicResource BrushTextMuted}" Text="تاریخ کاشت میکروچیپ" />
+                  <TextBlock Classes="BodyStrong"
+                             Text="{Binding MicrochipImplantedAtUtc, Converter={x:Static converters:JalaliDateConverter.Instance}, ConverterParameter=Date}" />
+                </StackPanel>
+                <StackPanel Spacing="{StaticResource Spacing4}" Width="200" Margin="0,0,16,12">
+                  <TextBlock Classes="Caption" Foreground="{DynamicResource BrushTextMuted}" Text="محل زندگی" />
+                  <TextBlock Classes="BodyStrong" Text="{Binding HousingType}" />
+                </StackPanel>
+                <StackPanel Spacing="{StaticResource Spacing4}" Width="200" Margin="0,0,16,12">
+                  <TextBlock Classes="Caption" Foreground="{DynamicResource BrushTextMuted}" Text="بارکد" />
+                  <TextBlock Classes="BodyStrong" Text="{Binding BarcodeValue}" />
+                </StackPanel>
+
+                <StackPanel Spacing="{StaticResource Spacing4}" Width="416" Margin="0,0,16,12">
+                  <TextBlock Classes="Caption" Foreground="{DynamicResource BrushTextMuted}" Text="رفتار" />
+                  <TextBlock Classes="BodyStrong" Text="{Binding Temperament}" TextWrapping="Wrap" />
+                </StackPanel>
+                <StackPanel Spacing="{StaticResource Spacing4}" Width="416" Margin="0,0,16,12">
+                  <TextBlock Classes="Caption" Foreground="{DynamicResource BrushTextMuted}" Text="جیره غذایی" />
+                  <TextBlock Classes="BodyStrong" Text="{Binding Diet}" TextWrapping="Wrap" />
+                </StackPanel>
+              </WrapPanel>
+
+              <StackPanel Spacing="{StaticResource Spacing4}">
+                <TextBlock Classes="Caption" Foreground="{DynamicResource BrushTextMuted}" Text="سابقه جراحی" />
+                <TextBlock Classes="Body" Text="{Binding SurgicalHistory}" TextWrapping="Wrap" />
+              </StackPanel>
+            </StackPanel>
+          </controls:SectionCard.BodyContent>
+        </controls:SectionCard>
+
+        <!--
+          TODO(P1-07)/TODO(P1-08) markers: both buttons stay disabled (HasVisitHistoryLink /
+          HasAttachmentsLink are always false in this phase) until Visits' visit-history screen and
+          Files' attachment screen exist to navigate to.
+        -->
+        <StackPanel Orientation="Horizontal" Spacing="{StaticResource CardGap}">
+          <Button Classes="Secondary"
+                  Content="تاریخچه ویزیت‌ها (به‌زودی)"
+                  IsEnabled="{Binding HasVisitHistoryLink}" />
+          <Button Classes="Secondary"
+                  Content="پیوست‌ها (به‌زودی)"
+                  IsEnabled="{Binding HasAttachmentsLink}" />
+        </StackPanel>
+
+        <Button Classes="Subtle"
+                HorizontalAlignment="Left"
+                Content="بازگشت به فهرست بیماران"
+                Command="{Binding BackCommand}" />
+      </StackPanel>
+    </StackPanel>
+  </ScrollViewer>
+</UserControl>

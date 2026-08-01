@@ -55,10 +55,16 @@
         <DataGridTemplateColumn Header="" Width="Auto">
           <DataGridTemplateColumn.CellTemplate>
             <DataTemplate>
-              <Button Classes="Subtle Small"
-                      Content="ویرایش"
-                      Command="{Binding DataContext.EditCommand, ElementName=Root}"
-                      CommandParameter="{Binding}" />
+              <StackPanel Orientation="Horizontal" Spacing="{StaticResource Spacing8}">
+                <Button Classes="Subtle Small"
+                        Content="پرونده پزشکی"
+                        Command="{Binding DataContext.OpenMedicalFileCommand, ElementName=Root}"
+                        CommandParameter="{Binding}" />
+                <Button Classes="Subtle Small"
+                        Content="ویرایش"
+                        Command="{Binding DataContext.EditCommand, ElementName=Root}"
+                        CommandParameter="{Binding}" />
+              </StackPanel>
             </DataTemplate>
           </DataGridTemplateColumn.CellTemplate>
         </DataGridTemplateColumn>
