@@ -1,21 +1,35 @@
-using Animora.Desktop.UI.Services;
+using Animora.Desktop.App.Startup;
 using Avalonia;
+using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 
 namespace Animora.Desktop.App;
 
 public partial class App : Application
 {
+    private readonly StartupSequence? _startup;
+
+    // Null on the design-time path only (Program.BuildAvaloniaApp()), where styles are all the
+    // previewer needs.
+    internal App(StartupSequence? startup)
+    {
+        _startup = startup;
+    }
+
     public override void Initialize()
     {
-        // TODO(P1-02): drop this direct call once the composition root resolves the design system
-        // through Animora.Desktop.UI.Services.ServiceCollectionExtensions.AddDesktopUi().
-        IconProviderRegistrar.Register();
-
         AvaloniaXamlLoader.Load(this);
     }
 
-    // TODO(P1-02): assign MainWindow from the host container here — ShellWindow now takes its
-    // ShellViewModel by constructor injection, so the startup sequence resolves the window instead of
-    // this method newing it up (DESK-ARCH-05/16).
+    public override void OnFrameworkInitializationCompleted()
+    {
+        if (_startup is not null && ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+        {
+            // The startup sequence owns stage order; this method only hands the window it produced to
+            // the lifetime that shows it (DESK-ARCH-16).
+            desktop.MainWindow = _startup.CreateShell();
+        }
+
+        base.OnFrameworkInitializationCompleted();
+    }
 }

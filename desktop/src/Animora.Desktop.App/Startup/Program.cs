@@ -1,5 +1,4 @@
 using Avalonia;
-using Microsoft.Extensions.Hosting;
 
 namespace Animora.Desktop.App.Startup;
 
@@ -9,26 +8,24 @@ internal static class Program
     [STAThread]
     public static int Main(string[] args)
     {
-        // The host owns background services and (from phase 02) the module service registrations;
-        // the Avalonia lifetime runs inside it so shutdown order stays host-then-UI.
-        using IHost host = Host.CreateApplicationBuilder(args).Build();
-        host.Start();
+        // Stage 1 completes before Avalonia starts, so App resolves an already-built container;
+        // disposing stops the host once the UI loop returns (DESK-ARCH-16).
+        using StartupSequence startup = StartupSequence.Bootstrap(args);
 
-        // TODO(P1-02): register modules, INavigationService, and the shell view models here.
-        try
-        {
-            return BuildAvaloniaApp().StartWithClassicDesktopLifetime(args);
-        }
-        finally
-        {
-            host.StopAsync().GetAwaiter().GetResult();
-        }
+        return BuildAvaloniaApp(startup).StartWithClassicDesktopLifetime(args);
     }
 
-    // Avalonia's design-time tooling resolves this member by name and signature.
+    // Avalonia's design-time tooling resolves this member by name and signature. It passes no startup
+    // sequence: the previewer renders XAML only, and bootstrapping the host would run the app's real
+    // startup stages inside the designer.
     public static AppBuilder BuildAvaloniaApp()
     {
-        return AppBuilder.Configure<App>()
+        return BuildAvaloniaApp(startup: null);
+    }
+
+    private static AppBuilder BuildAvaloniaApp(StartupSequence? startup)
+    {
+        return AppBuilder.Configure(() => new App(startup))
             .UsePlatformDetect();
     }
 }
