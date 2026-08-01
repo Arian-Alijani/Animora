@@ -11,7 +11,7 @@ public class UtcClockTests
     // would land on the following calendar date and fail the UtcToday assertions below.
     private static readonly DateTimeOffset LateEvening = new(2024, 3, 20, 22, 45, 30, TimeSpan.Zero);
 
-    private static TimeProvider FixedAt(DateTimeOffset instant) => new FixedTimeProvider(instant);
+    private static FixedTimeProvider FixedAt(DateTimeOffset instant) => new(instant);
 
     [Fact]
     public void UtcNow_returns_the_providers_instant()
@@ -38,7 +38,7 @@ public class UtcClockTests
     [Fact]
     public void UtcNow_is_deterministic_under_a_fixed_provider()
     {
-        TimeProvider timeProvider = FixedAt(LateEvening);
+        FixedTimeProvider timeProvider = FixedAt(LateEvening);
 
         // CONV-06's point: nothing reachable from here calls DateTime.UtcNow, so a test that pins
         // the provider pins every timestamp the code under test produces.
@@ -70,7 +70,7 @@ public class UtcClockTests
     [Fact]
     public void UtcToday_agrees_with_the_date_component_of_UtcNow()
     {
-        TimeProvider timeProvider = FixedAt(LateEvening);
+        FixedTimeProvider timeProvider = FixedAt(LateEvening);
 
         timeProvider.UtcToday().Should().Be(timeProvider.UtcNow().Date);
     }
