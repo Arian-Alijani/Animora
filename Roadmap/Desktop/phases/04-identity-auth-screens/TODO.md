@@ -47,13 +47,13 @@ Six decisions this list encodes, so the implementing sessions do not re-litigate
 - [x] 12. Add `Modules.Identity/Data/IRoleReadStore` + `IRoleWriteStore` (DIR-03, DT-05)
 - [x] 13. Add `Modules.Identity/Data/IDeviceReadStore` (DIR-03, DT-05)
 - [x] 14. Add `Modules.Identity/Data/IStaffCredentialReadStore`: the local credential-lookup seam carrying the `TODO(P2)` marker where the server auth call lands (DT-12, CM-06, SEC-03)
-- [ ] 15. Add `Modules.Identity/Data/IdentitySampleData`: the one seeded Persian demo dataset (staff, roles, devices) every Stage A fake in items 16-18 reads, marked `TODO(P1-15)` (DT-12). The seeded staff usernames must themselves follow SEC-17 (one bare owner-admin username, every other seeded staff prefixed with it).
-- [ ] 16. Add `Modules.Identity/Data/InMemoryStaffStore` over item 15, satisfying both item 11 seams so a create shows up in the list (DIR-03, DT-12)
-- [ ] 17. Add `Modules.Identity/Data/InMemoryRoleStore` over item 15, satisfying both item 12 seams (DIR-03, DT-12)
-- [ ] 18. Add `Modules.Identity/Data/InMemoryDeviceReadStore` + `InMemoryStaffCredentialReadStore` over item 15 (DIR-03, DT-12)
-- [ ] 19. Add `Handlers/SignInQuery` + `SignInHandler`: runs `CredentialValidator`, resolves the staff through item 14, returns `Result<SignedInStaff>` with item 4's codes, and marks the server-auth seam `TODO(P2)` (DT-03, DT-12, playbook step 3)
-- [ ] 20. Add `Handlers/GetStaffListQuery` + handler: search term plus a keyset page over item 11's read store (DT-08, CONV-16)
-- [ ] 21. Add `Handlers/GetStaffMemberQuery` + handler: the single-staff read the edit form loads with (DT-02)
+- [x] 15. Add `Modules.Identity/Data/IdentitySampleData`: the one seeded Persian demo dataset (staff, roles, devices) every Stage A fake in items 16-18 reads, marked `TODO(P1-15)` (DT-12). The seeded staff usernames must themselves follow SEC-17 (one bare owner-admin username, every other seeded staff prefixed with it).
+- [x] 16. Add `Modules.Identity/Data/InMemoryStaffStore` over item 15, satisfying both item 11 seams so a create shows up in the list (DIR-03, DT-12)
+- [x] 17. Add `Modules.Identity/Data/InMemoryRoleStore` over item 15, satisfying both item 12 seams (DIR-03, DT-12)
+- [x] 18. Add `Modules.Identity/Data/InMemoryDeviceReadStore` + `InMemoryStaffCredentialReadStore` over item 15 (DIR-03, DT-12)
+- [x] 19. Add `Handlers/SignInQuery` + `SignInHandler`: runs `CredentialValidator`, resolves the staff through item 14, returns `Result<SignedInStaff>` with item 4's codes, and marks the server-auth seam `TODO(P2)` (DT-03, DT-12, playbook step 3)
+- [x] 20. Add `Handlers/GetStaffListQuery` + handler: search term plus a keyset page over item 11's read store (DT-08, CONV-16)
+- [x] 21. Add `Handlers/GetStaffMemberQuery` + handler: the single-staff read the edit form loads with (DT-02)
 - [ ] 22. Add `Handlers/SaveStaffMemberCommand` + handler: `StaffValidator` runs here, not in the ViewModel, and a create generates its own `UUIDv7` (DT-03, CONV-01/02, INV-03). Also enforces SEC-17: resolve the owner-admin username via item 11's `FindOwnerAdminUsernameAsync`, skip the check when the input's `RoleId` is the system role itself, otherwise require the submitted `Username` to start with `{anchor}-` or return `IdentityErrors.SubordinateUsernamePrefixRequired`
 - [ ] 23. Add `Handlers/GetRolesQuery` + handler: the tenant's roles plus item 6's catalog the role screen renders (SEC-09)
 - [ ] 24. Add `Handlers/SaveRoleCommand` + handler: `RoleValidator` runs here, claim keys are checked against item 6's catalog, and the owner-admin role keeps `tenant.manage-staff` (SEC-09, SEC-11)
