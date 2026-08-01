@@ -28,9 +28,9 @@ Five decisions this list encodes, so the implementing sessions do not re-litigat
   `App/AppState`. A module may not reference the composition root (AT-09), and cross-boundary work
   goes through `Mediator` (DT-01) — this is what finally resolves `CurrentUserState`'s `TODO(P1-04)`.
 
-- [ ] 1. Add `shared/dotnet/Animora.SharedKernel/Validation/Identity/IStaffInput` + `StaffValidator`: the property surface a staff create/edit command implements and its I/O-free rules (CONV-18, INV-02, SH-01, SH-05, DT-03)
-- [ ] 2. Add `Validation/Identity/IRoleInput` + `RoleValidator`: role display name and assigned claim keys, with catalog membership left to the module that owns the catalog (CONV-18, SH-05, SEC-09)
-- [ ] 3. Add `Validation/Identity/ICredentialInput` + `CredentialValidator`: structural rules for the sign-in form only — no hashing, no lookup, no policy the server owns (SH-05, SEC-03, DT-12)
+- [x] 1. Add `shared/dotnet/Animora.SharedKernel/Validation/Identity/IStaffInput` + `StaffValidator`: the property surface a staff create/edit command implements and its I/O-free rules (CONV-18, INV-02, SH-01, SH-05, DT-03)
+- [x] 2. Add `Validation/Identity/IRoleInput` + `RoleValidator`: role display name and assigned claim keys, with catalog membership left to the module that owns the catalog (CONV-18, SH-05, SEC-09)
+- [x] 3. Add `Validation/Identity/ICredentialInput` + `CredentialValidator`: structural rules for the sign-in form only — no hashing, no lookup, no policy the server owns (SH-05, SEC-03, DT-12)
 - [ ] 4. Add `shared/dotnet/Animora.Contracts/Errors/IdentityErrors`: the `ERR-IDENTITY-{NNN}` constants this phase's handlers return (CONV-13/14/15, SH-03, AG-06)
 - [ ] 5. Add the `Mediator.Abstractions` and `Avalonia` package references to `Animora.Desktop.Modules.Identity.csproj`, matching the Reporting module's reference set (TECH_STACK §4, AG-08)
 - [ ] 6. Add `Modules.Identity/Models/PermissionClaim` + `PermissionCatalog`: the tenant-RBAC claim catalog grouped by module, transcribed from 10-security-and-access-control's table and marked `TODO(P2)` for the seed-data source (SEC-09, SEC-12, playbook "add a permission" step 1)
