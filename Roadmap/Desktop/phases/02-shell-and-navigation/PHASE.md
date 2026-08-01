@@ -51,13 +51,34 @@ registration and the data-seam pattern.
 
 ## Completion Criteria
 
-- [ ] Shell shows, applies RTL/theme once at the root, never per-screen (DT-06).
-- [ ] `INavigationService` lets a module register a route with zero shell-side edits.
-- [ ] Connectivity/sync/licensing status indicator exists as a non-blocking, persistent element
+- [x] Shell shows, applies RTL/theme once at the root, never per-screen (DT-06).
+- [x] `INavigationService` lets a module register a route with zero shell-side edits.
+- [x] Connectivity/sync/licensing status indicator exists as a non-blocking, persistent element
       (DESK-ARCH-07), currently backed by placeholder state.
-- [ ] The data-seam pattern (fake-now/real-later behind a module-owned interface) is implemented
+- [x] The data-seam pattern (fake-now/real-later behind a module-owned interface) is implemented
       once, working, and documented well enough that phase 04+ can copy it without re-deriving it.
-- [ ] Startup shows the shell without waiting on any background init (DESK-ARCH-16).
+- [x] Startup shows the shell without waiting on any background init (DESK-ARCH-16).
+
+### Verification evidence (2026-08-01)
+
+- Shell + root-only RTL/theme: `App.axaml` includes `AnimoraTheme.axaml` once and
+  `Theme/Styles/Root.axaml` sets `FlowDirection`/`FontFamily` on `Window`; asserted by
+  `UiTests/Shell/ShellWindowSmokeTests`, and launched on Windows by the user —
+  [`../../_meta/host-verification-log.md`](../../_meta/host-verification-log.md).
+- Zero shell-side edits per route: `Composition/ServiceCollectionExtensions.AddReportingModule()`
+  registers the Home route; `ArchTests/ShellDecouplingRules` forbids `Shell`/`Navigation` types from
+  naming any `Animora.Desktop.Modules.*` namespace, and `UnitTests/Navigation` covers registry and
+  navigation-service behaviour.
+- Status indicator: `Shell/StatusIndicator` bound to `IAppStatusState` (placeholder `Online`),
+  always present in the top bar, on no code path that blocks input.
+- Data seam: `Modules.Reporting/Data/IHomeSummaryReadStore` + `InMemoryHomeSummaryReadStore`
+  (`TODO(P1-21)`), swapped in one composition line and covered by the substituted-store handler test;
+  referenced for later phases from [`../../README.md`](../../README.md).
+- Startup: `Startup/StartupSequence` shows the shell before the background-init hook and never
+  awaits it.
+- Post-run look-and-feel corrections from the Windows session (reference §6): the top bar now closes
+  with a `Divider` hairline (`StrokeThicknessBottom`) and the rail nav pill draws its own box at
+  rail-inner-width x `NavItemHeight`, `RadiusBlock`.
 
 ---
 

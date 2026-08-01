@@ -68,6 +68,10 @@
   <Thickness x:Key="CardPadding">20</Thickness>
   <Thickness x:Key="CardPaddingLarge">24</Thickness>
   <Thickness x:Key="StrokeThickness">1</Thickness>
+  <!-- `StrokeThickness` as a bottom-only edge, for the surfaces that separate themselves from what
+       sits under them with a single hairline instead of a full outline (top bar -> content rule,
+       design-reference §6). Flow-direction safe: no leading/trailing component to mirror. -->
+  <Thickness x:Key="StrokeThicknessBottom">0,0,0,1</Thickness>
 
   <!-- Chip / count-badge padding (design-reference §6) — Thickness-typed for the same reason as
        ButtonPaddingX above: a Setter binds it straight to Padding with no converter. -->
