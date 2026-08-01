@@ -22,6 +22,17 @@ public class OwnerValidatorTests
         public string? LandlineNumber { get; init; }
 
         public string? NationalId { get; init; }
+
+        public string? Address { get; init; }
+
+        public string? City { get; init; }
+
+        public string? Notes { get; init; }
+
+        // A fixed UTC literal rather than a clock read: this test double stands in for a validated
+        // command (CONV-18), and a deterministic default keeps every existing assertion below
+        // exercising the fields it actually names instead of an incidentally-failing intake date.
+        public DateTime IntakeDateUtc { get; init; } = new(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc);
     }
 
     [Fact]

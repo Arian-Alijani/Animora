@@ -18,6 +18,28 @@ public class PatientValidatorTests
         public string Species { get; init; } = "Cat";
 
         public string Sex { get; init; } = "Female";
+
+        public string? Breed { get; init; }
+
+        public DateTime? BirthDateUtc { get; init; }
+
+        public decimal? WeightKg { get; init; }
+
+        public string? MicrochipId { get; init; }
+
+        public DateTime? MicrochipImplantedAtUtc { get; init; }
+
+        public string? Color { get; init; }
+
+        public string? Temperament { get; init; }
+
+        public string? HousingType { get; init; }
+
+        public string? Diet { get; init; }
+
+        public string? BarcodeValue { get; init; }
+
+        public string? SurgicalHistory { get; init; }
     }
 
     public static TheoryData<string> Species => new([.. PatientValidator.AllowedSpecies]);

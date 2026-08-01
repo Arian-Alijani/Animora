@@ -9,7 +9,9 @@ namespace Animora.SharedKernel.Validation.Clients;
 /// 05-domain-model fixes the Owner aggregate boundary but not field-level formats (AG-02); the
 /// mobile/landline/national-ID shapes enforced here are this phase's documented decision — see
 /// <c>Roadmap/Desktop/phases/03-shared-kernel-primitives/TODO.md</c> item 9 — not an invented
-/// default, and reviewable/adjustable without touching any other layer.
+/// default, and reviewable/adjustable without touching any other layer. The
+/// address/city/notes/intake-date rules added below are phase 05's own documented answer to the
+/// same kind of question (item 2).
 /// </remarks>
 public sealed class OwnerValidator : AbstractValidator<IOwnerInput>
 {
@@ -33,6 +35,24 @@ public sealed class OwnerValidator : AbstractValidator<IOwnerInput>
             .Must(IsValidNationalId)
             .WithMessage("National ID must be a valid 10-digit Iranian code-e-melli.")
             .When(owner => !string.IsNullOrEmpty(owner.NationalId));
+
+        RuleFor(owner => owner.Address)
+            .MaximumLength(500)
+            .When(owner => !string.IsNullOrEmpty(owner.Address));
+
+        RuleFor(owner => owner.City)
+            .MaximumLength(100)
+            .When(owner => !string.IsNullOrEmpty(owner.City));
+
+        RuleFor(owner => owner.Notes)
+            .MaximumLength(2000)
+            .When(owner => !string.IsNullOrEmpty(owner.Notes));
+
+        RuleFor(owner => owner.IntakeDateUtc)
+            .NotEqual(default(DateTime))
+            .WithMessage("Intake date is required.")
+            .Must(date => date.Kind == DateTimeKind.Utc)
+            .WithMessage("Intake date must be UTC (CONV-04).");
     }
 
     // Standard Iranian national-ID checksum: mod-11 over the first 9 digits, weighted 10..2 from
