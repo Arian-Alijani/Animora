@@ -60,4 +60,8 @@ every entity.
 
 ## Step 0
 
-Not run yet. See [`../../_meta/session-protocol.md`](../../_meta/session-protocol.md).
+Run on 2026-08-01 -> [`TODO.md`](TODO.md) (26 items). The three calls the list had to make — the UTC
+clock is the already-injected `System.TimeProvider` rather than a second abstraction (AG-14), shared
+validators bind to input interfaces a handler's command implements instead of copied input DTOs
+(CONV-18, SH-01), and `Animora.Contracts` gets a seed rather than a catalog (CONV-19/20) — are
+recorded in `TODO.md`'s header rather than restated per item.

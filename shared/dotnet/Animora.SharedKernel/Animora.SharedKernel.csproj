@@ -2,4 +2,11 @@
 
   <!-- Leaf assembly: no ProjectReference is permitted here (DIR-02, AT-02). -->
 
+  <!-- Validation/ authors the rule set both platforms run (CONV-18); the package stays here so a
+       platform project never gains its own validator surface. Nothing platform-bound may follow
+       (SH-02). -->
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" />
+  </ItemGroup>
+
 </Project>
