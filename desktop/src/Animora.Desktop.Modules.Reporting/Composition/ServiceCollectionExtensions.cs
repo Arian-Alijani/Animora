@@ -13,10 +13,6 @@ namespace Animora.Desktop.Modules.Reporting.Composition;
 /// Stage A data bindings together. Every module UI phase copies this shape, so the three kinds of
 /// registration stay in this order — routes, screens, data seams — and the Stage A binding stays one
 /// line for phase 21 to rebind.
-/// <para>
-/// <paramref name="routes"/> is passed in rather than resolved: registration happens before the
-/// container is built, and the shell must read back the same registry instance the modules wrote to.
-/// </para>
 /// </summary>
 public static class ServiceCollectionExtensions
 {
@@ -27,6 +23,16 @@ public static class ServiceCollectionExtensions
     // page title read it from the descriptor; the screen's own labels stay in HomeView.axaml (AG-11).
     private const string HomeRouteTitle = "خانه";
 
+    /// <summary>
+    /// Registers this module's routes, screens and Stage A read seam in one call, so the composition
+    /// root never names a screen, a view model or a read store of its own (DESK-ARCH-05).
+    /// </summary>
+    /// <param name="services">The container being described by the composition root.</param>
+    /// <param name="routes">
+    /// The shell's route registry, passed in rather than resolved: registration happens before the
+    /// container is built, and the shell must read back the same registry instance the modules wrote to.
+    /// </param>
+    /// <returns>The same <paramref name="services"/> instance, so registrations can be chained.</returns>
     public static IServiceCollection AddReportingModule(this IServiceCollection services, IRouteRegistry routes)
     {
         ArgumentNullException.ThrowIfNull(routes);
