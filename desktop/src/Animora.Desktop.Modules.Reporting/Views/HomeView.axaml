@@ -1,0 +1,59 @@
+<UserControl x:Class="Animora.Desktop.Modules.Reporting.Views.HomeView"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="using:Animora.Desktop.UI.Controls"
+             xmlns:converters="using:Animora.Desktop.UI.Converters">
+  <!--
+    The landing route's placeholder screen. Nothing here sets FlowDirection: the shell root's
+    RightToLeft is inherited, which is what puts the first grid column on the right (DT-06,
+    DESK-ARCH-06). Every value bound below is a storage unit from HomeViewModel.Summary, turned into
+    Persian digits / Tomans / a Jalali stamp by the phase-01 converters at this binding edge only
+    (DESK-ARCH-14). Only phase-01 StatCard/SectionCard and Theme/Tokens lookups appear here.
+  -->
+  <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+    <StackPanel Spacing="{StaticResource SectionGap}">
+      <Grid ColumnDefinitions="*,*,*,*" ColumnSpacing="{StaticResource CardGap}">
+        <controls:StatCard Grid.Column="0"
+                           IconGlyph="mdi-stethoscope"
+                           IconAccent="Info"
+                           Label="ویزیت‌های امروز"
+                           MetricValue="{Binding Summary.TodayVisitCount, Converter={x:Static converters:PersianNumberConverter.Instance}}" />
+        <controls:StatCard Grid.Column="1"
+                           IconGlyph="mdi-calendar-clock"
+                           IconAccent="Violet"
+                           Label="نوبت‌های امروز"
+                           MetricValue="{Binding Summary.TodayAppointmentCount, Converter={x:Static converters:PersianNumberConverter.Instance}}" />
+        <controls:StatCard Grid.Column="2"
+                           IconGlyph="mdi-file-document-alert"
+                           IconAccent="Warning"
+                           Label="فاکتورهای تسویه‌نشده"
+                           MetricValue="{Binding Summary.OutstandingInvoiceCount, Converter={x:Static converters:PersianNumberConverter.Instance}}" />
+        <controls:StatCard Grid.Column="3"
+                           IconGlyph="mdi-cash-multiple"
+                           IconAccent="Success"
+                           Label="درآمد امروز"
+                           MetricValue="{Binding Summary.TodayRevenueInRials, Converter={x:Static converters:MoneyConverter.Instance}}" />
+      </Grid>
+
+      <controls:SectionCard Eyebrow="مرکز کنترل" Title="نمای امروز">
+        <controls:SectionCard.BodyContent>
+          <StackPanel Spacing="{StaticResource Spacing12}">
+            <TextBlock Classes="Body"
+                       Foreground="{DynamicResource BrushTextSecondary}"
+                       TextWrapping="Wrap"
+                       Text="شمارنده‌های بالا از داده‌های همین دستگاه خوانده می‌شوند و بدون اتصال به اینترنت هم در دسترس‌اند." />
+            <StackPanel Orientation="Horizontal" Spacing="{StaticResource Spacing4}">
+              <TextBlock Classes="Caption"
+                         Foreground="{DynamicResource BrushTextMuted}"
+                         Text="آخرین به‌روزرسانی:" />
+              <TextBlock x:Name="FreshnessText"
+                         Classes="Caption"
+                         Foreground="{DynamicResource BrushTextMuted}"
+                         Text="{Binding Summary.GeneratedAtUtc, Converter={x:Static converters:JalaliDateConverter.Instance}, ConverterParameter=DateTime}" />
+            </StackPanel>
+          </StackPanel>
+        </controls:SectionCard.BodyContent>
+      </controls:SectionCard>
+    </StackPanel>
+  </ScrollViewer>
+</UserControl>

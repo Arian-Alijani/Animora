@@ -7,9 +7,11 @@
     <ProjectReference Include="../../../shared/dotnet/Animora.Contracts/Animora.Contracts.csproj" />
   </ItemGroup>
 
-  <!-- Look-and-feel stack (TECH_STACK.md §4). Pinned centrally in Directory.Packages.props;
-       this is the only desktop project allowed to take these package references directly —
-       every module/app project gets them transitively through the ProjectReference above. -->
+  <!-- Look-and-feel stack (TECH_STACK.md §4). Pinned centrally in Directory.Packages.props; every
+       module/app project gets these assemblies transitively through the ProjectReference above and
+       takes none of them directly, except `Avalonia` itself where the project owns .axaml views —
+       its XAML compiler and InitializeComponent generator are build/analyzer assets, which NuGet
+       does not flow across a ProjectReference. -->
   <ItemGroup>
     <PackageReference Include="Avalonia" />
     <PackageReference Include="Semi.Avalonia" />

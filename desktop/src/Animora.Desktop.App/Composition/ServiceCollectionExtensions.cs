@@ -1,6 +1,7 @@
 using Animora.Desktop.App.AppState;
 using Animora.Desktop.App.Navigation;
 using Animora.Desktop.App.Shell;
+using Animora.Desktop.Modules.Reporting.Composition;
 using Animora.Desktop.UI.AppState;
 using Animora.Desktop.UI.Navigation;
 using Animora.Desktop.UI.Services;
@@ -32,11 +33,14 @@ public static class ServiceCollectionExtensions
         // per-request scope for handlers to align with, and handlers hold no state (DESK-ARCH-02).
         services.AddMediator((MediatorOptions options) => options.ServiceLifetime = ServiceLifetime.Singleton);
 
-        // One instance behind two entries: modules see IRouteRegistry, while NavigationService needs
-        // the concrete type's route lookup, which is deliberately not on the interface
-        // (RouteRegistry.GetRequired).
-        services.TryAddSingleton<RouteRegistry>();
-        services.TryAddSingleton<IRouteRegistry>(static provider => provider.GetRequiredService<RouteRegistry>());
+        // Constructed here instead of resolved: the module registrations below publish their routes
+        // while the container is still being described, and the shell has to read back the same
+        // instance they wrote to. One instance behind two entries — modules see IRouteRegistry, while
+        // NavigationService needs the concrete type's route lookup, which is deliberately not on the
+        // interface (RouteRegistry.GetRequired).
+        RouteRegistry routes = new();
+        services.TryAddSingleton(routes);
+        services.TryAddSingleton<IRouteRegistry>(routes);
         services.TryAddSingleton<INavigationService, NavigationService>();
 
         // Injected singletons rather than state on ViewModelBase (DESK-ARCH-03); both are phase-02
@@ -59,6 +63,11 @@ public static class ServiceCollectionExtensions
                 // indicator (DESK-ARCH-07); the physical side follows the inherited flow direction.
                 Position = NotificationPosition.BottomLeft,
             });
+
+        // The module's only appearance in this project, and the proof of DESK-ARCH-05: the shell and
+        // navigation code above name no screen, no view model and no read store — this line is what
+        // makes the Home route exist. Later phases append one call each here (DT-09).
+        services.AddReportingModule(routes);
 
         return services;
     }
