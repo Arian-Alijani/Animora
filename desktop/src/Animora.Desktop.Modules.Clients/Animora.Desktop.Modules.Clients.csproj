@@ -10,4 +10,18 @@
     <ProjectReference Include="../../../shared/dotnet/Animora.Contracts/Animora.Contracts.csproj" />
   </ItemGroup>
 
+  <!-- Request/handler types for this module's screens (DT-02). The source generator stays in the
+       composition root, which discovers these handlers through its project reference. -->
+  <ItemGroup>
+    <PackageReference Include="Mediator.Abstractions" />
+  </ItemGroup>
+
+  <!-- Required by every project that owns .axaml views, even though the runtime assemblies already
+       arrive through Animora.Desktop.UI: the XAML compiler ships as build assets and the
+       InitializeComponent/x:Name generator as analyzer assets, and NuGet does not flow analyzer
+       assets across a ProjectReference. Version stays pinned in Directory.Packages.props. -->
+  <ItemGroup>
+    <PackageReference Include="Avalonia" />
+  </ItemGroup>
+
 </Project>
