@@ -20,12 +20,12 @@ Three decisions this list encodes, so the implementing sessions do not re-litiga
   consuming phase (05) binds to, shaped so the P2 OpenAPI swap is additive (CONV-19/20, SH-04).
 
 - [x] 1. Pin `FluentValidation` in `Directory.Packages.props` and reference it from `Animora.SharedKernel` only (TECH_STACK §4, AG-08, CONV-18, SH-05)
-- [ ] 2. Add `SharedKernel/Primitives/TenantId`: readonly record struct over a `UUIDv7` `Guid`, `New()`/`Empty`/`IsEmpty`, explicit conversions only, no ambient default (CONV-01/02/03, DOM-01, CM-05)
-- [ ] 3. Add `SharedKernel/Primitives/IEntity` + `ITenantScoped`: the base entity contract — `UUIDv7` identity with no public setter, `TenantId` on every tenant-scoped entity (INV-03, DOM-01, AT-07, playbook "add a CRUD entity" step 1)
-- [ ] 4. Add `SharedKernel/Primitives/ISyncedEntity`: marker adding the tombstone soft-delete shape only — no HLC/field-group/transport members (INV-03/04, DT-12, playbook "add a synced entity" step 3)
-- [ ] 5. Add `SharedKernel/Primitives/Error`: stable `ERR-{MODULE}-{NNN}` code plus optional non-localized detail, no message catalog (CONV-13/15, CONV-12)
-- [ ] 6. Add `SharedKernel/Primitives/Result` + `Result<T>`: failure without exceptions, no value access on a failed result, carrying item 5's `Error` (INV-07 client-side companion)
-- [ ] 7. Add `SharedKernel/Money/Money`: readonly record struct over `decimal`, IRR-only with no currency field, arithmetic/comparison, `Zero`, and a single explicit persistence-rounding operation using banker's rounding (CONV-07/08/09, INV-05)
+- [x] 2. Add `SharedKernel/Primitives/TenantId`: readonly record struct over a `UUIDv7` `Guid`, `New()`/`Empty`/`IsEmpty`, explicit conversions only, no ambient default (CONV-01/02/03, DOM-01, CM-05)
+- [x] 3. Add `SharedKernel/Primitives/IEntity` + `ITenantScoped`: the base entity contract — `UUIDv7` identity with no public setter, `TenantId` on every tenant-scoped entity (INV-03, DOM-01, AT-07, playbook "add a CRUD entity" step 1)
+- [x] 4. Add `SharedKernel/Primitives/ISyncedEntity`: marker adding the tombstone soft-delete shape only — no HLC/field-group/transport members (INV-03/04, DT-12, playbook "add a synced entity" step 3)
+- [x] 5. Add `SharedKernel/Primitives/Error`: stable `ERR-{MODULE}-{NNN}` code plus optional non-localized detail, no message catalog (CONV-13/15, CONV-12)
+- [x] 6. Add `SharedKernel/Primitives/Result` + `Result<T>`: failure without exceptions, no value access on a failed result, carrying item 5's `Error` (INV-07 client-side companion)
+- [x] 7. Add `SharedKernel/Money/Money`: readonly record struct over `decimal`, IRR-only with no currency field, arithmetic/comparison, `Zero`, and a single explicit persistence-rounding operation using banker's rounding (CONV-07/08/09, INV-05)
 - [ ] 8. Add `SharedKernel/Time/UtcClock`: UTC-typed extension surface over injected `System.TimeProvider` (`UtcNow`, `UtcToday`), no parallel clock interface, no Jalali (CONV-04/05/06, AG-14)
 - [ ] 9. Ask the user: which Owner/Patient fields are required and what formats are accepted (Iranian mobile/landline shape, national ID, patient species/sex value sets) — the corpus fixes aggregate boundaries but no field-level rules (AG-02)
 - [ ] 10. Add `SharedKernel/Validation/Clients/IOwnerInput`: the minimal property surface a handler's owner command implements so it can be validated without a DTO copy (CONV-18, INV-02, SH-01)
