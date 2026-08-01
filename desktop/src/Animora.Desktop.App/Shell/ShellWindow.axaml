@@ -28,13 +28,42 @@
     -->
     <Style Selector="Button.NavItem">
       <Setter Property="Height" Value="{StaticResource NavItemHeight}" />
+      <!-- The base Button theme carries its own MinHeight/MinWidth sized for a text button; zeroing
+           them here (structural zeros, not design values) keeps the pill exactly NavItemHeight tall
+           and lets it shrink to the rail's inner width instead of a theme-owned minimum. -->
+      <Setter Property="MinHeight" Value="0" />
+      <Setter Property="MinWidth" Value="0" />
+      <Setter Property="HorizontalAlignment" Value="Stretch" />
       <Setter Property="Padding" Value="{StaticResource ButtonPaddingX}" />
       <Setter Property="CornerRadius" Value="{StaticResource RadiusBlock}" />
       <Setter Property="Background" Value="Transparent" />
+      <Setter Property="BorderBrush" Value="Transparent" />
       <Setter Property="BorderThickness" Value="0" />
       <Setter Property="HorizontalContentAlignment" Value="Stretch" />
       <Setter Property="VerticalContentAlignment" Value="Center" />
       <Setter Property="Cursor" Value="Hand" />
+      <!--
+        The pill draws itself instead of inheriting the base theme's button template. The base
+        template paints its fill on an inner presenter with its own inset/min size, so the visible
+        box came out a different size than the 216x40 (rail inner width x NavItemHeight, RadiusBlock)
+        the reference measures. One Border bound to this style's own Background/CornerRadius/Padding
+        makes the painted box identical to the button's layout box, so the hover and Active fills
+        below land on exactly the sample's geometry.
+      -->
+      <Setter Property="Template">
+        <ControlTemplate>
+          <Border Background="{TemplateBinding Background}"
+                  BorderBrush="{TemplateBinding BorderBrush}"
+                  BorderThickness="{TemplateBinding BorderThickness}"
+                  CornerRadius="{TemplateBinding CornerRadius}"
+                  Padding="{TemplateBinding Padding}">
+            <ContentPresenter Content="{TemplateBinding Content}"
+                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                              HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                              VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
+          </Border>
+        </ControlTemplate>
+      </Setter>
     </Style>
     <Style Selector="Button.NavItem TextBlock.NavLabel">
       <Setter Property="Foreground" Value="{DynamicResource BrushRailTextInactive}" />
@@ -45,6 +74,15 @@
     </Style>
     <Style Selector="Button.NavItem:pointerover">
       <Setter Property="Background" Value="{DynamicResource BrushRailItemHover}" />
+    </Style>
+    <Style Selector="Button.NavItem:pressed">
+      <Setter Property="Background" Value="{DynamicResource BrushRailItemActive}" />
+    </Style>
+    <!-- Keyboard focus ring: the self-drawn template above replaces the base theme's, so the pill
+         states it with its own border rather than losing the affordance. -->
+    <Style Selector="Button.NavItem:focus-visible">
+      <Setter Property="BorderBrush" Value="{DynamicResource BrushStateFocusRing}" />
+      <Setter Property="BorderThickness" Value="{StaticResource StrokeThickness}" />
     </Style>
     <Style Selector="Button.NavItem.Active">
       <Setter Property="Background" Value="{DynamicResource BrushRailItemActive}" />
@@ -65,7 +103,12 @@
             Padding="{StaticResource RailPadding}">
       <!-- One scroller over brand block + groups: the rail grows with every module phase, and a
            fixed brand header would need a bottom-inset token that §4.4's scale does not carry. -->
-      <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+      <!-- AllowAutoHide keeps the scrollbar an overlay: once later phases register enough routes to
+           overflow, the nav pills keep the rail's full inner width instead of losing the scrollbar's
+           width and no longer matching the reference. -->
+      <ScrollViewer HorizontalScrollBarVisibility="Disabled"
+                    VerticalScrollBarVisibility="Auto"
+                    AllowAutoHide="True">
         <StackPanel Spacing="{StaticResource Spacing24}">
           <StackPanel Orientation="Horizontal"
                       Spacing="{StaticResource Spacing12}"
@@ -144,11 +187,16 @@
 
     <Grid Grid.Column="1" RowDefinitions="Auto,*">
       <!-- Top bar and content canvas are one surface (design-reference §1.2), so the bar carries no
-           fill of its own; its fixed height absorbs the vertical half of ContentPadding. -->
+           fill of its own; its fixed height absorbs the vertical half of ContentPadding. The single
+           Divider hairline on its bottom edge is what separates it from the content region — it runs
+           the full width of the content column, edge to edge, exactly as measured in the reference,
+           which is why it sits on this Border and not inside its ContentPadding inset. -->
       <Border x:Name="TopBar"
               Grid.Row="0"
               Height="{StaticResource TopBarHeight}"
-              Padding="{StaticResource ContentPadding}">
+              Padding="{StaticResource ContentPadding}"
+              BorderBrush="{DynamicResource BrushDivider}"
+              BorderThickness="{StaticResource StrokeThicknessBottom}">
         <Grid ColumnDefinitions="*,Auto">
           <StackPanel Grid.Column="0" VerticalAlignment="Center" Spacing="{StaticResource Spacing4}">
             <TextBlock x:Name="BreadcrumbText"

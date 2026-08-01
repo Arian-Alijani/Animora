@@ -224,7 +224,10 @@ canvas, not with depth.
   (`SurfaceMuted`, `RadiusPill`, leading magnifier glyph, trailing keyboard-shortcut hint), circular
   icon buttons (notifications with a dot badge, theme toggle), then a user chip: avatar (32,
   `RadiusPill`, brand fill, initial) + name (`BodyStrong`) + role (`Caption`, `TextMuted`) +
-  chevron.
+  chevron. A `StrokeThickness` `Divider` hairline closes the bar's bottom edge at `TopBarHeight`,
+  spanning the content column edge to edge (no gutter inset) — the only separator between bar and
+  content canvas, since both share the same fill. The same rule continues across the rail as a
+  barely-lighter tint of `RailBackground`, under the brand block.
 - **Hero / CTA banner**: full content width, `HeroHeight`, `RadiusHero`, brand gradient, `ShadowHero`.
   Contains a date pill (translucent white, leading calendar glyph) above a `HeroTitle`, a
   `Body` subtitle, then two buttons — solid white/`Brand600`-text primary and translucent-white

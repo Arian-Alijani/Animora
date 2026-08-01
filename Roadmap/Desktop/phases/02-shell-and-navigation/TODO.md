@@ -41,5 +41,5 @@ than in the shell project.
 - [x] 25. Add a `UnitTests` test for `GetHomeSummaryHandler` against a substituted `IHomeSummaryReadStore`, proving the seam swaps without touching the handler (DIR-03, DT-03)
 - [x] 26. Add the `UiTests` headless RTL smoke test for the shell: root `FlowDirection` is `RightToLeft`, the rail lists the registered route, the status indicator is present, and navigating renders `HomeView` in the content region (playbook step 5, PHASE.md criteria 1-3)
 - [x] 27. Point `Roadmap/Desktop/README.md`'s Stage A/C data-seam section at this phase's reference files (paths only, no rule restatement) so phases 04+ copy a working pattern (INV-18, PHASE.md criterion 4)
-- [ ] 28. User-run on Windows: the shell launches RTL with rail, top bar, status indicator and the Home route rendered, without waiting on background init (`dotnet run --project desktop/src/Animora.Desktop.App`)
-- [ ] 29. Verify phase Completion Criteria (see PHASE.md) and update PROGRESS.md to `complete`
+- [x] 28. User-run on Windows: the shell launches RTL with rail, top bar, status indicator and the Home route rendered, without waiting on background init (`dotnet run --project desktop/src/Animora.Desktop.App`)
+- [x] 29. Verify phase Completion Criteria (see PHASE.md) and update PROGRESS.md to `complete`
