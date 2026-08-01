@@ -33,7 +33,7 @@ public sealed class SaveStaffMemberHandler : ICommandHandler<SaveStaffMemberComm
 
     public async ValueTask<Result<Guid>> Handle(SaveStaffMemberCommand command, CancellationToken cancellationToken)
     {
-        var validation = Validator.Validate(command);
+        var validation = await Validator.ValidateAsync(command, cancellationToken);
         if (!validation.IsValid)
         {
             return Result.Failure<Guid>(new Error(IdentityErrors.ValidationFailed, validation.ToString()));

@@ -29,7 +29,7 @@ public sealed class SaveRoleHandler : ICommandHandler<SaveRoleCommand, Result<Gu
 
     public async ValueTask<Result<Guid>> Handle(SaveRoleCommand command, CancellationToken cancellationToken)
     {
-        var validation = Validator.Validate(command);
+        var validation = await Validator.ValidateAsync(command, cancellationToken);
         if (!validation.IsValid)
         {
             return Result.Failure<Guid>(new Error(IdentityErrors.ValidationFailed, validation.ToString()));

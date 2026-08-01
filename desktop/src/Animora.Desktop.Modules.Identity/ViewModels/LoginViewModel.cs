@@ -16,6 +16,10 @@ namespace Animora.Desktop.Modules.Identity.ViewModels;
 /// </summary>
 public sealed class LoginViewModel : ViewModelBase
 {
+    /// <summary>Rail-visible navigation key this screen registers under (item 31 wires it). Rail-visible
+    /// per the phase TODO's six-decision note: no pre-shell auth window exists in Stage A.</summary>
+    public const string RouteKey = "login";
+
     private readonly IMediator _mediator;
     private readonly IToastService _toast;
 

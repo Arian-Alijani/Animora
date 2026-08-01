@@ -23,6 +23,8 @@ public interface IStaffWriteStore
     /// Whether the account can sign in. Carried beside <paramref name="input"/> because activation
     /// is a status change, not an input-shape rule, which is why <see cref="IStaffInput"/> omits it.
     /// </param>
+    /// <param name="cancellationToken">Propagated to the underlying storage call, no different from
+    /// every other seam method in this module.</param>
     /// <remarks>
     /// One call rather than a handler-side sequence: staff is a synced entity, so the Stage C
     /// implementation writes the row and its outbox row inside a single SQLite transaction

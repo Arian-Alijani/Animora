@@ -33,7 +33,7 @@ public sealed class SignInHandler : IQueryHandler<SignInQuery, Result<SignedInSt
 
     public async ValueTask<Result<SignedInStaff>> Handle(SignInQuery query, CancellationToken cancellationToken)
     {
-        var validation = Validator.Validate(query);
+        var validation = await Validator.ValidateAsync(query, cancellationToken);
         if (!validation.IsValid)
         {
             return Result.Failure<SignedInStaff>(new Error(IdentityErrors.ValidationFailed, validation.ToString()));
