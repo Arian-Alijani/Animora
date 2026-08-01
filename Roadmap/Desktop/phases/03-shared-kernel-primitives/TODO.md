@@ -39,9 +39,9 @@ Three decisions this list encodes, so the implementing sessions do not re-litiga
 - [x] 18. Add `UnitTests/SharedKernel/MoneyTests`: arithmetic, comparison, and midpoint cases proving banker's rounding happens once at the persistence call (CONV-07/08, INV-05, PHASE criterion 1)
 - [x] 19. Add `UnitTests/SharedKernel/ResultTests`: success/failure construction and the guard on value access after failure (PHASE criterion 1)
 - [x] 20. Add `UnitTests/SharedKernel/UtcClockTests` driven by the existing `FixedTimeProvider`, asserting `DateTimeKind.Utc` and determinism (CONV-04/06, PHASE criterion 1)
-- [ ] 21. Add `UnitTests/SharedKernel/OwnerValidatorTests`: valid/invalid cases and an explicit no-I/O assertion path (SH-05, PHASE criterion 2, CONV-22)
-- [ ] 22. Add `UnitTests/SharedKernel/PatientValidatorTests` (SH-05, CONV-22)
-- [ ] 23. Implement the `PersistenceBoundaryRules` `TODO(P1-03)`: AT-07 — no public primary-key setter on `ISyncedEntity` implementations (AT-07, INV-03)
-- [ ] 24. Add `ArchTests/SharedAssemblyRules`: `Animora.SharedKernel` and `Animora.Contracts` reference no module/platform project and no Avalonia/ASP.NET/EF Core/Npgsql dependency (SH-01, SH-02, AT-02, PHASE criteria 3-4)
-- [ ] 25. Extend `ArchTests/SharedAssemblyRules` with the money rule: no `float`/`double` member on any public shared type (INV-05, PHASE criterion 5)
-- [ ] 26. Verify phase Completion Criteria (see PHASE.md) and update PROGRESS.md to `complete`
+- [x] 21. Add `UnitTests/SharedKernel/OwnerValidatorTests`: valid/invalid cases and an explicit no-I/O assertion path (SH-05, PHASE criterion 2, CONV-22)
+- [x] 22. Add `UnitTests/SharedKernel/PatientValidatorTests` (SH-05, CONV-22)
+- [x] 23. Implement the `PersistenceBoundaryRules` `TODO(P1-03)`: AT-07 — no public primary-key setter on `ISyncedEntity` implementations (AT-07, INV-03)
+- [x] 24. Add `ArchTests/SharedAssemblyRules`: `Animora.SharedKernel` and `Animora.Contracts` reference no module/platform project and no Avalonia/ASP.NET/EF Core/Npgsql dependency (SH-01, SH-02, AT-02, PHASE criteria 3-4)
+- [x] 25. Extend `ArchTests/SharedAssemblyRules` with the money rule: no `float`/`double` member on any public shared type (INV-05, PHASE criterion 5)
+- [x] 26. Verify phase Completion Criteria (see PHASE.md) and update PROGRESS.md to `complete`

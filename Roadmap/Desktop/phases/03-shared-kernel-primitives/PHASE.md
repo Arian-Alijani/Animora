@@ -49,12 +49,12 @@ every entity.
 
 ## Completion Criteria
 
-- [ ] `TenantId`, `Money`, `Result`, UTC clock abstraction exist and are unit-tested in isolation.
-- [ ] At least one real `FluentValidation` validator exists and runs with no I/O (SH-05).
-- [ ] `Animora.SharedKernel` and `Animora.Contracts` reference no `Modules.*` or platform project
+- [x] `TenantId`, `Money`, `Result`, UTC clock abstraction exist and are unit-tested in isolation.
+- [x] At least one real `FluentValidation` validator exists and runs with no I/O (SH-05).
+- [x] `Animora.SharedKernel` and `Animora.Contracts` reference no `Modules.*` or platform project
       (SH-01, AT-02).
-- [ ] No platform-conditional code exists in either project (SH-02).
-- [ ] Money uses `decimal(18,2)` exclusively; no `float`/`double` anywhere (INV-05).
+- [x] No platform-conditional code exists in either project (SH-02).
+- [x] Money uses `decimal(18,2)` exclusively; no `float`/`double` anywhere (INV-05).
 
 ---
 

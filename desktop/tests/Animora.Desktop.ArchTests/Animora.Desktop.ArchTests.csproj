@@ -7,9 +7,15 @@
 
   <!-- Referencing the composition root is what puts every desktop assembly in this project's
        output folder, which is how the rules below reach assemblies that still have no types
-       (DIR-04 desktop analogue). -->
+       (DIR-04 desktop analogue).
+
+       Animora.Contracts is referenced by no desktop project yet, so only an explicit reference puts
+       it in the output folder for SharedAssemblyRules; Animora.SharedKernel is listed alongside it
+       because PersistenceBoundaryRules names ISyncedEntity at compile time (AT-07). -->
   <ItemGroup>
     <ProjectReference Include="../../src/Animora.Desktop.App/Animora.Desktop.App.csproj" />
+    <ProjectReference Include="../../../shared/dotnet/Animora.SharedKernel/Animora.SharedKernel.csproj" />
+    <ProjectReference Include="../../../shared/dotnet/Animora.Contracts/Animora.Contracts.csproj" />
   </ItemGroup>
 
   <ItemGroup>
