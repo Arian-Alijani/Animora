@@ -51,12 +51,12 @@ logged-in staff context from here).
 
 ## Completion Criteria
 
-- [ ] Login, staff list, staff create/edit, role management, and device list screens exist and are
+- [x] Login, staff list, staff create/edit, role management, and device list screens exist and are
       navigable from the shell.
-- [ ] Every screen passes an `Avalonia.Headless` RTL smoke test.
-- [ ] No ViewModel references `DbContext`/`HttpClient` directly (DT-02).
-- [ ] Validation runs in the shared validator via the handler, not in the ViewModel (DT-03).
-- [ ] Server-bound seams (login network call) are marked `// TODO(P2): ...` per DT-12, not stubbed
+- [x] Every screen passes an `Avalonia.Headless` RTL smoke test.
+- [x] No ViewModel references `DbContext`/`HttpClient` directly (DT-02).
+- [x] Validation runs in the shared validator via the handler, not in the ViewModel (DT-03).
+- [x] Server-bound seams (login network call) are marked `// TODO(P2): ...` per DT-12, not stubbed
       with a fake API client.
 
 ---

@@ -72,5 +72,5 @@ Six decisions this list encodes, so the implementing sessions do not re-litigate
 - [x] 37. Add `UnitTests/Modules/Identity/SaveRoleHandlerTests`: unknown claim key rejected, SEC-11 guard enforced (SEC-09, SEC-11, CONV-22)
 - [x] 38. Add `UnitTests/SharedKernel/StaffValidatorTests`, `RoleValidatorTests` and `CredentialValidatorTests` (SH-05, CONV-22)
 - [x] 39. Add `UiTests/Identity/IdentityScreenSmokeTests`: one headless RTL fact per route, driven through the real composition root like phase 02's shell test (playbook step 5, PHASE criterion 2, DT-06)
-- [ ] 40. User-run on Windows: sign in on the login screen, then reach the staff list, the staff form, role management and the device list from the rail (`dotnet run --project desktop/src/Animora.Desktop.App`)
-- [ ] 41. Verify phase Completion Criteria (see PHASE.md) and update PROGRESS.md to `complete`
+- [x] 40. User-run on Windows: sign in on the login screen, then reach the staff list, the staff form, role management and the device list from the rail (`dotnet run --project desktop/src/Animora.Desktop.App`)
+- [x] 41. Verify phase Completion Criteria (see PHASE.md) and update PROGRESS.md to `complete`

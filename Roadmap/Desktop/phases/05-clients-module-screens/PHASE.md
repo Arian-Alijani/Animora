@@ -54,4 +54,9 @@ phase 08 (Files screens) reference patients created here for navigation context.
 
 ## Step 0
 
-Not run yet. See [`../../_meta/session-protocol.md`](../../_meta/session-protocol.md).
+Run on 2026-08-01 -> [`TODO.md`](TODO.md) (38 items). The five calls the list had to make — one
+patient-list route for both the global and the owner-scoped mode, the medical-file header read on the
+patient seam rather than a seam of its own, Visits/Files links left as markers, only the synced-entity
+recipe's sync-class declaration in scope, and read/write seams split per aggregate — are recorded in
+`TODO.md`'s header rather than restated per item. The three field-level questions the corpus does not
+answer are asked as items 2-4 instead of guessed (AG-02).
