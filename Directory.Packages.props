@@ -37,6 +37,13 @@
     <PackageVersion Include="Mediator.SourceGenerator" Version="3.0.2" />
   </ItemGroup>
 
+  <!-- Shared business-rule validation (TECH_STACK §4/§16). Referenced only by
+       Animora.SharedKernel: the rules are authored once there and run by desktop handlers and the
+       backend alike (CONV-18), so no consuming project takes this package directly. -->
+  <ItemGroup>
+    <PackageVersion Include="FluentValidation" Version="12.1.1" />
+  </ItemGroup>
+
   <ItemGroup>
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
     <PackageVersion Include="xunit" Version="2.9.3" />
