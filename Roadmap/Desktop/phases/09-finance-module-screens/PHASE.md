@@ -3,16 +3,18 @@
 ## Goal
 
 Build every screen the Finance module owns: cheque management, professional invoicing with
-templates and live preview, the cash-register/till module, and expense/income management, fully
-click-through against the Stage A data seam, inside `Animora.Desktop.Modules.Finance`.
+templates and live preview, sales and cash-register workflows, inventory, supplier purchasing, and
+expense/income management, fully click-through against the Stage A data seam, inside
+`Animora.Desktop.Modules.Finance`.
 
 ## Expected Outcome
 
 A staff member can register/track a cheque through its lifecycle, build and live-preview an
-invoice from a template before issuing it, open/reconcile/close a cash session, and record
-expenses/income — all through real `Mediator` handlers bound to `Modules.Finance`'s data-seam
-interface (fake now, real in phase 20), with the ledger-immutability and state-machine rules
-respected in the UI/handler flow even though there is no real ledger storage yet.
+invoice from a template before issuing it, sell products or services through a cash session, manage
+inventory, record supplier purchasing, and record expenses/income — all through real `Mediator`
+handlers bound to `Modules.Finance`'s data-seam interface (fake now, real in phase 20), with the
+ledger-immutability and state-machine rules respected in the UI/handler flow even though there is
+no real ledger storage yet.
 
 ## Scope
 
@@ -28,6 +30,14 @@ respected in the UI/handler flow even though there is no real ledger storage yet
   as the desktop's own single-till reality), cash movement entry, close/reconcile with variance
   entry (FIN-12/FIN-13).
 - Expense/income entry screens (categorized, tenant-extendable category list per FIN-16).
+- Sales and cash-register workflows: product/service selection, invoice line construction, payment
+  capture, and settlement through the existing invoice and cash-session flows; no parallel sales
+  document is introduced.
+- Inventory management: product catalog, stock visibility, and stock-operation screens. Barcode
+  capture UI is deferred to phase 25; persistence is deferred to phase 20.
+- Purchasing and supply management: supplier catalog, purchase recording/receiving, and the
+  purchase-expense entry flow. Supplier and purchase fields, approval, and valuation rules are
+  specified by Step 0 before implementation.
 - Every money screen keeps ledger semantics conceptually append-only in its handler design (no
   "edit a posted amount" affordance anywhere in the UI) even before phase 20 wires real storage.
 - Out of scope: local SQLite/ledger persistence (phase 20), payment gateway integration (P2/
@@ -51,8 +61,8 @@ Data). Phase 10 (Reporting screens) consumes Finance's conceptual ledger shape f
 
 ## Completion Criteria
 
-- [ ] Cheque, invoice (with live preview), cash session, and expense/income screens exist and are
-      navigable.
+- [ ] Cheque, invoice (with live preview), sales/cash-register, inventory, purchasing/supply, and
+      expense/income screens exist and are navigable.
 - [ ] No screen offers an "edit after issue/post" affordance for invoices, cheques (post-registration
       core fields), or ledger-adjacent amounts (DOM-06, FIN-02).
 - [ ] Cash session open enforces one-open-per-till in the local UI/handler flow (DOM-05).

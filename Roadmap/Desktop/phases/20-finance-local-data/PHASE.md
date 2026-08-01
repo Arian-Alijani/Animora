@@ -4,22 +4,25 @@
 
 Swap phase 09's Finance Stage A fake data-seam implementation for real local persistence: EF Core
 entities/configurations/migration for LedgerEntry, Invoice, InvoiceTemplate, Cheque, CashSession,
-Expense, Income, wired behind `Modules.Finance`'s own interface, with append-only ledger semantics
-enforced at the local storage layer.
+Expense, Income, Product, InventoryItem, Supplier, PurchaseOrder, and GoodsReceipt, wired behind
+`Modules.Finance`'s own interface, with append-only ledger semantics enforced at the local storage
+layer.
 
 ## Expected Outcome
 
-Cheque, invoice (with live preview), cash session, and expense/income screens from phase 09 now
-read/write real local SQLite rows; `LedgerEntry` rows are genuinely append-only locally (no
-update/delete code path exists), issuing an invoice posts a real local ledger entry, and cash
-session enforces one-open-per-till against real persisted state.
+Cheque, invoice (with live preview), cash session, sales, inventory, purchasing/supply, and
+expense/income screens from phase 09 now read/write real local SQLite rows; `LedgerEntry` rows are
+genuinely append-only locally (no update/delete code path exists), issuing an invoice posts a real
+local ledger entry, and cash session enforces one-open-per-till against real persisted state.
 
 ## Scope
 
 - EF Core entity configurations for `LedgerEntry` (`AppendOnly`), `Invoice`/`InvoiceTemplate`
   (`StateMachine`/data), `Cheque` (`StateMachine`), `CashSession`+`CashMovement` (`StateMachine`),
-  `Expense`/`Income` (`MutableLWW` metadata, `AppendOnly` posting per FIN-16) — `UUIDv7` PKs,
-  tombstones where applicable, sync metadata columns (DESK-02).
+  `Expense`/`Income` (`MutableLWW` metadata, `AppendOnly` posting per FIN-16), `Product`,
+  `InventoryItem`, `Supplier`, `PurchaseOrder`, and `GoodsReceipt` — `UUIDv7` PKs, tombstones where
+  applicable, sync metadata columns (DESK-02). Exact purchasing and stock valuation rules are
+  specified by Step 0 before this persistence work starts.
 - EF Core migration adding these tables (DT-11).
 - `Data/Writes` structurally prevents `UPDATE`/`DELETE` on `LedgerEntry` after insert (INV-06's
   desktop-local mirror; the real DB-trigger enforcement is server-side per FIN's "what is
@@ -57,7 +60,8 @@ by invoices/cheques). Feeds phase 21 (Reporting local data derives from this pha
 ## Completion Criteria
 
 - [ ] `LedgerEntry`, `Invoice`, `InvoiceTemplate`, `Cheque`, `CashSession`/`CashMovement`,
-      `Expense`, `Income` EF Core entities/configurations/migration exist.
+      `Expense`, `Income`, `Product`, `InventoryItem`, `Supplier`, `PurchaseOrder`, and
+      `GoodsReceipt` EF Core entities/configurations/migration exist.
 - [ ] No code path can update or delete a persisted `LedgerEntry` row; a test proves only insert is
       possible and a correction creates a new offsetting row.
 - [ ] Issuing an invoice posts a real ledger entry pair in the same transaction as the state

@@ -143,6 +143,28 @@ while any Desktop phase is active (AG-01, AG-05).
 | 30 | [Backup & Restore UX](phases/30-backup-and-restore-ux/PHASE.md) | D — Cross-cutting |
 | 31 | [Release Readiness](phases/31-release-readiness/PHASE.md) | Final |
 
+## Product tab allocation
+
+This is the planning map for the primary desktop navigation surfaces. It preserves the existing
+phase order and module boundaries: a tab is registered by its owning module during its Stage A
+screen phase, then receives real local data only in its paired Stage C phase. Supporting phases
+extend the same tab rather than creating a parallel navigation surface.
+
+| Tab | Primary Stage A UI phase | Supporting UI phases | Stage C local-data phase |
+|---|---|---|---|
+| Dashboard | 10 — Reporting Module Screens | 02 — Shell & Navigation provides the temporary home/seam | 21 — Reporting Local Data |
+| Appointments | 06 — Scheduling Module Screens | 26 — Local Job Scheduler & Reminders | 17 — Scheduling Local Data |
+| Owners & Patients | 05 — Clients Module Screens | 07 — Visits Module Screens adds patient visit history | 16 — Clients Local Data; 18 — Visits Local Data |
+| Vaccination Management | 07 — Visits Module Screens | 26 — Local Job Scheduler & Reminders enables due reminders | 18 — Visits Local Data |
+| Sales & Cash Register | 09 — Finance Module Screens | 24 — Documents & Printing supplies final invoice output | 20 — Finance Local Data |
+| Inventory Management | 09 — Finance Module Screens | 25 — Barcode & Imaging supplies barcode workflows | 20 — Finance Local Data |
+| Purchasing, Supply & Expenses | 09 — Finance Module Screens | — | 20 — Finance Local Data |
+| Detailed Statistics & Reports | 10 — Reporting Module Screens | 24 — Documents & Printing supplies export output | 21 — Reporting Local Data |
+
+The exact fields, workflows, and business rules for vaccination, inventory, suppliers, purchasing,
+and stock valuation are intentionally deferred to Step 0 of their owning phases. This roadmap
+records ownership and sequence only; it does not invent product rules before they are specified.
+
 ## Non-negotiables inherited from the project (not restated here)
 
 Every phase and every TODO Step 0 generates MUST obey repo-root `AGENTS.md`, `ARCHITECTURE.md`'s 10
