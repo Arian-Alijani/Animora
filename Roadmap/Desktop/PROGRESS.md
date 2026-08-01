@@ -16,7 +16,7 @@ in that phase's `TODO.md`; leave it `-/-` until `TODO.md` exists.
 | 00 | Solution Bootstrap | complete | 19/19 | `ci-desktop.sh` green (33 arch tests); app launch verified by the user on Windows — `_meta/host-verification-log.md` |
 | 01 | Design System Foundation | complete | 37/37 | Tokens/styles/controls/formatters + headless and token-discipline tests in place; gallery deleted; RTL/Vazirmatn rendering verified by the user on Windows — `_meta/host-verification-log.md` |
 | 02 | Shell & Navigation | complete | 29/29 | Shell, navigation, app state, the Reporting example screen and its data seam complete, with navigation/handler unit tests, the headless RTL shell smoke test and the README seam reference; Windows launch verified by the user — `_meta/host-verification-log.md` — and the two look-and-feel deviations it surfaced (top-bar `Divider` hairline, rail nav-pill box geometry) fixed against the reference |
-| 03 | Shared Kernel & Contracts Seed | in-progress | 7/26 | `SharedKernel/Primitives` (`TenantId`, `IEntity`/`ITenantScoped`, `ISyncedEntity`, `Error`, `Result`) and `Money` in place; validators, `Contracts` seed and tests still open |
+| 03 | Shared Kernel & Contracts Seed | in-progress | 15/26 | `SharedKernel/Primitives` (`TenantId`, `IEntity`/`ITenantScoped`, `ISyncedEntity`, `Error`, `Result`), `Money`, `Time/UtcClock`, Owner/Patient input interfaces + validators, and `Contracts` (`AppointmentStatus`, `OwnerDto`) in place; `PatientDto`, test project wiring (17-22), `PersistenceBoundaryRules`/`ArchTests` (23-25) still open |
 | 04 | Identity & Auth Screens | not-started | -/- | |
 | 05 | Clients Module Screens | not-started | -/- | |
 | 06 | Scheduling Module Screens | not-started | -/- | |
