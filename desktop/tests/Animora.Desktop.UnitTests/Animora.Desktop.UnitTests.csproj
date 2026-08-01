@@ -31,11 +31,16 @@
        UtcClock, the Clients validators). They already arrive transitively through the desktop
        projects above, but are listed explicitly so this element stays the readable index of what
        this project covers — and so a later trim of a desktop reference cannot silently drop the
-       shared primitives out from under these tests. -->
+       shared primitives out from under these tests.
+
+       Phase 04 adds Animora.Desktop.Modules.Identity for Handlers/SignInHandler,
+       SaveStaffMemberHandler, SaveRoleHandler (items 35-37) and SharedKernel's Staff/Role/Credential
+       validators (item 38). -->
   <ItemGroup>
     <ProjectReference Include="../../src/Animora.Desktop.UI/Animora.Desktop.UI.csproj" />
     <ProjectReference Include="../../src/Animora.Desktop.App/Animora.Desktop.App.csproj" />
     <ProjectReference Include="../../src/Animora.Desktop.Modules.Reporting/Animora.Desktop.Modules.Reporting.csproj" />
+    <ProjectReference Include="../../src/Animora.Desktop.Modules.Identity/Animora.Desktop.Modules.Identity.csproj" />
     <ProjectReference Include="../../../shared/dotnet/Animora.SharedKernel/Animora.SharedKernel.csproj" />
     <ProjectReference Include="../../../shared/dotnet/Animora.Contracts/Animora.Contracts.csproj" />
   </ItemGroup>

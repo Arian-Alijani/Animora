@@ -259,7 +259,7 @@ public sealed class RoleManagementViewModel : ViewModelBase, INavigationAware
         }
     }
 
-    private static IReadOnlyList<PermissionClaimGroupViewModel> BuildClaimGroups(
+    private static List<PermissionClaimGroupViewModel> BuildClaimGroups(
         IReadOnlyCollection<string> assignedKeys,
         bool isSystemRole)
     {

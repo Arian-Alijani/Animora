@@ -25,11 +25,15 @@
        (Shell/ShellWindow + Composition/AddDesktopApp) and, to name the screen it expects in the
        content region, the module that registered it. Naming the module here is a test-only reference
        and no weakening of DESK-ARCH-05: the assertion is precisely that the *shell* project does not
-       name it. -->
+       name it.
+
+       Phase 04 adds Animora.Desktop.Modules.Identity for IdentityScreenSmokeTests (item 39), one
+       headless RTL fact per login/staff-list/staff-form/role-management/device-list route. -->
   <ItemGroup>
     <ProjectReference Include="../../src/Animora.Desktop.UI/Animora.Desktop.UI.csproj" />
     <ProjectReference Include="../../src/Animora.Desktop.App/Animora.Desktop.App.csproj" />
     <ProjectReference Include="../../src/Animora.Desktop.Modules.Reporting/Animora.Desktop.Modules.Reporting.csproj" />
+    <ProjectReference Include="../../src/Animora.Desktop.Modules.Identity/Animora.Desktop.Modules.Identity.csproj" />
   </ItemGroup>
 
 </Project>

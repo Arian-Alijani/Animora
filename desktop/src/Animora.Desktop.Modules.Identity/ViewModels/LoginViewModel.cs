@@ -1,6 +1,7 @@
 using Animora.Contracts.Errors;
 using Animora.Desktop.Modules.Identity.Handlers;
 using Animora.Desktop.UI.Mvvm;
+using Animora.Desktop.UI.Navigation;
 using Animora.Desktop.UI.Services;
 using CommunityToolkit.Mvvm.Input;
 using Mediator;
@@ -20,7 +21,14 @@ public sealed class LoginViewModel : ViewModelBase
     /// per the phase TODO's six-decision note: no pre-shell auth window exists in Stage A.</summary>
     public const string RouteKey = "login";
 
+    // Modules.Identity may not reference Modules.Reporting to reuse its HomeRouteKey constant
+    // (DT-01) — INavigationService.NavigateTo is designed to be reached by route key string alone
+    // for exactly this case (see the interface's own remark), so the literal is this screen's one
+    // deliberate coupling to another module's landing route.
+    private const string HomeRouteKey = "home";
+
     private readonly IMediator _mediator;
+    private readonly INavigationService _navigation;
     private readonly IToastService _toast;
 
     private string _username = string.Empty;
@@ -28,9 +36,10 @@ public sealed class LoginViewModel : ViewModelBase
     private string? _errorMessage;
     private bool _isSigningIn;
 
-    public LoginViewModel(IMediator mediator, IToastService toast)
+    public LoginViewModel(IMediator mediator, INavigationService navigation, IToastService toast)
     {
         _mediator = mediator;
+        _navigation = navigation;
         _toast = toast;
 
         // Hand-built rather than [RelayCommand]: CommunityToolkit.Mvvm's generator is an analyzer
@@ -100,13 +109,15 @@ public sealed class LoginViewModel : ViewModelBase
                 return;
             }
 
-            // TODO(P1-33): once the sign-in projection notification exists, publish it here so
-            // ICurrentUserState reflects result.Value instead of phase-02's fixed placeholder, and
-            // navigate the shell to its landing route. Until then this screen only proves the
-            // credential round trip; a non-blocking toast is the only visible success feedback
-            // (DESK-ARCH-07 — never a modal spinner or blocking confirmation).
+            // CurrentUserState's handler (App/AppState) is the notification's only subscriber; it
+            // fills ICurrentUserState from result.Value in place of phase-02's fixed placeholder
+            // (DT-01, DESK-ARCH-03). A non-blocking toast is still the only visible confirmation
+            // (DESK-ARCH-07 — never a modal spinner or blocking confirmation); the navigation below
+            // is what actually leaves the login screen.
+            await _mediator.Publish(new StaffSignedInNotification(result.Value), cancellationToken).ConfigureAwait(true);
             _toast.ShowSuccess($"خوش‌آمدید، {result.Value.FullName}", "ورود موفق");
             Password = string.Empty;
+            _navigation.NavigateTo(HomeRouteKey);
         }
         finally
         {
