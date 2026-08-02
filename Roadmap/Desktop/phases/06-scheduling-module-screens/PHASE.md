@@ -53,4 +53,11 @@ phase 17 (Scheduling Local Data) and phase 26 (reminder computation reads Schedu
 
 ## Step 0
 
-Not run yet. See [`../../_meta/session-protocol.md`](../../_meta/session-protocol.md).
+Run on 2026-08-02 -> [`TODO.md`](TODO.md) (47 items). The seven calls the list had to make — one
+calendar route for day/week/month plus the resource filter, separate commands for booking /
+reschedule / cancel / status over the one ADR-0008 row, the DOM-08 overlap check in the handler
+rather than the validator, no `Modules.Clients` reference for the patient a booking needs, two
+catalog entities with one screen each, only the synced-entity recipe's sync-class declaration in
+scope, and `AppointmentSeries`/`ReminderRule` deferred — are recorded in `TODO.md`'s header rather
+than restated per item. The five questions the corpus does not answer are asked as items 2-6 instead
+of guessed (AG-02).

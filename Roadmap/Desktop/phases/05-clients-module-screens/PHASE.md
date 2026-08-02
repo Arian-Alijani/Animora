@@ -44,11 +44,11 @@ phase 08 (Files screens) reference patients created here for navigation context.
 
 ## Completion Criteria
 
-- [ ] Owner list/create/edit and patient list/create/edit screens exist and are navigable.
-- [ ] Medical file summary screen renders a patient's header fields.
-- [ ] Every screen passes an `Avalonia.Headless` RTL smoke test.
-- [ ] Any list that can exceed 200 rows uses a virtualized `DataGrid` (DT-08).
-- [ ] No ViewModel references `DbContext`/`HttpClient` directly (DT-02).
+- [x] Owner list/create/edit and patient list/create/edit screens exist and are navigable.
+- [x] Medical file summary screen renders a patient's header fields.
+- [x] Every screen passes an `Avalonia.Headless` RTL smoke test.
+- [x] Any list that can exceed 200 rows uses a virtualized `DataGrid` (DT-08).
+- [x] No ViewModel references `DbContext`/`HttpClient` directly (DT-02).
 
 ---
 
