@@ -1,25 +1,17 @@
-using Animora.Desktop.App.Composition;
-using Animora.Desktop.App.Shell;
 using Animora.Desktop.Modules.Identity.ViewModels;
 using Animora.Desktop.Modules.Identity.Views;
-using Animora.Desktop.UI.Navigation;
-using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Headless.XUnit;
 using Avalonia.Media;
-using Avalonia.Threading;
-using Avalonia.VisualTree;
 using FluentAssertions;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Animora.Desktop.UiTests.Identity;
 
 /// <summary>
 /// One headless RTL smoke test per route this module registers (playbook step 5, PHASE.md
-/// criterion 2), driven through the real composition root exactly like
-/// <c>Shell/ShellWindowSmokeTests</c>: <c>AddDesktopApp()</c> is built, the shell is shown at its
-/// default route, and then <see cref="INavigationService"/> — never a View or ViewModel constructed
-/// by hand — takes it to the route under test.
+/// criterion 2), driven through <see cref="ShellRouteHarness"/>: the real composition root is
+/// built, the shell is shown at its default route, and navigation — never a View or ViewModel
+/// constructed by hand — takes it to the route under test.
 /// </summary>
 public class IdentityScreenSmokeTests
 {
@@ -89,27 +81,10 @@ public class IdentityScreenSmokeTests
             .Which.Items.Should().NotBeEmpty();
     }
 
-    // Mirrors Shell/ShellWindowSmokeTests.BuildAppServices/ShowShell: the shell is brought up through
-    // the same AddDesktopApp() the real app boots with and shown at its default route first, so a
-    // screen's own regression never masks a broken shell/registry wiring underneath it.
     private static Control NavigateAndGetContent(string routeKey)
     {
-        using ServiceProvider services = new ServiceCollection().AddDesktopApp().BuildServiceProvider();
+        using ShellRouteHarness harness = ShellRouteHarness.Start();
 
-        ShellWindow shell = services.GetRequiredService<ShellWindow>();
-        services.GetRequiredService<ShellViewModel>().ShowDefaultRoute();
-        shell.Show();
-        Dispatcher.UIThread.RunJobs();
-
-        services.GetRequiredService<INavigationService>().NavigateTo(routeKey);
-
-        // Drains the target screen's own load command, posted to the dispatcher rather than awaited
-        // (DESK-ARCH-10), the same way ShowShell drains the landing screen's.
-        Dispatcher.UIThread.RunJobs();
-
-        ContentControl contentRegion = shell.GetVisualDescendants().OfType<ContentControl>()
-            .Single(control => string.Equals(control.Name, "ContentRegion", StringComparison.Ordinal));
-
-        return (Control)contentRegion.Content!;
+        return harness.NavigateTo(routeKey);
     }
 }
